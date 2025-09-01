@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>The Guardian</title>
+    <title>Paper Route News</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Roboto:wght@400;500;700&amp;display=swap"
@@ -16,6 +16,22 @@
     <style>
       body {
         font-family: 'Roboto', sans-serif;
+        position: relative;
+        z-index: 1;
+        color: black;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('assets/background.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.5;
+        z-index: -1;
       }
       h1,
       h2,
@@ -30,7 +46,7 @@
         background-color: #052962;
       }
       .text-brand-blue {
-        color: #052962;
+        color: black;
       }
       .border-brand-blue {
         border-color: #052962;
@@ -40,14 +56,14 @@
       }
     </style>
   </head>
-  <body class="bg-gray-100">
+  <body>
     <header class="bg-brand-blue text-white">
       <div class="border-b border-gray-600">
         <div
           class="container mx-auto px-4 py-2 flex justify-between items-center"
         >
           <div>
-            <h2 class="text-lg font-bold font-serif">Support the Guardian</h2>
+            <h2 class="text-lg font-bold font-serif">Support Paper Route News</h2>
             <p class="text-sm">Fund the free press with $5 per month</p>
           </div>
           <a
@@ -79,11 +95,9 @@
           <a class="hover:underline" href="#">Culture</a>
           <a class="hover:underline" href="#">Lifestyle</a>
         </nav>
-        <button class="bg-yellow-400 text-black p-2 rounded-full">
-          <span class="material-icons">menu</span>
-        </button>
+        <img src="assets/Route Final Logo.png" alt="Paper Route News Logo" class="h-16" />
         <div class="text-right">
-          <div class="font-serif text-5xl font-bold">The Guardian</div>
+          <div class="font-serif text-5xl font-bold">Paper Route News</div>
           <div class="text-xs tracking-widest">US</div>
         </div>
       </div>
@@ -94,7 +108,7 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
         <div class="md:col-span-3">
-          <p class="font-bold text-gray-700">31 August 2025</p>
+          <p class="font-bold">31 August 2025</p>
         </div>
         <div class="md:col-span-9">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -114,7 +128,7 @@
                 <h3 class="font-bold text-lg font-serif text-brand-blue mt-1">
                   F1: Dutch Grand Prix updates - live
                 </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
+                <p class="text-xs mt-4">08.00 EDT</p>
               </div>
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -128,21 +142,21 @@
                   'I'm holding his political wake': the trumpeter waiting to
                   mark Bolsonaro's judgment day
                 </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
+                <p class="text-xs mt-4">08.00 EDT</p>
               </div>
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
               <img
                 alt="A person holding a smartphone and a blue folder"
                 class="w-full h-40 object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3CgymIaPAF4a9uyw1bOlvQgyEnfHgHl3lD1WAIOhxfDlymWzBIvB6BcO_192uTalG85SEV8hGwS_fOAFgRqkycZcROX67TPxgEy7zr2FO4FoACpjnxHeHqZrA20LZtUoDYjI-B5QxYtZHvEzGQ8sfoZrKTOn47RQO9VHDh7uCK7C0ToX63MMJAJ1nH4XxUKxQUjZKHvhSe1dqQCEraixmH4tmArWzMBlpH8EZ4c94PZnXYfv-3Xa_hkexyqVObJXukcZafyAaA8uW"
+                src="httpshttps://lh3.googleusercontent.com/aida-public/AB6AXuD3CgymIaPAF4a9uyw1bOlvQgyEnfHgHl3lD1WAIOhxfDlymWzBIvB6BcO_192uTalG85SEV8hGwS_fOAFgRqkycZcROX67TPxgEy7zr2FO4FoACpjnxHeHqZrA20LZtUoDYjI-B5QxYtZHvEzGQ8sfoZrKTOn47RQO9VHDh7uCK7C0ToX63MMJAJ1nH4XxUKxQUjZKHvhSe1dqQCEraixmH4tmArWzMBlpH8EZ4c94PZnXYfv-3Xa_hkexyqVObJXukcZafyAaA8uW"
               />
               <div class="p-4">
                 <h3 class="font-bold text-lg font-serif text-brand-blue mt-1">
                   Trial of tech that could be used to keep Australian under-16s
                   off social media finds some errors 'inevitable'
                 </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
+                <p class="text-xs mt-4">08.00 EDT</p>
               </div>
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -156,7 +170,7 @@
                   Jess Breach hails 'phenomenal' feeling as she eyes 50th
                   England cap against Australia
                 </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
+                <p class="text-xs mt-4">08.00 EDT</p>
               </div>
             </div>
           </div>
@@ -168,7 +182,7 @@
                 Greta Thunberg: aid flotilla 'even stronger' as dozens of boats
                 to head for Gaza - video
               </h4>
-              <div class="text-xs text-gray-500 mt-2 flex items-center">
+              <div class="text-xs mt-2 flex items-center">
                 <span class="material-icons text-red-600 mr-1"
                   >play_circle_filled</span
                 >
