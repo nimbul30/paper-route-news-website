@@ -31,7 +31,7 @@
       <header
         class="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-10 py-5"
       >
-        <div class="flex items-center gap-3">
+        <a class="flex items-center gap-3" href="home.html">
           <svg
             fill="none"
             height="24"
@@ -50,16 +50,16 @@
             ></path>
           </svg>
           <h2 class="text-xl font-bold">Paper Route News</h2>
-        </div>
+        </a>
         <nav class="hidden md:flex items-center gap-8 text-sm">
           <a
             class="hover:text-[var(--primary-color)] transition-colors"
-            href="#"
+            href="home.html"
             >Home</a
           >
           <a
             class="hover:text-[var(--primary-color)] transition-colors"
-            href="#"
+            href="feed.html"
             >Explore</a
           >
           <a
@@ -74,17 +74,20 @@
           >
         </nav>
         <div class="flex items-center gap-4">
-          <button
+          <a
             class="flex items-center justify-center rounded-full h-10 w-10 bg-white/10 hover:bg-white/20 transition-colors"
+            href="post.html"
           >
             <span class="material-symbols-outlined text-white"> add </span>
-          </button>
-          <div
-            class="size-10 rounded-full bg-cover bg-center"
-            style="
-              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD51UfM30YGUAFKlblF-UJqc8Lbnf_Maiaud-57_x1J8gBKewI63Bf5dZD3JFnBwzk9gDRPjScfEakK7OjklqgYjrLfOD1uFCvBfAzv8rj_41XQfMWjYeCepwYor4HFWGkgbTp83mJT6zYqT3mE-PxY9uv5qtnvf3Bj0uVSNTcflojVbS-A7EdLbQY0xLR5VzEZKrAk1Yy6qmMBSnztgnDOrRoqCz26dZ0OEbaAubkyc3d9DdClp9_rIdagoe6s-lwUom3CTBl63v30');
-            "
-          ></div>
+          </a>
+          <a href="user-creater-profile.html">
+            <div
+              class="size-10 rounded-full bg-cover bg-center"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD51UfM30YGUAFKlblF-UJqc8Lbnf_Maiaud-57_x1J8gBKewI63Bf5dZD3JFnBwzk9gDRPjScfEakK7OjklqgYjrLfOD1uFCvBfAzv8rj_41XQfMWjYeCepwYor4HFWGkgbTp83mJT6zYqT3mE-PxY9uv5qtnvf3Bj0uVSNTcflojVbS-A7EdLbQY0xLR5VzEZKrAk1Yy6qmMBSnztgnDOrRoqCz26dZ0OEbaAubkyc3d9DdClp9_rIdagoe6s-lwUom3CTBl63v30');
+              "
+            ></div>
+          </a>
         </div>
       </header>
       <main
@@ -105,11 +108,31 @@
             that rewards truth, transparency, and community verification.
           </p>
           <div class="mt-10">
-            <button
+            <a
+              href="feed.html"
               class="bg-[var(--primary-color)] hover:bg-red-700 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-[var(--primary-color)]/20 transform hover:scale-105"
             >
               Get Started
-            </button>
+            </a>
+          </div>
+          <div class="mt-16">
+            <h2 class="text-2xl font-bold tracking-tighter">Stay in the Loop</h2>
+            <p class="mt-2 text-neutral-400">
+              Subscribe to our newsletter to get the latest news and updates.
+            </p>
+            <form class="mt-6 flex justify-center" action="#" method="post">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="form-input w-full max-w-sm rounded-l-full border-none bg-gray-800 py-3 px-6 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[var(--primary-color)]"
+              />
+              <button
+                type="submit"
+                class="rounded-r-full bg-[var(--primary-color)] px-6 py-3 font-bold text-white hover:bg-red-700"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
       </main>
