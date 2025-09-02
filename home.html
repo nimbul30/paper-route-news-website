@@ -2,202 +2,117 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>The Guardian</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Paper Route News</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
     />
-    <style>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+      :root {
+        --primary-color: #ea2a33;
+      }
       body {
-        font-family: 'Roboto', sans-serif;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      .font-serif {
-        font-family: 'Merriweather', serif;
-      }
-      .bg-brand-blue {
-        background-color: #052962;
-      }
-      .text-brand-blue {
-        color: #052962;
-      }
-      .border-brand-blue {
-        border-color: #052962;
-      }
-      .yellow-highlight {
-        background-color: #ffe500;
+        font-family: 'Spline Sans', sans-serif;
       }
     </style>
   </head>
-  <body class="bg-gray-100">
-    <header class="bg-brand-blue text-white">
-      <div class="border-b border-gray-600">
-        <div
-          class="container mx-auto px-4 py-2 flex justify-between items-center"
-        >
-          <div>
-            <h2 class="text-lg font-bold font-serif">Support the Guardian</h2>
-            <p class="text-sm">Fund the free press with $5 per month</p>
-          </div>
-          <a
-            class="bg-yellow-400 text-black font-bold py-2 px-4 rounded flex items-center"
-            href="#"
-          >
-            Support us <span class="material-icons ml-2">arrow_forward</span>
-          </a>
-        </div>
-      </div>
-      <div class="border-b border-gray-600">
-        <div
-          class="container mx-auto px-4 py-2 flex justify-end items-center text-sm space-x-4"
-        >
-          <a class="hover:underline" href="#">Print subscriptions</a>
-          <a class="hover:underline" href="#">Newsletters</a>
-          <a class="flex items-center hover:underline" href="#">
-            <span class="material-icons mr-1">person</span> Sign in
-          </a>
-        </div>
-      </div>
-      <div
-        class="container mx-auto px-4 py-4 flex justify-between items-center"
+  <body class="bg-[#141414] text-white">
+    <div
+      class="relative flex size-full min-h-screen flex-col overflow-x-hidden"
+    >
+      <header
+        class="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-10 py-5"
       >
-        <nav class="flex items-center space-x-6 text-lg font-bold">
-          <a class="hover:underline" href="#">News</a>
-          <a class="hover:underline" href="#">Opinion</a>
-          <a class="hover:underline" href="#">Sport</a>
-          <a class="hover:underline" href="#">Culture</a>
-          <a class="hover:underline" href="#">Lifestyle</a>
-        </nav>
-        <button class="bg-yellow-400 text-black p-2 rounded-full">
-          <span class="material-icons">menu</span>
-        </button>
-        <div class="text-right">
-          <div class="font-serif text-5xl font-bold">The Guardian</div>
-          <div class="text-xs tracking-widest">US</div>
-        </div>
-      </div>
-    </header>
-    <main class="container mx-auto px-4 py-8">
-      <div class="border-b-2 border-gray-300 pb-2 mb-4">
-        <h1 class="text-3xl font-bold font-serif text-brand-blue">News</h1>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-        <div class="md:col-span-3">
-          <p class="font-bold text-gray-700">31 August 2025</p>
-        </div>
-        <div class="md:col-span-9">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                alt="A sign indicating a bicycle route at the F1 Dutch GP"
-                class="w-full h-40 object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMv0oZVs5IjxBmdxFbzUpXDZMVa9jWdyZEZ6x2x4eJ7IvCPJIEdF4MW070Pm34uaQRXQ2GBR1gPmX_4sVZ4dUkZ5-id_3y4xohbl_lNiDHKbXqumH_eXka0ffxgRupy346N2pypsBDRSKoliONsJcOp-Iv9shKR8TeU0euYqB_J8gwlfYHmmU1l7QvvODI8HN0bM2TxVklDOpfgLx7Lw38ahOr9V4hlODe6dRf8Mk3RcgPTd-FguOM-hgqxmm-9wmfghJVAv8afr8g"
-              />
-              <div class="p-4">
-                <p class="text-red-600 text-sm font-bold">
-                  <span class="material-icons text-xs align-middle"
-                    >circle</span
-                  >
-                  Live
-                </p>
-                <h3 class="font-bold text-lg font-serif text-brand-blue mt-1">
-                  F1: Dutch Grand Prix updates - live
-                </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
-              </div>
-            </div>
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                alt="A man in a hard hat and safety vest"
-                class="w-full h-40 object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVmwukSqzPRODFGNHXT84L4LZXrWAxql6UQiaSLvmpzChjusvh_uKbf-66B0fXGJOvQ-ebnCxgS8wVQsy243zLTDROD4w4VPTLbu3r18ugebTASY0hbZLUDVB0ubd5i51-d7JJlGXNkn23_KQtddnSd3Xhq4W1Adq1_nmuPqWPNX2S68VO1X0rNTVl1lLYYgan5a6zWV_Wz6X0r--uhRuDA2FlAUO6joreem0PvA7cHWZosBaxsGUjmNh5Dukwd0eD0cfK8KOTb-Pn"
-              />
-              <div class="p-4">
-                <h3 class="font-bold text-lg font-serif text-brand-blue mt-1">
-                  'I'm holding his political wake': the trumpeter waiting to
-                  mark Bolsonaro's judgment day
-                </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
-              </div>
-            </div>
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                alt="A person holding a smartphone and a blue folder"
-                class="w-full h-40 object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3CgymIaPAF4a9uyw1bOlvQgyEnfHgHl3lD1WAIOhxfDlymWzBIvB6BcO_192uTalG85SEV8hGwS_fOAFgRqkycZcROX67TPxgEy7zr2FO4FoACpjnxHeHqZrA20LZtUoDYjI-B5QxYtZHvEzGQ8sfoZrKTOn47RQO9VHDh7uCK7C0ToX63MMJAJ1nH4XxUKxQUjZKHvhSe1dqQCEraixmH4tmArWzMBlpH8EZ4c94PZnXYfv-3Xa_hkexyqVObJXukcZafyAaA8uW"
-              />
-              <div class="p-4">
-                <h3 class="font-bold text-lg font-serif text-brand-blue mt-1">
-                  Trial of tech that could be used to keep Australian under-16s
-                  off social media finds some errors 'inevitable'
-                </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
-              </div>
-            </div>
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                alt="A woman in a sports jersey celebrating at a stadium"
-                class="w-full h-40 object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmUIKvzcg_9VT9WoU5MwM9K8Y3kFs2xCJJUia97r-psjy1YDXS3_vX4D4pQB7IlgC9G4VNc7Z7FudAGQ5v9pg8l4l1JR8IAQG0h4emzfwyMp28TvVdsSblrUgvSa2aegAgPfZIb6fJn4DUlGEbAZQTojDeYT_4ogpUeAbqCPOJMG-t_ZyPRTDy8_ROeDpVvd8EBcuz2U4nCI7Ym2ngCIZZnBKm4eUWXEJjWdPbYxE5-UDoXSYhkRju84oYf7M71e9GsXqwKBvOgAPt"
-              />
-              <div class="p-4">
-                <h3 class="font-bold text-lg font-serif text-brand-blue mt-1">
-                  Jess Breach hails 'phenomenal' feeling as she eyes 50th
-                  England cap against Australia
-                </h3>
-                <p class="text-gray-500 text-xs mt-4">08.00 EDT</p>
-              </div>
-            </div>
-          </div>
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6"
+        <div class="flex items-center gap-3">
+          <svg
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <div>
-              <h4 class="font-bold text-brand-blue font-serif">
-                Greta Thunberg: aid flotilla 'even stronger' as dozens of boats
-                to head for Gaza - video
-              </h4>
-              <div class="text-xs text-gray-500 mt-2 flex items-center">
-                <span class="material-icons text-red-600 mr-1"
-                  >play_circle_filled</span
-                >
-                Video
-                <span class="material-icons text-gray-400 mx-1">bar_chart</span>
-                194
-              </div>
-            </div>
-            <div>
-              <h4 class="font-bold text-brand-blue font-serif">
-                <span class="text-red-600 font-bold">● Ukraine war live </span
-                >Vladimir Putin arrives in China for security summit - Ukraine
-                war live
-              </h4>
-            </div>
-            <div>
-              <h4 class="font-bold text-brand-blue font-serif">
-                Israeli airstrikes and gunfire have killed 18 around Gaza City,
-                local officials say
-              </h4>
-            </div>
-            <div>
-              <h4 class="font-bold text-brand-blue font-serif">
-                British baby dies from whooping cough as vaccination rates fall
-              </h4>
-            </div>
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+              fill="currentColor"
+            ></path>
+            <path
+              d="M12 12L5.64 5.64"
+              stroke="currentColor"
+              stroke-width="2"
+            ></path>
+          </svg>
+          <h2 class="text-xl font-bold">Paper Route News</h2>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm">
+          <a
+            class="hover:text-[var(--primary-color)] transition-colors"
+            href="#"
+            >Home</a
+          >
+          <a
+            class="hover:text-[var(--primary-color)] transition-colors"
+            href="#"
+            >Explore</a
+          >
+          <a
+            class="hover:text-[var(--primary-color)] transition-colors"
+            href="#"
+            >Notifications</a
+          >
+          <a
+            class="hover:text-[var(--primary-color)] transition-colors"
+            href="#"
+            >Messages</a
+          >
+        </nav>
+        <div class="flex items-center gap-4">
+          <button
+            class="flex items-center justify-center rounded-full h-10 w-10 bg-white/10 hover:bg-white/20 transition-colors"
+          >
+            <span class="material-symbols-outlined text-white"> add </span>
+          </button>
+          <div
+            class="size-10 rounded-full bg-cover bg-center"
+            style="
+              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD51UfM30YGUAFKlblF-UJqc8Lbnf_Maiaud-57_x1J8gBKewI63Bf5dZD3JFnBwzk9gDRPjScfEakK7OjklqgYjrLfOD1uFCvBfAzv8rj_41XQfMWjYeCepwYor4HFWGkgbTp83mJT6zYqT3mE-PxY9uv5qtnvf3Bj0uVSNTcflojVbS-A7EdLbQY0xLR5VzEZKrAk1Yy6qmMBSnztgnDOrRoqCz26dZ0OEbaAubkyc3d9DdClp9_rIdagoe6s-lwUom3CTBl63v30');
+            "
+          ></div>
+        </div>
+      </header>
+      <main
+        class="flex flex-1 flex-col items-center justify-center text-center px-4"
+      >
+        <div
+          class="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"
+        ></div>
+        <div class="relative z-10 max-w-3xl">
+          <h1
+            class="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400"
+          >
+            Welcome to Paper Route News
+          </h1>
+          <p class="mt-6 text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto">
+            A decentralized social news platform where truth is rewarded, and
+            you own your data and content. Fight misinformation with a system
+            that rewards truth, transparency, and community verification.
+          </p>
+          <div class="mt-10">
+            <button
+              class="bg-[var(--primary-color)] hover:bg-red-700 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-[var(--primary-color)]/20 transform hover:scale-105"
+            >
+              Get Started
+            </button>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   </body>
 </html>

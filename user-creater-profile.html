@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Spline+Sans%3Awght%40400%3B500%3B700"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <title>Stitch Design</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+      :root {
+        --primary-color: #ea2a33;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#141414] text-white dark group/design-root"
+      style="font-family: 'Spline Sans', 'Noto Sans', sans-serif"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#262626] px-10 py-4"
+        >
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3 text-white">
+              <svg
+                class="h-8 w-8 text-[var(--primary-color)]"
+                fill="none"
+                viewBox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_6_319)">
+                  <path
+                    d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                    fill="currentColor"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_6_319">
+                    <rect fill="white" height="48" width="48"></rect>
+                  </clipPath>
+                </defs>
+              </svg>
+              <h1
+                class="text-white text-xl font-bold leading-tight tracking-[-0.015em]"
+              >
+                Paper Route News
+              </h1>
+            </div>
+            <nav class="flex items-center gap-8">
+              <a
+                class="text-gray-300 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="#"
+                >Home</a
+              >
+              <a
+                class="text-gray-300 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="#"
+                >Explore</a
+              >
+              <a
+                class="text-gray-300 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="#"
+                >Create</a
+              >
+            </nav>
+          </div>
+          <div class="flex flex-1 items-center justify-end gap-4">
+            <label class="flex w-full max-w-xs flex-col">
+              <div class="flex w-full flex-1 items-stretch rounded-full">
+                <div
+                  class="text-gray-400 flex border-none bg-[#262626] items-center justify-center pl-4 rounded-l-full border-r-0"
+                  data-icon="MagnifyingGlass"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20px"
+                    viewBox="0 0 256 256"
+                    width="20px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-full text-white placeholder:text-gray-400 focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] border-none bg-[#262626] h-10 px-4 text-sm font-normal leading-normal"
+                  placeholder="Search"
+                  value=""
+                />
+              </div>
+            </label>
+            <button
+              class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#262626] text-gray-300 hover:bg-[#333] hover:text-white transition-colors"
+            >
+              <span class="material-symbols-outlined text-2xl">
+                notifications
+              </span>
+            </button>
+            <button>
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAe3VE7rAv3kWuhlSFkALDJdeeRR9WKD68V00DVxvnux9mGoAmsrBXFFfM9cEGaQlmMEE-DKuJ-n_ynDxVrwjJGr7tAf_6QO9QI_ke9RhslKKxpCt3i4bcQVwabJg6mVW5NTUJ8R4qgEifOJAL0F8sDtLGFERuuwMvHplSee2Hi3ofrrNJoHbvxcFmVIgSiERdaXE2_ox8SEcyEuq8KyU1hWjTM8QSWptgOIctDTI_u_bhOxXzA94v8tSo4z-7lP23SZK6nFjp6abay');
+                "
+              ></div>
+            </button>
+          </div>
+        </header>
+        <main class="px-40 flex flex-1 justify-center py-10">
+          <div
+            class="layout-content-container flex flex-col max-w-[960px] flex-1"
+          >
+            <div class="rounded-2xl bg-[#1a1a1a] p-8 @container">
+              <div
+                class="flex w-full flex-col gap-6 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center"
+              >
+                <div class="flex items-center gap-6">
+                  <div
+                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 shrink-0"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRflt7cedET75Q_VcJln0p1EUS6G7ApfkHeVttGvece3xow1A3yzUvuHAKc64JX6bIwf1EPQ5aD7uR-ybNValU89C1b6Rv3MKKG_HRokpsh28532Xp9CQpdw1shhGK6IOBSliGUBE-WetirNlveyW4jdmlyVGcmPDJByhfiugK1vnhX_HQWjgp9XySbnrtOdWd687ldMx0PjW--lp1BE9Isf4vyK__BYVF9WawFXyxxpw0_uHwlHEKLHHbr6QgjaJAwqPlVn9MfPF-');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center gap-1">
+                    <h2
+                      class="text-white text-3xl font-bold leading-tight tracking-tight"
+                    >
+                      Sophia Carter
+                    </h2>
+                    <p
+                      class="text-gray-400 text-base font-normal leading-normal"
+                    >
+                      <span class="font-semibold text-gray-300">DID:</span>
+                      0x4a7b...c8f2
+                    </p>
+                    <div class="flex items-center gap-2 mt-2">
+                      <p class="text-white text-lg font-bold leading-normal">
+                        Trust Score: 92
+                      </p>
+                      <div class="w-24 h-2 bg-gray-700 rounded-full">
+                        <div
+                          class="h-2 bg-[var(--primary-color)] rounded-full"
+                          style="width: 92%"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-[var(--primary-color)] text-white text-sm font-bold leading-normal tracking-wide hover:bg-red-700 transition-colors w-full @[480px]:w-auto"
+                >
+                  <span class="truncate">Follow</span>
+                </button>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="flex border-b border-[#262626] px-4 gap-8">
+                <a
+                  class="flex flex-col items-center justify-center border-b-[3px] border-b-[var(--primary-color)] text-white pb-3 pt-2"
+                  href="#"
+                >
+                  <p class="text-white text-base font-semibold leading-normal">
+                    Posts
+                  </p>
+                </a>
+                <a
+                  class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-gray-400 hover:text-white hover:border-gray-400 transition-colors pb-3 pt-2"
+                  href="#"
+                >
+                  <p class="text-base font-semibold leading-normal">
+                    Verifications
+                  </p>
+                </a>
+                <a
+                  class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-gray-400 hover:text-white hover:border-gray-400 transition-colors pb-3 pt-2"
+                  href="#"
+                >
+                  <p class="text-base font-semibold leading-normal">
+                    Challenges
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 divide-y divide-[#262626]">
+              <article
+                class="p-6 hover:bg-[#1a1a1a] transition-colors duration-200"
+              >
+                <div class="flex items-start justify-between gap-6">
+                  <div class="flex flex-col gap-2 flex-1">
+                    <p class="text-gray-400 text-sm font-normal leading-normal">
+                      2d ago
+                    </p>
+                    <h3 class="text-white text-lg font-bold leading-tight">
+                      Local Bookstore Hosts Author Event
+                    </h3>
+                    <p
+                      class="text-gray-300 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      The beloved independent bookstore, 'Book Nook', hosted a
+                      successful author event last night, featuring local
+                      writer, Amelia Hayes. The event drew a large crowd of book
+                      enthusiasts, eager to hear Hayes discuss her new novel,
+                      'Whispers of the Past'.
+                    </p>
+                  </div>
+                  <div
+                    class="w-48 h-32 bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-shrink-0"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3UI_ixv9OExDEg2kGzDloxcDJT3Sn08AHo7UEBQzgcO0ibYYtyzT-weuny7slamECYpLYaFRlZWieVwU2C4KDcmCKhQ0MvBPaxQRdzQS3tes3LrCzFaXPJ2X2LEU-gCFxreWqZzIQaF2jnxfYmAJhySPuTTajmFF9CWvuAH-3xrABRp3mk6VNMBEu4mAlaXyaCqclMASrO48DESaWUd3j3-LgxcBtlIbUhuFqRnsW3v5RdFIuC3av1jFwFvIcPQY5F4F8r9G2-Esx');
+                    "
+                  ></div>
+                </div>
+              </article>
+              <article
+                class="p-6 hover:bg-[#1a1a1a] transition-colors duration-200"
+              >
+                <div class="flex items-start justify-between gap-6">
+                  <div class="flex flex-col gap-2 flex-1">
+                    <p class="text-gray-400 text-sm font-normal leading-normal">
+                      1w ago
+                    </p>
+                    <h3 class="text-white text-lg font-bold leading-tight">
+                      Community Garden Thrives Despite Drought
+                    </h3>
+                    <p
+                      class="text-gray-300 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Despite the ongoing drought, the community garden at
+                      Willow Creek Park is thriving, thanks to the dedication of
+                      local volunteers. The garden, which provides fresh produce
+                      to the community, has implemented water-saving techniques
+                      and continues to yield a variety of vegetables and herbs.
+                    </p>
+                  </div>
+                  <div
+                    class="w-48 h-32 bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-shrink-0"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGpNXkCRQXNkzkUYIt-CZGkcvQFt7_buVHPkarsW1vj0vm4kZ_DeTg-ElElvnRT4n0-m999T1OrYXAAHNZME7Xt_uloTw_P-_BQGHVdldMGNRLqupJ1TtCbGNXMeW_mMIBDFA43htZTloqvm9TkCYUMKBzQ7IxxrLb5kg4A4PfQJlZQP5g4ZR7ZJEAy3SRAEIakTs648Bt59PxpteD_N0IEgBj4p5TINkCCyKIrlPgRyENRBeeV45xQbYL0QrbdDhAyNBGcwC4Y2t-');
+                    "
+                  ></div>
+                </div>
+              </article>
+              <article
+                class="p-6 hover:bg-[#1a1a1a] transition-colors duration-200"
+              >
+                <div class="flex items-start justify-between gap-6">
+                  <div class="flex flex-col gap-2 flex-1">
+                    <p class="text-gray-400 text-sm font-normal leading-normal">
+                      2w ago
+                    </p>
+                    <h3 class="text-white text-lg font-bold leading-tight">
+                      New Bike Lane Opens Along Main Street
+                    </h3>
+                    <p
+                      class="text-gray-300 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      A new bike lane has officially opened along Main Street,
+                      enhancing safety and accessibility for cyclists. The
+                      project, which was completed ahead of schedule, includes
+                      clearly marked lanes and improved traffic signals to
+                      accommodate both cyclists and drivers.
+                    </p>
+                  </div>
+                  <div
+                    class="w-48 h-32 bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-shrink-0"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCJWrfHSB3ZFzgGatTiLcp6SLJhITX_J2tosnZBLDUxGy3j-Qs1ocBNQosxZNzFUBMkc81aLt7A7G2oE-r1cgtdEgEWoSZLp1kAF4cwSS6I3RN6gk3ki-o4nzeNHIZy-GCGkJM_PlGGkGqJt71UdaD1cNYhT0Gr0cr3paA3H-ZdnYNQr_1t6dGULQ1655Wsa3SBLZHibI-id2ZK67vXfFpX6dgwglE_S2s1EaKNS8I9B8eF-6WektFToaqo5cn0PnOUwrEvhn5Q0NbE');
+                    "
+                  ></div>
+                </div>
+              </article>
+              <article
+                class="p-6 hover:bg-[#1a1a1a] transition-colors duration-200"
+              >
+                <div class="flex items-start justify-between gap-6">
+                  <div class="flex flex-col gap-2 flex-1">
+                    <p class="text-gray-400 text-sm font-normal leading-normal">
+                      3w ago
+                    </p>
+                    <h3 class="text-white text-lg font-bold leading-tight">
+                      Local Artist Unveils Public Mural
+                    </h3>
+                    <p
+                      class="text-gray-300 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Local artist, Ethan Blake, unveiled a vibrant new mural on
+                      the side of the community center, celebrating the town's
+                      history and diversity. The mural, titled 'Harmony in
+                      Colors', has quickly become a popular spot for residents
+                      and visitors alike.
+                    </p>
+                  </div>
+                  <div
+                    class="w-48 h-32 bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-shrink-0"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAIXZWPT8o49fIrMstYezljzBjDNa63WCi_k2JpR92OYdY-RrSobqbmvxC8OrwzRH62_DmC_3UlndPH7JC73f_XCA34DNnOhwvYgA5NMH0LqoO4QbScscHtlrDz6ZRa3FwYMsL7e8RN3ZECcjjeX0t2BHgzrO7IpWz_DqfTnOG77vd02rVajSw89ks_hQBt9V6r1WalpXAsJzqA81EfPO879iIOtHuSwjkl9g05J9Bq-MHyxhy2SThtuvoTI8ZdC0Jqay0ekvR_YbpE');
+                    "
+                  ></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
