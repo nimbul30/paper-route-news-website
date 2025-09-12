@@ -24,72 +24,13 @@
       }
     </style>
   </head>
-  <body class="bg-[#141414] text-white">
+  <body
+    class="text-black"
+    style="background-image: url('assets/background.png')"
+  >
     <div
       class="relative flex size-full min-h-screen flex-col overflow-x-hidden"
     >
-      <header
-        class="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-10 py-5"
-      >
-        <a class="flex items-center gap-3" href="home.html">
-          <svg
-            fill="none"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
-              fill="currentColor"
-            ></path>
-            <path
-              d="M12 12L5.64 5.64"
-              stroke="currentColor"
-              stroke-width="2"
-            ></path>
-          </svg>
-          <h2 class="text-xl font-bold">Paper Route News</h2>
-        </a>
-        <nav class="hidden md:flex items-center gap-8 text-sm">
-          <a
-            class="hover:text-[var(--primary-color)] transition-colors"
-            href="home.html"
-            >Home</a
-          >
-          <a
-            class="hover:text-[var(--primary-color)] transition-colors"
-            href="feed.html"
-            >Explore</a
-          >
-          <a
-            class="hover:text-[var(--primary-color)] transition-colors"
-            href="#"
-            >Notifications</a
-          >
-          <a
-            class="hover:text-[var(--primary-color)] transition-colors"
-            href="#"
-            >Messages</a
-          >
-        </nav>
-        <div class="flex items-center gap-4">
-          <a
-            class="flex items-center justify-center rounded-full h-10 w-10 bg-white/10 hover:bg-white/20 transition-colors"
-            href="post.html"
-          >
-            <span class="material-symbols-outlined text-white"> add </span>
-          </a>
-          <a href="user-creater-profile.html">
-            <div
-              class="size-10 rounded-full bg-cover bg-center"
-              style="
-                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD51UfM30YGUAFKlblF-UJqc8Lbnf_Maiaud-57_x1J8gBKewI63Bf5dZD3JFnBwzk9gDRPjScfEakK7OjklqgYjrLfOD1uFCvBfAzv8rj_41XQfMWjYeCepwYor4HFWGkgbTp83mJT6zYqT3mE-PxY9uv5qtnvf3Bj0uVSNTcflojVbS-A7EdLbQY0xLR5VzEZKrAk1Yy6qmMBSnztgnDOrRoqCz26dZ0OEbaAubkyc3d9DdClp9_rIdagoe6s-lwUom3CTBl63v30');
-              "
-            ></div>
-          </a>
-        </div>
-      </header>
       <main
         class="flex flex-1 flex-col items-center justify-center text-center px-4"
       >
@@ -97,27 +38,29 @@
           class="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"
         ></div>
         <div class="relative z-10 max-w-3xl">
-          <h1
-            class="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400"
-          >
-            Welcome to Paper Route News
+          <h1 class="text-5xl font-bold tracking-tighter text-black">
+            Welcome to:
+            <img src="assets/Route Final Logo.png" class="inline-block h-25" />
           </h1>
-          <p class="mt-6 text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto">
-            A decentralized social news platform where truth is rewarded, and
-            you own your data and content. Fight misinformation with a system
-            that rewards truth, transparency, and community verification.
+          <p class="text-lg md:text-xl max-w-2xl mx-auto text-black">
+            The entire media world runs on one thing: your attention. It's an
+            <b>attention economy.</b> We value your attention and will bring you
+            a curated feed of news you won't find on the mainstream hype
+            newsfeed.
           </p>
           <div class="mt-10">
             <a
               href="feed.html"
               class="bg-[var(--primary-color)] hover:bg-red-700 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-[var(--primary-color)]/20 transform hover:scale-105"
             >
-              Get Started
+              The News
             </a>
           </div>
           <div class="mt-16">
-            <h2 class="text-2xl font-bold tracking-tighter">Stay in the Loop</h2>
-            <p class="mt-2 text-neutral-400">
+            <h2 class="text-2xl font-bold tracking-tighter">
+              Stay in the Loop
+            </h2>
+            <p class="mt-2 text-black">
               Subscribe to our newsletter to get the latest news and updates.
             </p>
             <form class="mt-6 flex justify-center" action="#" method="post">
