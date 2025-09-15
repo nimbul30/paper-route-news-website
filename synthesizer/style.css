@@ -1,4 +1,6 @@
-/* Custom styles for the News Synthesizer app can be added here. */
+/* synthesizer/style.css */
+
+/* Define primary color variable */
 :root {
-  --primary-color: #ea2a33;
+  --primary-color: #ef4444; /* Tailwind's red-500, or your preferred primary color */
 }

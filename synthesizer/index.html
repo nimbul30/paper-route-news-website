@@ -56,7 +56,66 @@
               Aggregated and summarized news from multiple perspectives.
             </p>
           </div>
-          <div id="synthesized-news-container" class="space-y-6"></div>
+
+          <div class="mb-8">
+            <form id="search-form" class="flex gap-2">
+              <input
+                type="search"
+                id="search-input"
+                placeholder="Search for a topic (e.g., 'artificial intelligence')"
+                class="form-input flex-grow rounded-full border-none bg-[#262626] px-4 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[var(--primary-color)]"
+              />
+              <button
+                type="submit"
+                class="bg-[var(--primary-color)] hover:bg-red-700 transition-colors text-white font-bold py-2 px-4 rounded-full"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+
+          <div class="mb-8 flex items-center gap-4">
+            <label for="facts-toggle" class="text-gray-300 font-medium"
+              >"Just the Facts" Mode:</label
+            >
+            <button
+              id="facts-toggle-btn"
+              type="button"
+              class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2 focus:ring-offset-gray-800"
+              role="switch"
+              aria-checked="false"
+            >
+              <span
+                class="pointer-events-none inline-block h-5 w-5 translate-x-0 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+              ></span>
+            </button>
+          </div>
+
+          <div
+            id="api-key-section"
+            class="hidden text-center bg-[#1a1a1a] p-8 rounded-lg"
+          >
+            <h3 class="text-xl font-bold">API Key Required</h3>
+            <p class="text-gray-400 mt-2 mb-4">
+              Please provide your NewsAPI.org key to fetch live articles.
+            </p>
+            <div class="flex justify-center gap-4">
+              <button
+                id="set-api-key-btn"
+                class="bg-[var(--primary-color)] hover:bg-red-700 transition-colors text-white font-bold py-2 px-4 rounded-full"
+              >
+                Set API Key
+              </button>
+              <button
+                id="clear-api-key-btn"
+                class="bg-gray-600 hover:bg-gray-700 transition-colors text-white font-bold py-2 px-4 rounded-full"
+              >
+                Clear Stored Key
+              </button>
+            </div>
+          </div>
+
+          <div id="synthesized-news-container"></div>
         </div>
       </main>
     </div>
