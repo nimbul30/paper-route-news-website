@@ -39,42 +39,97 @@
         ></div>
         <div class="relative z-10 max-w-3xl">
           <img src="assets/Route Final Logo.png" class="inline-block h-25" />
-          </h1>
-          <div class=>
+
+          <div>
             <h2 class="text-2xl font-bold tracking-tighter">
-              Stay in the Loop
+              Sign-up for the Beta Release!
             </h2>
-            <p class="mt-2 text-black">
-              Subscribe to our newsletter to get the latest news and updates.
-            </p>
-            <form class="mt-6 flex justify-center" action="#" method="post">
+
               <input
                 type="email"
+                name="Email"
                 placeholder="Enter your email"
                 class="form-input w-full max-w-sm rounded-l-full border-none bg-gray-800 py-3 px-6 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[var(--primary-color)]"
+                required
               />
               <button
                 type="submit"
+                id="submit-button"
                 class="rounded-r-full bg-[var(--primary-color)] px-6 py-3 font-bold text-white hover:bg-red-700"
               >
-                Subscribe
+                Beta Sign-up!
               </button>
             </form>
+            <p id="form-message" class="mt-4 text-black font-semibold"></p>
           </div>
-          <div class="mt-10">
+
+          <!--   <div class="mt-10">
             <a
               href="feed.html"
               class="bg-[var(--primary-color)] hover:bg-red-700 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-[var(--primary-color)]/20 transform hover:scale-105 mb-10"
             >
               Click Here for the News
             </a>
-             <a
+            <a
               href="synthesizer/index.html"
               class="bg-blue-600 hover:bg-blue-800 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-blue-500/20 transform hover:scale-105"
             >
               Go to News Synthesizer
             </a>
+          </div> -->
+        </div>
       </main>
     </div>
+
+    <script>
+      const form = document.getElementById('subscribe-form');
+      const messageEl = document.getElementById('form-message');
+      const submitButton = document.getElementById('submit-button');
+
+      // PASTE YOUR NEW SheetDB API ENDPOINT URL HERE
+      const sheetDB_URL = 'https://sheetdb.io/api/v1/b4gh6wqd3mkyl';
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitButton.disabled = true;
+        messageEl.textContent = 'Subscribing...';
+
+        // Get the email value from the form
+        const userEmail = form.elements['Email'].value;
+
+        // Prepare the data in the format SheetDB expects
+        const data = {
+          Timestamp: new Date().toISOString(),
+          Email: userEmail,
+        };
+
+        fetch(sheetDB_URL, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ data: [data] }), // Note the structure: { data: [ { ... } ] }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // SheetDB returns { "created": 1 } on success
+            if (data.created) {
+              messageEl.textContent = 'Thank you for subscribing!';
+              form.reset();
+            } else {
+              // If there was an error, display it
+              throw new Error(data.error || 'An unknown error occurred.');
+            }
+          })
+          .catch((error) => {
+            console.error('Error!', error);
+            messageEl.textContent = 'Something went wrong. Please try again.';
+          })
+          .finally(() => {
+            submitButton.disabled = false;
+          });
+      });
+    </script>
   </body>
 </html>
