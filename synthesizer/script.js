@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const factsToggleBtn = document.getElementById('facts-toggle-btn');
   const apiKeySection = document.getElementById('api-key-section');
   const setApiKeyBtn = document.getElementById('set-api-key-btn');
-  const clearApiKeyBtn = document.getElementById('clear-api-key-btn');
-  const searchForm = document.getElementById('search-form');
-  const searchInput = document.getElementById('search-input');
 
   let allArticles = [];
   let factsOnlyMode = false;
@@ -13,13 +10,27 @@ document.addEventListener('DOMContentLoaded', function () {
   const curatedKeywords = [
     'independent journalism',
     'scientific breakthrough',
-    'local corruption report',
+    'local corruption',
     'environmental disaster',
     'human rights report',
-    'labor union action',
+    'labor union',
     'protest movement',
-    'unsolved mysteries',
     'technological ethics',
+  ];
+
+  const excludedDomains = [
+    'cnn.com',
+    'foxnews.com',
+    'msnbc.com',
+    'nytimes.com',
+    'washingtonpost.com',
+    'theguardian.com',
+    'wsj.com',
+    'usatoday.com',
+    'politico.com',
+    'huffpost.com',
+    'buzzfeed.com',
+    'dailymail.co.uk',
   ];
 
   const factSources = [
@@ -31,32 +42,15 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   const sourceBiasRatings = {
-    'the-washington-post': { bias: 'Left', name: 'WaPo' },
-    cnn: { bias: 'Left', name: 'CNN' },
-    msnbc: { bias: 'Left', name: 'MSNBC' },
-    'nbc-news': { bias: 'Left', name: 'NBC' },
-    'cbs-news': { bias: 'Left', name: 'CBS' },
-    'abc-news': { bias: 'Left', name: 'ABC' },
     'associated-press': { bias: 'Center', name: 'AP' },
     reuters: { bias: 'Center', name: 'Reuters' },
     'the-hill': { bias: 'Center', name: 'The Hill' },
     'bbc-news': { bias: 'Center', name: 'BBC' },
     axios: { bias: 'Center', name: 'Axios' },
-    'fox-news': { bias: 'Right', name: 'Fox News' },
-    'the-wall-street-journal': { bias: 'Right', name: 'WSJ' },
-    'breitbart-news': { bias: 'Right', name: 'Breitbart' },
-    'the-washington-times': { bias: 'Right', name: 'Wash. Times' },
   };
 
   function getApiKey() {
     return localStorage.getItem('newsApiKey');
-  }
-
-  function clearApiKey() {
-    localStorage.removeItem('newsApiKey');
-    console.log('Stored API Key cleared.');
-    apiKeySection.classList.remove('hidden');
-    newsContainer.innerHTML = '';
   }
 
   function promptAndSetApiKey() {
@@ -64,50 +58,18 @@ document.addEventListener('DOMContentLoaded', function () {
     if (apiKey) {
       localStorage.setItem('newsApiKey', apiKey);
       apiKeySection.classList.add('hidden');
-      fetchCuratedNews();
+      initializeFeed();
     }
   }
 
-  function renderLoading(message = 'Fetching and analyzing live news...') {
+  function renderLoading(message = 'Searching for underreported news...') {
     if (!newsContainer) return;
     newsContainer.innerHTML = `<p class="text-gray-400">${message}</p>`;
   }
 
-  function renderError(
-    message = 'Could not retrieve articles. Please check your API key or search term.'
-  ) {
+  function renderError(message = 'Could not retrieve articles.') {
     if (!newsContainer) return;
     newsContainer.innerHTML = `<div class="bg-red-900/50 border border-red-700 text-red-300 p-4 rounded-lg"><h3 class="font-bold">Failed to Fetch News</h3><p>${message}</p></div>`;
-  }
-
-  function groupArticlesByTopic(articles) {
-    const topics = {
-      Tech: ['ai', 'apple', 'google', 'microsoft', 'tech', 'crypto'],
-      Business: [
-        'economy',
-        'market',
-        'stocks',
-        'inflation',
-        'business',
-        'finance',
-      ],
-      Health: ['health', 'covid', 'fda', 'medical', 'disease'],
-      Politics: ['white house', 'congress', 'senate', 'biden', 'trump'],
-    };
-    const grouped = {};
-    articles.forEach((article) => {
-      const title = article.title.toLowerCase();
-      let foundTopic = 'General News';
-      for (const topic in topics) {
-        if (topics[topic].some((keyword) => title.includes(keyword))) {
-          foundTopic = topic;
-          break;
-        }
-      }
-      if (!grouped[foundTopic]) grouped[foundTopic] = [];
-      grouped[foundTopic].push(article);
-    });
-    return grouped;
   }
 
   function getBiasDisplayForSource(sourceId) {
@@ -143,72 +105,34 @@ document.addEventListener('DOMContentLoaded', function () {
     return articleElement;
   }
 
-  function createTopicSection(topic, articles) {
-    const section = document.createElement('section');
-    section.className = 'topic-group mb-8';
-    const topicTitle = document.createElement('h2');
-    topicTitle.className =
-      'text-2xl font-bold border-b border-[#262626] pb-2 mb-4';
-    topicTitle.textContent = topic;
-    section.appendChild(topicTitle);
-    articles.forEach((article) => {
-      section.appendChild(createArticleElement(article));
-    });
-    return section;
-  }
-  // ... inside synthesizer/script.js ...
-
-  async function fetchCuratedNews() {
-    // The new URL for your scraper running on GCP
-    const url = `34.26.64.23`;
-
-    const articles = await fetchApiData(
-      url,
-      'Fetching news from custom scraper...'
-    );
-
-    if (articles) {
-      allArticles = articles;
-      renderNews(allArticles);
-    } // ... rest of the function ...
-  }
-
   function renderNews(articlesToRender) {
     if (!newsContainer) return;
-    const groupedArticles = groupArticlesByTopic(articlesToRender);
     newsContainer.innerHTML = '';
-    if (Object.keys(groupedArticles).length === 0) {
+    if (!articlesToRender || articlesToRender.length === 0) {
       newsContainer.innerHTML =
-        '<p class="text-gray-400">No articles found for this topic.</p>';
+        '<p class="text-gray-400">No articles found matching the criteria.</p>';
       return;
     }
-    const orderedTopics = [
-      'Politics',
-      'Business',
-      'Tech',
-      'Health',
-      'General News',
-    ];
-    orderedTopics.forEach((topic) => {
-      if (groupedArticles[topic]) {
-        const section = createTopicSection(topic, groupedArticles[topic]);
-        newsContainer.appendChild(section);
-      }
+    articlesToRender.forEach((article) => {
+      newsContainer.appendChild(createArticleElement(article));
     });
   }
 
-  async function fetchApiData(url, loadingMessage) {
+  async function fetchCuratedNews() {
     const apiKey = getApiKey();
     if (!apiKey) {
       apiKeySection.classList.remove('hidden');
       return null;
     }
-    renderLoading(loadingMessage);
 
-    // *** DEBUGGING STEP ***
-    console.log('Requesting URL:', url);
-    // **********************
+    const randomKeyword =
+      curatedKeywords[Math.floor(Math.random() * curatedKeywords.length)];
+    const domainsToExclude = excludedDomains.join(',');
+    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(
+      randomKeyword
+    )}&excludeDomains=${domainsToExclude}&sortBy=publishedAt&apiKey=${apiKey}`;
 
+    renderLoading(`Searching for news about "${randomKeyword}"...`);
     try {
       const response = await fetch(url);
       if (!response.ok)
@@ -223,58 +147,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  async function fetchSearchNews(query) {
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(
-      query
-    )}&sortBy=relevancy&apiKey=${getApiKey()}`;
-    const articles = await fetchApiData(
-      url,
-      `Searching for articles about '${query}'...`
-    );
-    if (articles) {
-      renderNews(articles);
-    }
-  }
-
-  async function fetchFactNews() {
-    const sourcesQuery = factSources.join(',');
-    const url = `https://newsapi.org/v2/everything?sources=${sourcesQuery}&apiKey=${getApiKey()}`;
-    const articles = await fetchApiData(url, 'Fetching fact-based articles...');
-    if (articles) {
-      renderNews(articles);
-    }
-  }
-
-  async function fetchCuratedNews() {
-    const randomKeyword =
-      curatedKeywords[Math.floor(Math.random() * curatedKeywords.length)];
-
-    // MODIFIED: Temporarily removed the excludeDomains parameter for debugging
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(
-      randomKeyword
-    )}&sortBy=publishedAt&apiKey=${getApiKey()}`;
-
-    const articles = await fetchApiData(
-      url,
-      `Searching for underreported news about "${randomKeyword}"...`
-    );
-
+  async function initializeFeed() {
+    const articles = await fetchCuratedNews();
     if (articles) {
       allArticles = articles;
       renderNews(allArticles);
-    } else if (articles === null && !getApiKey()) {
-      apiKeySection.classList.remove('hidden');
-      newsContainer.innerHTML = '';
-    } else if (articles && articles.length === 0) {
-      renderNews([]);
-    }
-  }
-
-  function handleSearch(event) {
-    event.preventDefault();
-    const query = searchInput.value.trim();
-    if (query) {
-      fetchSearchNews(query);
     }
   }
 
@@ -288,7 +165,10 @@ document.addEventListener('DOMContentLoaded', function () {
         'bg-[var(--primary-color)]'
       );
       span.classList.add('translate-x-5');
-      fetchFactNews();
+      const filteredArticles = allArticles.filter((a) =>
+        factSources.includes(a.source.id)
+      );
+      renderNews(filteredArticles);
     } else {
       factsToggleBtn.classList.replace(
         'bg-[var(--primary-color)]',
@@ -300,10 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Initial setup
-  factsToggleBtn.addEventListener('click', toggleFactsMode);
   setApiKeyBtn.addEventListener('click', promptAndSetApiKey);
-  clearApiKeyBtn.addEventListener('click', clearApiKey);
-  searchForm.addEventListener('submit', handleSearch);
-
-  fetchCuratedNews();
+  factsToggleBtn.addEventListener('click', toggleFactsMode);
+  initializeFeed();
 });
