@@ -1,131 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Paper Route News</title>
-    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paper Route News - Your Daily Briefing</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <style type="text/tailwindcss">
-      :root {
-        --primary-color: #ea2a33;
-      }
-      body {
-        font-family: 'Spline Sans', sans-serif;
-      }
-    </style>
   </head>
-  <body
-    class="text-black"
-    style="background-image: url('assets/background.png')"
-  >
-    <div
-      class="relative flex size-full min-h-screen flex-col overflow-x-hidden"
-    >
-      <main
-        class="flex flex-1 flex-col items-center justify-center text-center px-4"
-      >
-        <div
-          class="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"
-        ></div>
-        <div class="relative z-10 max-w-3xl">
-          <img src="assets/Route Final Logo.png" class="inline-block h-25" />
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+        <div class="logo">
+          <img
+            src="assets\Paper Route News Logo.png"
+            alt="Paper Route News Logo"
+          />
+          <span>PAPER ROUTE NEWS</span>
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#" class="active">HOME</a></li>
+            <li><a href="#">LOCAL</a></li>
+            <li><a href="#">NATIONAL</a></li>
+            <li><a href="#">OPINION</a></li>
+            <li><a href="#">SPORTS</a></li>
+          </ul>
+        </nav>
+        <a href="#" class="button subscribe-button">SUBSCRIBE</a>
+      </header>
 
-          <div class="mt-6 flex justify-center">
-            <form class="flex w-full max-w-md" id="subscribe-form">
-              <input
-                type="email"
-                name="Email"
-                placeholder="Enter your email"
-                class="form-input grow rounded-l-full border-none bg-gray-800 py-3 px-6 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
-                required
-              />
-              <button
-                type="submit"
-                id="submit-button"
-                class="flex-shrink-0 rounded-r-full bg-[var(--primary-color)] px-6 py-3 font-bold text-white hover:bg-red-700"
-              >
-                Beta Sign-up!
-              </button>
-            </form>
+      <main>
+        <section
+          class="hero-section"
+          style="background-image: url('hero-background.jpg')"
+        >
+          <div class="hero-content">
+            <h1>DELIVERING TRUSTED NEWS, DAILY</h1>
+            <p>YOUR MORNING ROUTINE, REIMAGINED</p>
+          </div>
+        </section>
+
+        <div class="main-content-area">
+          <div class="stories-column">
+            <h2 class="section-title">TOP STORIES</h2>
+            <section class="top-stories-grid">
+              <article class="story-card">
+                <img src="story-image.jpg" alt="City council building" />
+                <div class="card-content">
+                  <h3>City Council Approves New Park Initiative</h3>
+                  <a href="#" class="button read-more-button">READ MORE</a>
+                </div>
+              </article>
+              <article class="story-card">
+                <img src="story-image.jpg" alt="Cyclist on a street" />
+                <div class="card-content">
+                  <h3>City Council Approves New Park Initiative</h3>
+                  <a href="#" class="button read-more-button">READ MORE</a>
+                </div>
+              </article>
+              <article class="story-card">
+                <img src="story-image.jpg" alt="Books on a shelf" />
+                <div class="card-content">
+                  <h3>Reclaimed Quiz Team Soars to Victory</h3>
+                  <a href="#" class="button read-more-button">READ MORE</a>
+                </div>
+              </article>
+            </section>
           </div>
 
-          <!--   <div class="mt-10">
-            <a
-              href="feed.html"
-              class="bg-[var(--primary-color)] hover:bg-red-700 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-[var(--primary-color)]/20 transform hover:scale-105 mb-10"
-            >
-              Click Here for the News
-            </a>
-            <a
-              href="synthesizer/index.html"
-              class="bg-blue-600 hover:bg-blue-800 transition-all duration-300 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg shadow-blue-500/20 transform hover:scale-105"
-            >
-              Go to News Synthesizer
-            </a>
-          </div> -->
+          <aside class="sidebar">
+            <div class="sidebar-widget">
+              <h3 class="widget-title">LATEST HEADLINES</h3>
+              <ul class="headlines-list">
+                <li><a href="#">City to Improve Park Initiative</a></li>
+                <li>
+                  <a href="#">Local Makes See Big Win in US Championship</a>
+                </li>
+                <li><a href="#">Ian's School Team to Growth</a></li>
+              </ul>
+            </div>
+            <div class="sidebar-widget">
+              <h3 class="widget-title">NEWSLETTER SIGN UP</h3>
+              <form class="newsletter-form">
+                <input type="email" placeholder="email@address.com" required />
+                <button
+                  type="submit"
+                  class="button subscribe-button full-width"
+                >
+                  SUBSCRIBE
+                </button>
+              </form>
+            </div>
+          </aside>
         </div>
       </main>
+
+      <footer class="site-footer">
+        <div class="footer-logo">
+          <img src="story-image.jpg" alt="Paper Route News Logo" />
+          <span>PAPERROUTENEWS.COM</span>
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms Policy</a>
+        </div>
+        <div class="social-media">
+          <a href="#" title="Twitter">T</a>
+          <a href="#" title="Facebook">F</a>
+          <a href="#" title="Instagram">I</a>
+        </div>
+      </footer>
     </div>
-
-    <script>
-      const form = document.getElementById('subscribe-form');
-      const messageEl = document.getElementById('form-message');
-      const submitButton = document.getElementById('submit-button');
-
-      // PASTE YOUR NEW SheetDB API ENDPOINT URL HERE
-      const sheetDB_URL = 'https://sheetdb.io/api/v1/b4gh6wqd3mkyl';
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        submitButton.disabled = true;
-        messageEl.textContent = 'Subscribing...';
-
-        // Get the email value from the form
-        const userEmail = form.elements['Email'].value;
-
-        // Prepare the data in the format SheetDB expects
-        const data = {
-          Timestamp: new Date().toISOString(),
-          Email: userEmail,
-        };
-
-        fetch(sheetDB_URL, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ data: [data] }), // Note the structure: { data: [ { ... } ] }
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // SheetDB returns { "created": 1 } on success
-            if (data.created) {
-              messageEl.textContent = 'Thank you for subscribing!';
-              form.reset();
-            } else {
-              // If there was an error, display it
-              throw new Error(data.error || 'An unknown error occurred.');
-            }
-          })
-          .catch((error) => {
-            console.error('Error!', error);
-            messageEl.textContent = 'Something went wrong. Please try again.';
-          })
-          .finally(() => {
-            submitButton.disabled = false;
-          });
-      });
-    </script>
   </body>
 </html>
