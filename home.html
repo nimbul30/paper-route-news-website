@@ -1,117 +1,592 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="scroll-smooth" lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paper Route News - Your Daily Briefing</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Paper Route News</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Roboto:wght@400;700&amp;display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3A4D62',
+              'background-light': '#F5F3ED',
+              'background-dark': '#1A202C',
+              'text-light': '#333333',
+              'text-dark': '#E2E8F0',
+              'accent-light': '#D4C5A3',
+              'accent-dark': '#4A5568',
+            },
+            fontFamily: {
+              display: ['Playfair Display', 'serif'],
+              body: ['Roboto', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.25rem',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .dark .invert-dark {
+        filter: invert(1) hue-rotate(180deg);
+      }
+      .comment-scroll::-webkit-scrollbar {
+        width: 8px;
+      }
+      .comment-scroll::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+      .comment-scroll::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+      }
+      .comment-scroll::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+      .dark .comment-scroll::-webkit-scrollbar-track {
+        background: #333;
+      }
+      .dark .comment-scroll::-webkit-scrollbar-thumb {
+        background: #666;
+      }
+      .dark .comment-scroll::-webkit-scrollbar-thumb:hover {
+        background: #888;
+      }
+    </style>
   </head>
-  <body>
-    <div class="site-container">
-      <header class="site-header">
-        <div class="logo">
-          <img src="assets/logo.png" alt="Paper Route News Logo" />
-          <span>PAPER ROUTE NEWS</span>
+  <body
+    class="bg-background-light dark:bg-background-dark font-body text-text-light dark:text-text-dark transition-colors duration-300"
+  >
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+      <nav
+        class="container mx-auto px-6 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center">
+          <img
+            alt="The Paper Route News Logo"
+            class="h-16 mr-4 invert-dark"
+            src="assets/news logo.png"
+          />
+          <a
+            class="text-2xl font-display font-bold text-primary dark:text-accent-light"
+            href="#"
+            >The Paper Route News</a
+          >
         </div>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="#" class="active">HOME</a></li>
-            <li><a href="#">LOCAL</a></li>
-            <li><a href="#">NATIONAL</a></li>
-            <li><a href="#">OPINION</a></li>
-            <li><a href="#">SPORTS</a></li>
-          </ul>
-        </nav>
-        <a href="#" class="button subscribe-button">SUBSCRIBE</a>
-      </header>
+        <div class="hidden md:flex items-center space-x-6">
+          <a
+            class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+            href="#world"
+            >World</a
+          >
+          <a
+            class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+            href="#politics"
+            >Politics</a
+          >
+          <a
+            class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+            href="#business"
+            >Business</a
+          >
+          <a
+            class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+            href="#tech"
+            >Tech</a
+          >
+          <a
+            class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+            href="#culture"
+            >Culture</a
+          >
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            class="text-gray-600 dark:text-gray-300 focus:outline-none"
+            id="theme-toggle"
+          >
+            <span class="material-icons" id="theme-icon">wb_sunny</span>
+          </button>
+          <button class="md:hidden flex items-center">
+            <span class="material-icons text-gray-600 dark:text-gray-300"
+              >menu</span
+            >
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="container mx-auto px-6 py-12">
+      <section class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1
+              class="text-5xl md:text-6xl font-display font-bold text-primary dark:text-accent-light mb-4"
+            >
+              Independent Journalism for the Modern Age
+            </h1>
+            <p class="text-lg text-gray-700 dark:text-gray-400 mb-6">
+              Delivering unfiltered news with integrity. Your daily route to the
+              stories that matter.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                class="bg-primary text-white py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
+                href="#latest"
+                >Read The Latest</a
+              >
+              <a
+                class="border-2 border-primary text-primary dark:border-accent-light dark:text-accent-light py-3 px-6 rounded-md hover:bg-primary hover:text-white dark:hover:bg-accent-light dark:hover:text-primary transition-colors"
+                href="#discussion"
+                >Join the Discussion</a
+              >
+            </div>
+          </div>
+          <div>
+            <img
+              alt="Newspapers stacked on a table"
+              class="rounded-lg shadow-xl w-full h-auto object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL6ujL4Fgg7PN8PDZi_zpD9PGc3FTrXQZ_1HyBJ-lAtEoPA2IltReWvZic0QdhkCRUvaB904BeaCw2gHzjXNxtU4ZhX9jyfw1dfhI7Y8-M0sZf7Y7X3S2Xolo9TQy3wO8PaSCsYlNSG5CIP5Tgfv5peX3T50rBUO9Zpk8EPKjhjYqorO_8Q9lADo92fziDAWjSntIPDxGbj77CGRmny9ymVWV54Q6fcSoqmujuwo_kRpKQjECXyx1UXV9Eet-s2FwRFVy0_EbVKEg"
+            />
+          </div>
+        </div>
+      </section>
 
-      <main>
-        <section
-          class="hero-section"
-          style="background-image: url('hero-background.jpg')"
+      <section class="mb-12" id="latest">
+        <h2
+          class="text-4xl font-display font-bold text-primary dark:text-accent-light mb-8 border-b-2 border-accent-light dark:border-accent-dark pb-2"
         >
-          <div class="hero-content">
-            <h1>DELIVERING TRUSTED NEWS, DAILY</h1>
-            <p>YOUR MORNING ROUTINE, REIMAGINED</p>
-          </div>
-        </section>
-
-        <div class="main-content-area">
-          <div class="stories-column">
-            <h2 class="section-title">TOP STORIES</h2>
-            <section class="top-stories-grid">
-              <article class="story-card">
-                <img src="story-image.jpg" alt="City council building" />
-                <div class="card-content">
-                  <h3>City Council Approves New Park Initiative</h3>
-                  <a href="#" class="button read-more-button">READ MORE</a>
-                </div>
-              </article>
-              <article class="story-card">
-                <img src="story-image.jpg" alt="Cyclist on a street" />
-                <div class="card-content">
-                  <h3>City Council Approves New Park Initiative</h3>
-                  <a href="#" class="button read-more-button">READ MORE</a>
-                </div>
-              </article>
-              <article class="story-card">
-                <img src="story-image.jpg" alt="Books on a shelf" />
-                <div class="card-content">
-                  <h3>Reclaimed Quiz Team Soars to Victory</h3>
-                  <a href="#" class="button read-more-button">READ MORE</a>
-                </div>
-              </article>
-            </section>
-          </div>
-
-          <aside class="sidebar">
-            <div class="sidebar-widget">
-              <h3 class="widget-title">LATEST HEADLINES</h3>
-              <ul class="headlines-list">
-                <li><a href="#">City to Improve Park Initiative</a></li>
-                <li>
-                  <a href="#">Local Makes See Big Win in US Championship</a>
-                </li>
-                <li><a href="#">Ian's School Team to Growth</a></li>
-              </ul>
-            </div>
-            <div class="sidebar-widget">
-              <h3 class="widget-title">NEWSLETTER SIGN UP</h3>
-              <form class="newsletter-form">
-                <input type="email" placeholder="email@address.com" required />
-                <button
-                  type="submit"
-                  class="button subscribe-button full-width"
+          Latest Articles
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <article
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              alt="News van with satellite dish"
+              class="w-full h-48 object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaDLANn8xrM3W65JDgRJj3OMdMXotEGJTTGmT62V9_d4NNum4u3QiLwsnHy9pG3p2Q0waWS9E_dsX5RdDd8zhSeLIOBQJFU6QgAhIwSr4qfOma0tgO5c50yP1d7T6LNd9dpL7RUcsxv-ZV2Ll-oxJnkbEzcvJcA9lWvGFf_G3BcvMTiB2NXll3mHqomJN99ykpXEq7ImeI-QZGe_Pz8g387mhI0W0VJyNu-1Bo8lgTITqgaw7I-sFZmP507k9VxRaBn0zsB9sh0WA"
+            />
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span
+                  class="text-xs font-semibold text-primary dark:text-accent-light"
+                  >WORLD</span
                 >
-                  SUBSCRIBE
-                </button>
-              </form>
+                <div class="flex items-center space-x-2">
+                  <span
+                    class="material-icons text-gray-500 dark:text-gray-400 text-sm"
+                    >chat_bubble</span
+                  >
+                  <span class="text-gray-600 dark:text-gray-400 text-sm"
+                    >12</span
+                  >
+                  <span
+                    class="material-icons text-gray-500 dark:text-gray-400 text-sm"
+                    >share</span
+                  >
+                  <span class="text-gray-600 dark:text-gray-400 text-sm"
+                    >5</span
+                  >
+                </div>
+              </div>
+              <h3
+                class="font-bold font-display text-xl my-2 text-gray-800 dark:text-white"
+              >
+                Global Summit Addresses Climate Change
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                Leaders from around the world convene to discuss urgent actions
+                needed to combat the growing climate crisis...
+              </p>
+              <a
+                class="text-primary dark:text-accent-light font-semibold hover:underline mt-4 inline-block"
+                href="#"
+                >Read More →</a
+              >
             </div>
-          </aside>
+          </article>
+          <article
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              alt="Inside of a government building"
+              class="w-full h-48 object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnwkH2D748vYCR5vSM7v3gO1q3GeyJTpQ0riWCv_K5v5_sR8ip5Acg2mzS7iz_rOe3Epa5hBlvMDG5Yxgxx8uuZ_jIBckpcYTQqauzr02lulX9ZjF6dPLUIF23I2UgRvFN1IKIBnM1LZc-znuVyXwX4IkFXVj1zyJHptGKPtqcKoYTttiVcawb4vrRmQ_NW37junMlYv41qdimatoCW2MkASHBTHAXippSxSLUK2sOiKlLSKzQBTy-EqOJSs4InaowKGDc-1NOPrg"
+            />
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span
+                  class="text-xs font-semibold text-primary dark:text-accent-light"
+                  >POLITICS</span
+                >
+                <div class="flex items-center space-x-2">
+                  <span
+                    class="material-icons text-gray-500 dark:text-gray-400 text-sm"
+                    >chat_bubble</span
+                  >
+                  <span class="text-gray-600 dark:text-gray-400 text-sm"
+                    >25</span
+                  >
+                  <span
+                    class="material-icons text-gray-500 dark:text-gray-400 text-sm"
+                    >share</span
+                  >
+                  <span class="text-gray-600 dark:text-gray-400 text-sm"
+                    >10</span
+                  >
+                </div>
+              </div>
+              <h3
+                class="font-bold font-display text-xl my-2 text-gray-800 dark:text-white"
+              >
+                New Legislation on Data Privacy Passes
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                A landmark bill aimed at protecting consumer data has been
+                passed, with wide-ranging implications for tech companies...
+              </p>
+              <a
+                class="text-primary dark:text-accent-light font-semibold hover:underline mt-4 inline-block"
+                href="#"
+                >Read More →</a
+              >
+            </div>
+          </article>
+          <article
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              alt="Person typing on a laptop with code on the screen"
+              class="w-full h-48 object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxuUU0Uc5kXKdmvcJL0sGsWRfj0fLAVE3duLtY9X7qCEJSMGhLoxJ-IPnhexbRS2H6TfVm6ZJ8SzKPrStv2e_g-UPScxsxpxvQ5hCPwPU0qFcTrZMoKwtIoWvPYyPpWsf9m1HteAHQA6zYvk709f-SM2OBDFs5Zf7ijWBqxmfU3tLYc30kYEA_EhfMfxBSGXmyZyZYU9s5ng80KTfge8n1657ketk0sVsWJUZtZVUmuIi6KjGKgmiedeOfAqgw90oiAcFxs4D8HMc"
+            />
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span
+                  class="text-xs font-semibold text-primary dark:text-accent-light"
+                  >TECH</span
+                >
+                <div class="flex items-center space-x-2">
+                  <span
+                    class="material-icons text-gray-500 dark:text-gray-400 text-sm"
+                    >chat_bubble</span
+                  >
+                  <span class="text-gray-600 dark:text-gray-400 text-sm"
+                    >8</span
+                  >
+                  <span
+                    class="material-icons text-gray-500 dark:text-gray-400 text-sm"
+                    >share</span
+                  >
+                  <span class="text-gray-600 dark:text-gray-400 text-sm"
+                    >3</span
+                  >
+                </div>
+              </div>
+              <h3
+                class="font-bold font-display text-xl my-2 text-gray-800 dark:text-white"
+              >
+                The Rise of AI in Creative Fields
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                Artificial intelligence is no longer just for data analysis. We
+                explore how AI is transforming art, music, and writing...
+              </p>
+              <a
+                class="text-primary dark:text-accent-light font-semibold hover:underline mt-4 inline-block"
+                href="#"
+                >Read More →</a
+              >
+            </div>
+          </article>
         </div>
-      </main>
+      </section>
 
-      <footer class="site-footer">
-        <div class="footer-logo">
-          <img src="assets/logo.png" alt="Paper Route News Logo" />
-          <span>PAPERROUTENEWS.COM</span>
+      <section
+        class="mb-12 grid grid-cols-1 md:grid-cols-3 gap-8"
+        id="discussion"
+      >
+        <div class="md:col-span-2">
+          <h2
+            class="text-4xl font-display font-bold text-primary dark:text-accent-light mb-8 border-b-2 border-accent-light dark:border-accent-dark pb-2"
+          >
+            Community Discussions
+          </h2>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+            <h3
+              class="text-2xl font-display font-bold text-primary dark:text-accent-light mb-4"
+            >
+              Latest Forum Threads
+            </h3>
+            <div class="space-y-4">
+              <div
+                class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-3"
+              >
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">
+                    Debate: AI's Impact on Job Markets
+                  </h4>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Started by @Analyst | 54 comments
+                  </p>
+                </div>
+                <a
+                  class="text-primary dark:text-accent-light hover:underline"
+                  href="#"
+                  >View Thread →</a
+                >
+              </div>
+              <div
+                class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-3"
+              >
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">
+                    Open Forum: Your Thoughts on Current Events
+                  </h4>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Started by @Citizen | 120 comments
+                  </p>
+                </div>
+                <a
+                  class="text-primary dark:text-accent-light hover:underline"
+                  href="#"
+                  >View Thread →</a
+                >
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">
+                    Poll: Future of Renewable Energy
+                  </h4>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Started by @EcoWarrior | 32 comments
+                  </p>
+                </div>
+                <a
+                  class="text-primary dark:text-accent-light hover:underline"
+                  href="#"
+                  >View Thread →</a
+                >
+              </div>
+            </div>
+            <a
+              class="mt-6 inline-block text-primary dark:text-accent-light font-semibold hover:underline"
+              href="#"
+              >Explore All Discussions →</a
+            >
+          </div>
         </div>
-        <div class="footer-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms Policy</a>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 h-fit">
+          <h3
+            class="text-2xl font-display font-bold text-primary dark:text-accent-light mb-4"
+          >
+            Reader Comments
+          </h3>
+          <div class="comment-scroll max-h-96 overflow-y-auto pr-4">
+            <div
+              class="mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            >
+              <div class="flex items-center mb-2">
+                <img
+                  alt="User Avatar 1"
+                  class="w-8 h-8 rounded-full mr-3"
+                  src="[IMAGE_PLACEHOLDER_5]"
+                />
+                <p class="font-semibold text-gray-800 dark:text-white">
+                  Alice Johnson
+                </p>
+                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto"
+                  >2 hours ago</span
+                >
+              </div>
+              <p class="text-gray-700 dark:text-gray-300 text-sm">
+                This is a really insightful article. I particularly agree with
+                the points made about global cooperation.
+              </p>
+            </div>
+            <div
+              class="mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            >
+              <div class="flex items-center mb-2">
+                <img
+                  alt="User Avatar 2"
+                  class="w-8 h-8 rounded-full mr-3"
+                  src="[IMAGE_PLACEHOLDER_6]"
+                />
+                <p class="font-semibold text-gray-800 dark:text-white">
+                  Bob Williams
+                </p>
+                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto"
+                  >5 hours ago</span
+                >
+              </div>
+              <p class="text-gray-700 dark:text-gray-300 text-sm">
+                While the article is good, I think it overlooks the economic
+                challenges of implementing these climate solutions.
+              </p>
+            </div>
+            <div
+              class="mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            >
+              <div class="flex items-center mb-2">
+                <img
+                  alt="User Avatar 3"
+                  class="w-8 h-8 rounded-full mr-3"
+                  src="[IMAGE_PLACEHOLDER_7]"
+                />
+                <p class="font-semibold text-gray-800 dark:text-white">
+                  Charlie Davis
+                </p>
+                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto"
+                  >1 day ago</span
+                >
+              </div>
+              <p class="text-gray-700 dark:text-gray-300 text-sm">
+                Great to see this topic being discussed so openly. Hopefully,
+                more people will engage.
+              </p>
+            </div>
+            <div
+              class="mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            >
+              <div class="flex items-center mb-2">
+                <img
+                  alt="User Avatar 4"
+                  class="w-8 h-8 rounded-full mr-3"
+                  src="[IMAGE_PLACEHOLDER_8]"
+                />
+                <p class="font-semibold text-gray-800 dark:text-white">
+                  Diana Evans
+                </p>
+                <span class="text-xs text-gray-500 dark:text-gray-400 ml-auto"
+                  >2 days ago</span
+                >
+              </div>
+              <p class="text-gray-700 dark:text-gray-300 text-sm">
+                I'm worried about the long-term implications for developing
+                nations.
+              </p>
+            </div>
+          </div>
+          <form class="mt-6">
+            <textarea
+              class="w-full p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-accent-dark text-sm"
+              placeholder="Add your comment..."
+              rows="3"
+            ></textarea>
+            <button
+              class="mt-3 bg-primary text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors"
+              type="submit"
+            >
+              Post Comment
+            </button>
+          </form>
         </div>
-        <div class="social-media">
-          <a href="#" title="Twitter">T</a>
-          <a href="#" title="Facebook">F</a>
-          <a href="#" title="Instagram">I</a>
+      </section>
+
+      <section
+        class="bg-accent-light dark:bg-accent-dark text-primary dark:text-white rounded-lg p-8 text-center my-12"
+      >
+        <h2 class="text-3xl font-display font-bold mb-2">Join Our Community</h2>
+        <p class="mb-6 opacity-90">
+          Become a member and connect with like-minded readers, participate in
+          exclusive discussions, and shape the future of our news platform.
+        </p>
+        <div
+          class="flex flex-col md:flex-row justify-center items-center gap-4"
+        >
+          <input
+            class="w-full md:w-80 px-4 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+            placeholder="Your email address"
+            type="email"
+          />
+          <button
+            class="bg-primary text-white font-bold py-2 px-6 rounded-md hover:bg-opacity-90 transition-colors w-full md:w-auto dark:bg-white dark:text-primary"
+            type="submit"
+          >
+            Sign Up
+          </button>
+          <button
+            class="bg-transparent border-2 border-primary text-primary font-bold py-2 px-6 rounded-md hover:bg-primary hover:text-white transition-colors w-full md:w-auto dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-primary"
+            type="button"
+          >
+            Learn More
+          </button>
         </div>
-      </footer>
-    </div>
+      </section>
+    </main>
+    <footer
+      class="bg-white dark:bg-gray-800 mt-12 border-t border-gray-200 dark:border-gray-700"
+    >
+      <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0">
+            <h3
+              class="text-xl font-display font-bold text-primary dark:text-accent-light"
+            >
+              The Paper Route News
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              paperroutenews.com
+            </p>
+          </div>
+          <div class="flex space-x-6 text-gray-600 dark:text-gray-300">
+            <a class="hover:text-primary dark:hover:text-white" href="#"
+              >About Us</a
+            >
+            <a class="hover:text-primary dark:hover:text-white" href="#"
+              >Contact</a
+            >
+            <a class="hover:text-primary dark:hover:text-white" href="#"
+              >Privacy Policy</a
+            >
+            <a class="hover:text-primary dark:hover:text-white" href="#"
+              >Terms of Service</a
+            >
+          </div>
+        </div>
+        <div
+          class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400"
+        >
+          <p>© 2023 The Paper Route News. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const htmlEl = document.documentElement;
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (
+        localStorage.getItem('theme') === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        htmlEl.classList.add('dark');
+        themeIcon.innerText = 'nights_stay';
+      } else {
+        htmlEl.classList.remove('dark');
+        themeIcon.innerText = 'wb_sunny';
+      }
+      themeToggle.addEventListener('click', () => {
+        htmlEl.classList.toggle('dark');
+        const isDark = htmlEl.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        themeIcon.innerText = isDark ? 'nights_stay' : 'wb_sunny';
+      });
+    </script>
   </body>
 </html>
