@@ -51,21 +51,21 @@
         <div class="flex items-center">
           <img
             alt="The Paper Route News Logo"
-            class="h-24 mr-4"
+            class="h-16 md:h-24 mr-4"
             src="assets/news logo.png"
           />
           <div>
             <a
-              class="text-2xl font-display font-bold text-pr-primary"
+              class="text-xl md:text-2xl font-display font-bold text-pr-primary"
               href="#"
               >The Paper Route News</a
             >
-            <p class="text-sm text-pr-primary mt-1">
+            <p class="hidden md:block text-sm text-pr-primary mt-1">
               Your daily route to the stories that matter.
             </p>
           </div>
         </div>
-        <div class="hidden md:flex items-center space-x-6">
+        <div class="hidden md:flex items-center space-x-6 main-nav">
           <a
             class="text-pr-secondary hover:text-pr-primary"
             href="#world"
@@ -93,16 +93,23 @@
           >
         </div>
         <div class="flex items-center space-x-4">
-          <button class="md:hidden flex items-center">
-            <span class="material-icons text-pr-secondary"
+          <button class="md:hidden flex items-center mobile-menu-button">
+            <span class="material-icons text-pr-primary"
               >menu</span
             >
           </button>
         </div>
       </nav>
+      <div class="md:hidden main-nav" id="mobile-menu">
+        <a class="block py-2 px-4 text-sm hover:bg-pr-nav" href="#world">World</a>
+        <a class="block py-2 px-4 text-sm hover:bg-pr-nav" href="#politics">Politics</a>
+        <a class="block py-2 px-4 text-sm hover:bg-pr-nav" href="#business">Business</a>
+        <a class="block py-2 px-4 text-sm hover:bg-pr-nav" href="#tech">Tech</a>
+        <a class="block py-2 px-4 text-sm hover:bg-pr-nav" href="#culture">Culture</a>
+      </div>
     </header>
     <main class="container mx-auto px-6 py-12">
-      <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 hero-section">
         <div class="flex flex-col gap-8">
           <div class="bg-card-bg p-6 rounded-lg shadow-custom h-full">
             <h3 class="font-bold text-lg mb-4 text-pr-primary">Live updates: Trump overhauls H-1B visa for high-skilled workers, adds new $100,000 annual fee</h3>
@@ -457,7 +464,7 @@
         </div>
       </section>
       <section
-        class="bg-pr-nav text-pr-primary rounded-lg p-8 text-center my-12"
+        class="bg-card-bg text-pr-primary rounded-lg p-8 text-center my-12"
       >
         <h2 class="text-3xl font-display font-bold mb-2">Join Our Community</h2>
         <p class="mb-6 opacity-90">
@@ -524,5 +531,14 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      const mobileMenuButton = document.querySelector('.mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('is-open');
+      });
+    </script>
   </body>
 </html>
