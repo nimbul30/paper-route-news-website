@@ -20,6 +20,77 @@ body {
   transition: color 0.3s, background-color 0.3s;
 }
 
+/* News Ticker */
+.news-ticker-container {
+  width: 100%;
+  padding: 0.75rem 0;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.news-ticker-container::before,
+.news-ticker-container::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--pr-primary),
+    var(--pr-secondary),
+    #ffffff,
+    var(--pr-secondary),
+    var(--pr-primary)
+  );
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -2; /* Sit behind the ticker content */
+  animation: steam 20s linear infinite;
+}
+
+.news-ticker-container::after {
+  filter: blur(20px);
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.news-ticker {
+  background-color: var(--pr-primary);
+  color: var(--card-bg);
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll-ticker 40s linear infinite;
+  white-space: nowrap;
+}
+
+.news-ticker li {
+  display: inline-block;
+  padding: 0 2rem;
+  font-size: 0.9rem;
+}
+
+@keyframes scroll-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 /* Custom Scrollbar */
 .comment-scroll::-webkit-scrollbar {
   width: 8px;
