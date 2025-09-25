@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Paper Route News - Article</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <style>
+      .news-article-body p {
+        margin-bottom: 1rem;
+        line-height: 1.75;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'pr-background': '#6b7d91',
+              'pr-nav': '#d8d3c4',
+              'pr-primary': '#182a38',
+              'pr-secondary': '#757d7f',
+              'pr-text-accent': '#eae7db',
+              'card-bg': '#eae7db',
+            },
+            fontFamily: {
+              display: ['Playfair Display', 'serif'],
+              body: ['Roboto', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.25rem',
+            },
+            boxShadow: {
+              custom:
+                '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-pr-background font-body text-pr-primary transition-colors duration-300"
+  >
+    <div
+      class="relative flex size-full min-h-screen flex-col overflow-x-hidden"
+    >
+      <div class="flex h-full grow flex-col">
+        <header class="bg-[#eae7db] shadow-md sticky top-0 z-50">
+          <nav
+            class="container mx-auto px-6 py-3 flex justify-between items-center"
+          >
+            <div class="flex items-center">
+              <img
+                alt="The Paper Route News Logo"
+                class="h-16 md:h-24 mr-4"
+                src="assets/news logo.png"
+              />
+              <div>
+                <a
+                  class="text-xl md:text-2xl font-display font-bold text-pr-primary"
+                  href="home.html"
+                  >The Paper Route News</a
+                >
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main class="container mx-auto px-6 py-12">
+          <div class="max-w-4xl mx-auto" id="article-content">
+            <div class="flex items-center justify-between mb-8">
+              <a
+                href="home.html"
+                class="flex items-center gap-2 text-pr-secondary hover:text-pr-primary transition-colors"
+              >
+                <span class="material-icons">arrow_back</span>
+                <span>Back to Home</span>
+              </a>
+            </div>
+            <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden">
+              <div class="p-8">
+                <h1
+                  id="article-title"
+                  class="text-pr-primary font-display text-4xl font-bold mb-4"
+                >
+                  Loading Article...
+                </h1>
+                <div
+                  class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6"
+                >
+                  <div class="flex items-center gap-3">
+                    <span id="author-name" class="font-semibold text-pr-primary"
+                      >Loading...</span
+                    >
+                  </div>
+                </div>
+                <div
+                  id="article-body"
+                  class="news-article-body text-pr-primary max-w-none mt-6"
+                >
+                  <p>Please wait while the content is being loaded.</p>
+                </div>
+                <div
+                  id="article-sources"
+                  class="border-t border-pr-nav mt-8 pt-6"
+                >
+                  <h3
+                    class="text-xl font-display font-bold text-pr-primary mb-4"
+                  >
+                    Sources
+                  </h3>
+                  <div
+                    id="sources-list"
+                    class="text-pr-secondary space-y-2"
+                  ></div>
+                  <div
+                    id="article-verification-details"
+                    class="border-t border-pr-secondary mt-6 pt-6"
+                  >
+                    <h4
+                      class="text-lg font-display font-bold text-pr-primary mb-3"
+                    >
+                      Verification Details
+                    </h4>
+                    <div
+                      id="verification-details-list"
+                      class="text-pr-secondary space-y-2 whitespace-pre-wrap"
+                    ></div>
+                    <div id="article-image" class="bg-center ..."></div>
+
+                    <div id="youtube-embed-container" class="mt-6"></div>
+
+                      <h1 id="article-title" class="text-pr-primary ...">Loading Article...</h1>
+
+                    <div id="article-verification-details" class="border-t ...">
+                      <h4 class="text-lg ...">Verification Details</h4>
+
+                    <div id="verification-pdf-link-container" class="mb-4"></div>
+
+                    <div id="verification-details-list" class="text-pr-secondary ...">
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        </main>
+
+        <footer class="bg-[#eae7db] mt-auto border-t border-gray-200">
+          <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+              <div class="mb-6 md:mb-0">
+                <h3 class="text-xl font-display font-bold text-pr-primary">
+                  The Paper Route News
+                </h3>
+              </div>
+              <div class="flex space-x-6 text-pr-secondary footer-links">
+                <a class="hover:text-pr-primary" href="#">About Us</a>
+                <a class="hover:text-pr-primary" href="#">Contact</a>
+                <a class="hover:text-pr-primary" href="#">Privacy Policy</a>
+                <a class="hover:text-pr-primary" href="ai-policy.html">AI Policy</a>
+              </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-pr-secondary">
+              <p>© 2025 The Paper Route News. All Rights Reserved.</p>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <script src="/js/article.js"></script>
+  </body>
+</html>
+ 

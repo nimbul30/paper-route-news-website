@@ -1,0 +1,12 @@
+prdb_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-chicago-1.oraclecloud.com))(connect_data=(service_name=g378008961e462e_prdb_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+prdb_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-chicago-1.oraclecloud.com))(connect_data=(service_name=g378008961e462e_prdb_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+prdb_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-chicago-1.oraclecloud.com))(connect_data=(service_name=g378008961e462e_prdb_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+prdb_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-chicago-1.oraclecloud.com))(connect_data=(service_name=g378008961e462e_prdb_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+prdb_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-chicago-1.oraclecloud.com))(connect_data=(service_name=g378008961e462e_prdb_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+
