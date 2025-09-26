@@ -3,6 +3,7 @@
 const express = require('express');
 const path = require('path');
 const oracledb = require('oracledb');
+const { DatabaseSanitizer } = require('./utils/databaseSanitizer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -32,14 +33,28 @@ async function startApp() {
 
     app.get('/api/articles', async (req, res) => {
       try {
-        // This will now return a simple array of arrays, e.g., [ [1, 'Title', 'slug', ...], [...] ]
+        // Get array response from Oracle database
         const result = await connection.execute(
           `SELECT * FROM articles ORDER BY created_at DESC`
         );
-        res.json(result.rows);
+
+        // Convert array response to consistent object structure using sanitization utility
+        const sanitizedArticles = DatabaseSanitizer.arrayToObject(result.rows);
+
+        res.json(sanitizedArticles);
       } catch (err) {
         console.error('Error fetching articles:', err);
-        res.status(500).send('Error fetching articles');
+
+        // Return sanitized error response
+        try {
+          res.status(500).json({
+            error: 'Error fetching articles',
+            message: 'Failed to retrieve articles from database',
+          });
+        } catch (responseError) {
+          // Fallback if JSON response fails
+          res.status(500).send('Error fetching articles');
+        }
       }
     });
 
@@ -57,19 +72,38 @@ async function startApp() {
           return res.status(404).json({ message: 'Article not found' });
         }
 
-        const article = result.rows[0];
+        const rawArticle = result.rows[0];
 
-        if (article.CONTENT && typeof article.CONTENT.getData === 'function') {
-          article.CONTENT = await article.CONTENT.getData();
-        }
-        if (article.SOURCES && typeof article.SOURCES.getData === 'function') {
-          article.SOURCES = await article.SOURCES.getData();
-        }
+        // Use DatabaseSanitizer to clean the complex Oracle object
+        const sanitizedArticle = DatabaseSanitizer.sanitizeObject(rawArticle);
 
-        res.json(article);
+        // Extract CLOB data using the utility method
+        const clobData = await DatabaseSanitizer.extractClobData(rawArticle);
+
+        // Merge the sanitized object with extracted CLOB data
+        const cleanArticle = {
+          ...sanitizedArticle,
+          ...clobData,
+        };
+
+        res.json(cleanArticle);
       } catch (err) {
         console.error(`Error fetching article with slug ${slug}:`, err);
-        res.status(500).json({ message: 'Error fetching article' });
+
+        // Enhanced error handling for sanitization failures
+        if (err.message && err.message.includes('circular')) {
+          console.error('Circular reference detected during sanitization');
+          return res.status(500).json({
+            message: 'Error processing article data',
+            error: 'Data structure issue',
+          });
+        }
+
+        // Return sanitized error response to avoid JSON serialization issues
+        res.status(500).json({
+          message: 'Error fetching article',
+          error: 'Database query failed',
+        });
       }
     });
 
