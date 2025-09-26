@@ -297,18 +297,38 @@ class SanitizationLogger {
   }
 }
 
+// Field names array in the exact order of database columns
+// Order MUST match the database column order: ID, TITLE, SLUG, CONTENT, CATEGORY, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL
+const ARTICLE_FIELD_NAMES = [
+  'ID',
+  'TITLE',
+  'SLUG',
+  'CONTENT',
+  'CATEGORY',
+  'AUTHOR_ID',
+  'CREATED_AT',
+  'IMAGE_URL',
+  'SOURCES',
+  'VERIFICATION_DETAILS',
+  'VERIFICATION_PDF_URL',
+  'YOUTUBE_EMBED_URL',
+];
+
 // Field mapping configuration for articles table
+// Maps database field names to frontend field names (frontend expects uppercase)
 const ARTICLE_FIELD_MAPPING = {
-  ID: 'id',
-  TITLE: 'title',
-  SLUG: 'slug',
-  CONTENT: 'content',
-  CATEGORY: 'category',
-  IMAGE_URL: 'image_url',
-  SOURCES: 'sources',
-  VERIFICATION_PDF_URL: 'verification_pdf_url',
-  YOUTUBE_EMBED_URL: 'youtube_embed_url',
-  CREATED_AT: 'created_at',
+  ID: 'ID',
+  TITLE: 'TITLE',
+  SLUG: 'SLUG',
+  CONTENT: 'CONTENT',
+  CATEGORY: 'CATEGORY',
+  AUTHOR_ID: 'AUTHOR_ID',
+  CREATED_AT: 'CREATED_AT',
+  IMAGE_URL: 'IMAGE_URL',
+  SOURCES: 'SOURCES',
+  VERIFICATION_DETAILS: 'VERIFICATION_DETAILS',
+  VERIFICATION_PDF_URL: 'VERIFICATION_PDF_URL',
+  YOUTUBE_EMBED_URL: 'YOUTUBE_EMBED_URL',
 };
 
 // CLOB fields that require special handling with getData() calls
@@ -803,10 +823,7 @@ class DatabaseSanitizer {
    * @param {Array} fieldNames - Array of field names corresponding to array indices
    * @returns {Array} Array of clean objects
    */
-  static arrayToObject(
-    dbArray,
-    fieldNames = Object.keys(ARTICLE_FIELD_MAPPING)
-  ) {
+  static arrayToObject(dbArray, fieldNames = ARTICLE_FIELD_NAMES) {
     if (!Array.isArray(dbArray)) {
       return [];
     }
@@ -821,7 +838,14 @@ class DatabaseSanitizer {
         if (index < row.length) {
           const mappedField =
             ARTICLE_FIELD_MAPPING[fieldName] || fieldName.toLowerCase();
-          cleanObject[mappedField] = row[index];
+          let value = row[index];
+
+          // Handle Date objects by converting to ISO string
+          if (value instanceof Date) {
+            value = value.toISOString();
+          }
+
+          cleanObject[mappedField] = value;
         }
       });
 
@@ -1735,6 +1759,7 @@ module.exports = {
   DatabaseSanitizer,
   SanitizationLogger,
   ARTICLE_FIELD_MAPPING,
+  ARTICLE_FIELD_NAMES,
   CLOB_FIELDS,
   PERFORMANCE_METRICS, // Export for testing
 };

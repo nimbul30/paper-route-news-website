@@ -88,10 +88,26 @@
             <label for="content" class="block font-bold text-pr-primary"
               >Content (Body)</label
             >
+            <div class="text-sm text-pr-secondary mb-2">
+              <strong>Formatting Tips:</strong><br />
+              • Use double line breaks for new paragraphs<br />
+              • **bold text** for bold, *italic text* for italic<br />
+              • # Heading 1, ## Heading 2, ### Heading 3<br />
+              • Use --- to create section breaks
+            </div>
             <textarea
               id="content"
-              rows="15"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+              rows="20"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800 font-mono text-sm"
+              placeholder="Write your article content here...
+
+Use double line breaks between paragraphs.
+
+## Story 1: Your First Section
+Content for your first section goes here.
+
+## Story 2: Your Second Section  
+Content for your second section goes here."
             ></textarea>
           </div>
           <div>
@@ -137,6 +153,13 @@
             </button>
             <button
               type="button"
+              id="edit-btn"
+              class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Edit Article
+            </button>
+            <button
+              type="button"
               id="delete-btn"
               class="w-full bg-red-700 text-white font-bold py-3 px-6 rounded-md hover:bg-red-800 transition-colors"
             >
@@ -147,6 +170,6 @@
         <p id="feedback-message" class="mt-4 text-center font-bold"></p>
       </div>
     </div>
-    <script src="/js/create.js"></script>
+    <script src="/js/create.js?v=2"></script>
   </body>
 </html>

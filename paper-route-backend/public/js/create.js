@@ -6,8 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const createArticleForm = document.getElementById('create-article-form');
   const feedbackMessage = document.getElementById('feedback-message');
   const deleteBtn = document.getElementById('delete-btn');
+  const editBtn = document.getElementById('edit-btn');
 
   const ADMIN_PASSWORD = 'password123';
+  let isEditMode = false;
+  let originalSlug = null;
 
   submitPasswordBtn.addEventListener('click', () => {
     if (passwordInput.value === ADMIN_PASSWORD) {
@@ -34,20 +37,73 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      const response = await fetch('/api/articles', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(articleData),
-      });
+      console.log('Form submission - isEditMode:', isEditMode);
+      console.log('originalSlug:', originalSlug);
+
+      let response;
+      if (isEditMode) {
+        // Update existing article
+        articleData.new_slug = articleData.slug; // For updates, use new_slug
+        console.log('Sending PUT request to:', `/api/articles/${originalSlug}`);
+        console.log('Article data:', articleData);
+        // Temporarily use POST with _method parameter for testing
+        articleData._method = 'PUT';
+        articleData._originalSlug = originalSlug;
+        response = await fetch(`/api/articles/update`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(articleData),
+        });
+      } else {
+        // Create new article
+        console.log('Sending POST request to: /api/articles');
+        console.log('Article data:', articleData);
+        response = await fetch('/api/articles', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(articleData),
+        });
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create article');
+        throw new Error(
+          errorData.message ||
+            `Failed to ${isEditMode ? 'update' : 'create'} article`
+        );
       }
 
-      feedbackMessage.textContent = 'Article published successfully!';
+      const result = await response.json();
+      feedbackMessage.textContent = isEditMode
+        ? 'Article updated successfully!'
+        : 'Article published successfully!';
       feedbackMessage.style.color = 'green';
-      createArticleForm.reset();
+
+      if (isEditMode) {
+        // Reset edit mode
+        isEditMode = false;
+        originalSlug = null;
+        document.querySelector('button[type="submit"]').textContent =
+          'Publish Article';
+        document.querySelector('h1').textContent = 'Create or Delete Article';
+      } else {
+        createArticleForm.reset();
+      }
+    } catch (error) {
+      feedbackMessage.textContent = `Error: ${error.message}`;
+      feedbackMessage.style.color = 'red';
+    }
+  });
+
+  editBtn.addEventListener('click', async () => {
+    const slugToEdit = document.getElementById('slug').value;
+    if (!slugToEdit) {
+      alert('Please enter the slug of the article you wish to edit.');
+      return;
+    }
+
+    try {
+      await loadArticleForEdit(slugToEdit);
     } catch (error) {
       feedbackMessage.textContent = `Error: ${error.message}`;
       feedbackMessage.style.color = 'red';
@@ -80,4 +136,52 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  async function loadArticleForEdit(slug) {
+    try {
+      console.log('loadArticleForEdit called with slug:', slug);
+      const response = await fetch(`/api/articles/${slug}`);
+      if (!response.ok) {
+        throw new Error('Failed to load article for editing');
+      }
+
+      const article = await response.json();
+
+      // Store original slug and set edit mode
+      originalSlug = slug;
+      isEditMode = true;
+      console.log(
+        'Edit mode set - isEditMode:',
+        isEditMode,
+        'originalSlug:',
+        originalSlug
+      );
+
+      // Update UI for edit mode
+      document.querySelector('h1').textContent = 'Edit Article';
+      document.querySelector('button[type="submit"]').textContent =
+        'Update Article';
+
+      // Populate the form fields with existing data
+      document.getElementById('title').value = article.TITLE || '';
+      document.getElementById('slug').value = article.SLUG || '';
+      document.getElementById('image_url').value = article.IMAGE_URL || '';
+      document.getElementById('category').value = article.CATEGORY || '';
+      document.getElementById('content').value = article.CONTENT || '';
+      document.getElementById('sources').value = article.SOURCES || '';
+      document.getElementById('verification_pdf_url').value =
+        article.VERIFICATION_PDF_URL || '';
+      document.getElementById('youtube_embed_url').value =
+        article.YOUTUBE_EMBED_URL || '';
+
+      // Show success message
+      const feedbackMessage = document.getElementById('feedback-message');
+      feedbackMessage.textContent = 'Article loaded for editing';
+      feedbackMessage.style.color = 'blue';
+    } catch (error) {
+      const feedbackMessage = document.getElementById('feedback-message');
+      feedbackMessage.textContent = `Error loading article: ${error.message}`;
+      feedbackMessage.style.color = 'red';
+    }
+  }
 });

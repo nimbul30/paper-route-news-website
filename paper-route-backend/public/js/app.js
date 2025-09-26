@@ -8,7 +8,7 @@ async function fetchArticles() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    // articles is now an array of arrays, e.g., [ [1, 'Title', 'slug', ...], [...] ]
+    // articles is now an array of clean objects, e.g., [{ id: 1, title: '...', slug: '...' }]
     const articles = await response.json();
     renderArticles(articles);
   } catch (error) {
@@ -23,13 +23,14 @@ function renderArticles(articles) {
   newsGridContainer.innerHTML = '';
 
   const articlesByCategory = {};
-  articles.forEach((articleRow) => {
-    // The CATEGORY is the 5th column, so it's at index 4
-    const category = articleRow[4];
+  articles.forEach((article) => {
+    // --- THIS IS THE FIX ---
+    // We now access properties by their names (e.g., article.CATEGORY), not by index.
+    const category = article.CATEGORY;
     if (!articlesByCategory[category]) {
       articlesByCategory[category] = [];
     }
-    articlesByCategory[category].push(articleRow);
+    articlesByCategory[category].push(article);
   });
 
   for (const categoryName in articlesByCategory) {
@@ -41,22 +42,37 @@ function renderArticles(articles) {
 
     const categoryArticles = articlesByCategory[categoryName];
 
-    categoryArticles.forEach((articleRow) => {
-      // --- THIS IS THE CRITICAL CHANGE ---
-      // We access data by its column index, which is guaranteed to be stable.
-      // TITLE is at index 1
-      // SLUG is at index 2
-      // CONTENT is at index 3
-      // IMAGE_URL is at index 8
-      const title = articleRow[1];
-      const slug = articleRow[2];
-      const content = articleRow[3];
-      const imageUrl = articleRow[8] || 'assets/news logo.png';
+    categoryArticles.forEach((article) => {
+      // --- THIS IS THE FIX ---
+      // We now use the clean property names from the sanitized object.
+      const title = article.TITLE;
+      const slug = article.SLUG;
+      const content = article.CONTENT;
+      // Handle image URL - add proper path prefix and fallback
+      let imageUrl = 'assets/news logo.png'; // Default fallback
+      if (article.IMAGE_URL) {
+        // If IMAGE_URL exists, check if it already has a path prefix
+        if (
+          article.IMAGE_URL.startsWith('http') ||
+          article.IMAGE_URL.startsWith('/')
+        ) {
+          imageUrl = article.IMAGE_URL;
+        } else {
+          // Add assets/ prefix for local files
+          imageUrl = `assets/${article.IMAGE_URL}`;
+        }
+      }
+
+      // Skip articles without valid slugs
+      if (!slug || slug === 'undefined' || slug === 'null') {
+        console.warn('Skipping article with invalid slug:', { title, slug });
+        return;
+      }
 
       const articleHtml = `
                 <div class="news-article">
                     <a href="/article-page.html?slug=${slug}">
-                        <img src="${imageUrl}" alt="${title}" class="w-full h-32 object-cover rounded-md mb-2">
+                        <img src="${imageUrl}" alt="${title}" class="w-full h-32 object-cover rounded-md mb-2" onerror="this.src='assets/news logo.png'">
                         <h4>${title}</h4>
                     </a>
                     <p>${
