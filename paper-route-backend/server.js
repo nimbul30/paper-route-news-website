@@ -176,164 +176,78 @@ app.get('/api/articles/:slug', async (req, res) => {
   }
 });
 
-// PUT endpoint for updating articles
-app.put('/api/articles/:slug', async (req, res) => {
-  const slug = req.params.slug;
-  const {
-    title,
-    new_slug,
-    content,
-    category,
-    image_url,
-    sources,
-    verification_pdf_url,
-    youtube_embed_url,
-  } = req.body;
 
-  if (!title || !new_slug || !content || !category) {
-    return res.status(400).json({
-      message: 'Title, slug, content, and category are required.',
-    });
-  }
-
-  if (!connection) {
-    return res
-      .status(500)
-      .json({ message: 'Database connection not available' });
-  }
-
-  try {
-    // Check if slug is actually changing
-    const slugChanged =
-      slug.toLowerCase().trim() !== new_slug.toLowerCase().trim();
-
-    // If slug is changing, check if new slug already exists
-    if (slugChanged) {
-      const checkResult = await connection.execute(
-        `SELECT COUNT(*) as count FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:new_slug))`,
-        { new_slug }
-      );
-
-      if (checkResult.rows[0][0] > 0) {
-        return res.status(409).json({
-          message: 'Error: A post with this slug already exists.',
-        });
-      }
-    }
-
-    const sql = `UPDATE articles SET 
-                   title = :title, 
-                   slug = :new_slug, 
-                   content = :content, 
-                   category = :category, 
-                   image_url = :image_url, 
-                   sources = :sources, 
-                   verification_pdf_url = :verification_pdf_url, 
-                   youtube_embed_url = :youtube_embed_url
-                 WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`;
-
-    const binds = {
-      title,
-      new_slug,
-      content,
-      category,
-      image_url,
-      sources,
-      verification_pdf_url,
-      youtube_embed_url,
-      slug: slug,
-    };
-
-    const result = await connection.execute(sql, binds, {
-      autoCommit: true,
-    });
-
-    if (result.rowsAffected === 0) {
-      return res.status(404).json({ message: 'Article not found.' });
-    }
-
-    res.status(200).json({ message: 'Article updated successfully', new_slug });
-  } catch (err) {
-    console.error('Error updating article:', err);
-    if (err.errorNum === 1) {
-      return res
-        .status(409)
-        .json({ message: 'Error: A post with this slug already exists.' });
-    }
-    res.status(500).json({ message: 'Database error' });
-  }
-});
-
-// Temporary POST route for updates (to test if PUT is the issue)
-app.post('/api/articles/update', async (req, res) => {
-  const {
-    title,
-    new_slug,
-    content,
-    category,
-    image_url,
-    sources,
-    verification_pdf_url,
-    youtube_embed_url,
-    _originalSlug,
-  } = req.body;
-
-  if (!title || !new_slug || !content || !category || !_originalSlug) {
-    return res.status(400).json({
-      message:
-        'Title, slug, content, category, and original slug are required.',
-    });
-  }
-
-  if (!connection) {
-    return res
-      .status(500)
-      .json({ message: 'Database connection not available' });
-  }
-
-  try {
-    const sql = `UPDATE articles SET 
-                   title = :title, 
-                   slug = :new_slug, 
-                   content = :content, 
-                   category = :category, 
-                   image_url = :image_url, 
-                   sources = :sources, 
-                   verification_pdf_url = :verification_pdf_url, 
-                   youtube_embed_url = :youtube_embed_url
-                 WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:original_slug))`;
-
-    const binds = {
-      title,
-      new_slug,
-      content,
-      category,
-      image_url,
-      sources,
-      verification_pdf_url,
-      youtube_embed_url,
-      original_slug: _originalSlug,
-    };
-
-    const result = await connection.execute(sql, binds, {
-      autoCommit: true,
-    });
-
-    if (result.rowsAffected === 0) {
-      return res.status(404).json({ message: 'Article not found.' });
-    }
-
-    res.status(200).json({ message: 'Article updated successfully', new_slug });
-  } catch (err) {
-    console.error('Error updating article:', err);
-    res.status(500).json({ message: 'Database error' });
-  }
-});
 
 async function startApp() {
   try {
     connection = await oracledb.getConnection(dbConfig);
     console.log('Successfully connected to Oracle Database!');
+
+    // Temporary POST route for updates (to test if PUT is the issue)
+    app.post('/api/articles/update', async (req, res) => {
+      const {
+        title,
+        new_slug,
+        content,
+        category,
+        image_url,
+        sources,
+        verification_pdf_url,
+        youtube_embed_url,
+        _originalSlug,
+      } = req.body;
+
+      if (!title || !new_slug || !content || !category || !_originalSlug) {
+        return res.status(400).json({
+          message:
+            'Title, slug, content, category, and original slug are required.',
+        });
+      }
+
+      if (!connection) {
+        return res
+          .status(500)
+          .json({ message: 'Database connection not available' });
+      }
+
+      try {
+        const sql = `UPDATE articles SET 
+                       title = :title, 
+                       slug = :new_slug, 
+                       content = :content, 
+                       category = :category, 
+                       image_url = :image_url, 
+                       sources = :sources, 
+                       verification_pdf_url = :verification_pdf_url, 
+                       youtube_embed_url = :youtube_embed_url
+                     WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:original_slug))`;
+
+        const binds = {
+          title,
+          new_slug,
+          content,
+          category,
+          image_url,
+          sources,
+          verification_pdf_url,
+          youtube_embed_url,
+          original_slug: _originalSlug,
+        };
+
+        const result = await connection.execute(sql, binds, {
+          autoCommit: true,
+        });
+
+        if (result.rowsAffected === 0) {
+          return res.status(404).json({ message: 'Article not found.' });
+        }
+
+        res.status(200).json({ message: 'Article updated successfully', new_slug });
+      } catch (err) {
+        console.error('Error updating article:', err);
+        res.status(500).json({ message: 'Database error' });
+      }
+    });
 
     // --- The POST and DELETE routes remain the same ---
     app.post('/api/articles', async (req, res) => {

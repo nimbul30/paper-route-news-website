@@ -24,13 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
   createArticleForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    const turndownService = new TurndownService();
+    const content = tinymce.get('content').getContent();
+    const sources = tinymce.get('sources').getContent();
+
     const articleData = {
       title: document.getElementById('title').value,
       slug: document.getElementById('slug').value,
       image_url: document.getElementById('image_url').value,
       category: document.getElementById('category').value,
-      content: document.getElementById('content').value,
-      sources: document.getElementById('sources').value,
+      content: turndownService.turndown(content),
+      sources: turndownService.turndown(sources),
       verification_pdf_url: document.getElementById('verification_pdf_url')
         .value,
       youtube_embed_url: document.getElementById('youtube_embed_url').value,
@@ -44,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isEditMode) {
         // Update existing article
         articleData.new_slug = articleData.slug; // For updates, use new_slug
-        console.log('Sending PUT request to:', `/api/articles/${originalSlug}`);
+        console.log('Sending POST request to: /api/articles/update');
         console.log('Article data:', articleData);
         // Temporarily use POST with _method parameter for testing
         articleData._method = 'PUT';
@@ -97,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   editBtn.addEventListener('click', async () => {
     const slugToEdit = document.getElementById('slug').value;
-    if (!slugToEdit) {
-      alert('Please enter the slug of the article you wish to edit.');
+    if (!isValidSlug(slugToEdit)) {
+      alert('Please enter a valid slug (no spaces).');
       return;
     }
 
@@ -137,6 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  function isValidSlug(slug) {
+    if (!slug || slug.trim() === '') {
+      return false;
+    }
+    // Check for spaces
+    if (/\s/.test(slug)) {
+      return false;
+    }
+    return true;
+  }
+
   async function loadArticleForEdit(slug) {
     try {
       console.log('loadArticleForEdit called with slug:', slug);
@@ -167,8 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('slug').value = article.SLUG || '';
       document.getElementById('image_url').value = article.IMAGE_URL || '';
       document.getElementById('category').value = article.CATEGORY || '';
-      document.getElementById('content').value = article.CONTENT || '';
-      document.getElementById('sources').value = article.SOURCES || '';
+      tinymce.get('content').setContent(article.CONTENT || '');
+      tinymce.get('sources').setContent(article.SOURCES || '');
       document.getElementById('verification_pdf_url').value =
         article.VERIFICATION_PDF_URL || '';
       document.getElementById('youtube_embed_url').value =

@@ -58,16 +58,8 @@ function renderArticle(article) {
 
   if (article.SOURCES) {
     const sourcesList = document.getElementById('sources-list');
-    const sourcesHtml = article.SOURCES.split('\n')
-      .map((source) => {
-        const urlMatch = source.match(/https?:\/\/[^\s]+/);
-        if (urlMatch) {
-          return `<p><a href="${urlMatch[0]}" target="_blank" rel="noopener noreferrer" class="hover:text-pr-primary underline">${source}</a></p>`;
-        }
-        return `<p>${source}</p>`;
-      })
-      .join('');
-    sourcesList.innerHTML = sourcesHtml;
+    const formattedSources = formatArticleContent(article.SOURCES);
+    sourcesList.innerHTML = formattedSources;
   }
 
   if (article.VERIFICATION_PDF_URL) {
@@ -88,21 +80,21 @@ function formatArticleContent(content) {
 
   // Convert headings
   formatted = formatted.replace(
-    /^### (.*$)/gm,
+    /^###\s+(.*$)/gm,
     '<h3 class="text-lg font-semibold text-pr-primary mt-6 mb-3">$1</h3>'
   );
   formatted = formatted.replace(
-    /^## (.*$)/gm,
+    /^##\s+(.*$)/gm,
     '<h2 class="text-xl font-bold text-pr-primary mt-8 mb-4 border-b-2 border-pr-nav pb-2">$1</h2>'
   );
   formatted = formatted.replace(
-    /^# (.*$)/gm,
+    /^#\s+(.*$)/gm,
     '<h1 class="text-2xl font-bold text-pr-primary mt-8 mb-6">$1</h1>'
   );
 
   // Convert bold and italic
   formatted = formatted.replace(
-    /\*\*(.*?)\*\*/g,
+    /\*\*(.*)\*\*/g,
     '<strong class="font-bold">$1</strong>'
   );
   formatted = formatted.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>');

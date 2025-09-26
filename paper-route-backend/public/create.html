@@ -5,6 +5,17 @@
     <title>Create New Article</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="/style.css" rel="stylesheet" />
+    <script src="https://cdn.tiny.cloud/1/t0ynb2qd775yn0erg2drlenr3uznfyyz14q6xlanfdaneqri/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        tinymce.init({
+          selector: '#content, #sources',
+          plugins: 'advlist autolink lists link image charmap print preview anchor',
+          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image'
+        });
+      });
+    </script>
   </head>
   <body class="bg-pr-background">
     <div class="container mx-auto p-8">
@@ -112,12 +123,19 @@ Content for your second section goes here."
           </div>
           <div>
             <label for="sources" class="block font-bold text-pr-primary"
-              >Sources (One per line)</label
+              >Sources</label
             >
+            <div class="text-sm text-pr-secondary mb-2">
+              <strong>Formatting Tips:</strong><br />
+              • Use double line breaks for new paragraphs<br />
+              • **bold text** for bold, *italic text* for italic<br />
+              • # Heading 1, ## Heading 2, ### Heading 3<br />
+              • Use --- to create section breaks
+            </div>
             <textarea
               id="sources"
               rows="5"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800 font-mono text-sm"
             ></textarea>
           </div>
           <div>
