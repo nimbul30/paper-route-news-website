@@ -1,4 +1,3 @@
-// public/js/create.js
 document.addEventListener('DOMContentLoaded', () => {
   const passwordGate = document.getElementById('password-gate');
   const createFormContainer = document.getElementById('create-form-container');
@@ -6,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitPasswordBtn = document.getElementById('submit-password');
   const createArticleForm = document.getElementById('create-article-form');
   const feedbackMessage = document.getElementById('feedback-message');
+  const deleteBtn = document.getElementById('delete-btn');
 
-  // A simple, insecure password. For a real site, you'd use a proper login system.
   const ADMIN_PASSWORD = 'password123';
 
   submitPasswordBtn.addEventListener('click', () => {
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   createArticleForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
     const articleData = {
       title: document.getElementById('title').value,
@@ -29,55 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
       category: document.getElementById('category').value,
       content: document.getElementById('content').value,
       sources: document.getElementById('sources').value,
-      verification_details: document.getElementById('verification_details')
-        .value,
       verification_pdf_url: document.getElementById('verification_pdf_url')
-        .value, // Add this
-      youtube_embed_url: document.getElementById('youtube_embed_url').value, // Add this
+        .value,
+      youtube_embed_url: document.getElementById('youtube_embed_url').value,
     };
-    // ... at the end of public/js/create.js ...
-    const deleteBtn = document.getElementById('delete-btn');
 
-    deleteBtn.addEventListener('click', async () => {
-      const slugToDelete = document.getElementById('slug').value;
-
-      if (!slugToDelete) {
-        alert('Please enter the slug of the article you wish to delete.');
-        return;
-      }
-
-      // Safety confirmation prompt
-      const isConfirmed = confirm(
-        `Are you sure you want to permanently delete the article with slug "${slugToDelete}"?`
-      );
-
-      if (isConfirmed) {
-        try {
-          const response = await fetch(`/api/articles/${slugToDelete}`, {
-            method: 'DELETE',
-          });
-
-          const result = await response.json();
-
-          if (!response.ok) {
-            throw new Error(result.message);
-          }
-
-          feedbackMessage.textContent = result.message;
-          feedbackMessage.style.color = 'green';
-          createArticleForm.reset();
-        } catch (error) {
-          feedbackMessage.textContent = `Error: ${error.message}`;
-          feedbackMessage.style.color = 'red';
-        }
-      }
-    });
     try {
       const response = await fetch('/api/articles', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(articleData),
       });
 
@@ -88,10 +47,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
       feedbackMessage.textContent = 'Article published successfully!';
       feedbackMessage.style.color = 'green';
-      createArticleForm.reset(); // Clear the form
+      createArticleForm.reset();
     } catch (error) {
       feedbackMessage.textContent = `Error: ${error.message}`;
       feedbackMessage.style.color = 'red';
+    }
+  });
+
+  deleteBtn.addEventListener('click', async () => {
+    const slugToDelete = document.getElementById('slug').value;
+    if (!slugToDelete) {
+      alert('Please enter the slug of the article you wish to delete.');
+      return;
+    }
+
+    const isConfirmed = confirm(
+      `Are you sure you want to permanently delete the article with slug "${slugToDelete}"?`
+    );
+    if (isConfirmed) {
+      try {
+        const response = await fetch(`/api/articles/${slugToDelete}`, {
+          method: 'DELETE',
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message);
+        feedbackMessage.textContent = result.message;
+        feedbackMessage.style.color = 'green';
+        createArticleForm.reset();
+      } catch (error) {
+        feedbackMessage.textContent = `Error: ${error.message}`;
+        feedbackMessage.style.color = 'red';
+      }
     }
   });
 });

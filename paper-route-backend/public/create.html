@@ -16,7 +16,7 @@
           Admin Access
         </h1>
         <p class="mb-4 text-pr-secondary">
-          Please enter the password to create a new article.
+          Please enter the password to create or delete an article.
         </p>
         <input
           type="password"
@@ -37,7 +37,7 @@
         class="hidden max-w-4xl mx-auto bg-card-bg p-8 rounded-lg shadow-custom"
       >
         <h1 class="text-2xl font-display font-bold text-pr-primary mb-6">
-          Create a New Article
+          Create or Delete Article
         </h1>
         <form id="create-article-form" class="space-y-4">
           <div>
@@ -106,59 +106,45 @@
           </div>
           <div>
             <label
-              for="youtube_embed_url"
-              class="block font-bold text-pr-primary"
-              >YouTube Embed URL</label
-            >
-            <p class="text-sm text-pr-secondary mt-1">
-              From YouTube, click Share > Embed, and copy the URL from the `src`
-              attribute.
-            </p>
-            <input
-              type="text"
-              id="youtube_embed_url"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
-              placeholder="https://www.youtube.com/embed/VIDEO_ID"
-            />
-          </div>
-          <div>
-            <label
               for="verification_pdf_url"
               class="block font-bold text-pr-primary"
               >Verification PDF URL</label
             >
-            <p class="text-sm text-pr-secondary mt-1">
-              Upload your PDF to Object Storage and paste the public URL here.
-            </p>
             <input
               type="text"
               id="verification_pdf_url"
               class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
             />
           </div>
-          <button
-            type="submit"
-            class="w-full bg-pr-primary text-black font-bold py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
-          >
-            Publish Article
-          </button>
+          <div>
+            <label
+              for="youtube_embed_url"
+              class="block font-bold text-pr-primary"
+              >YouTube Embed URL</label
+            >
+            <input
+              type="text"
+              id="youtube_embed_url"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            />
+          </div>
+          <div class="flex space-x-4 pt-4">
+            <button
+              type="submit"
+              class="w-full bg-pr-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              Publish Article
+            </button>
+            <button
+              type="button"
+              id="delete-btn"
+              class="w-full bg-red-700 text-white font-bold py-3 px-6 rounded-md hover:bg-red-800 transition-colors"
+            >
+              Delete Article
+            </button>
+          </div>
         </form>
         <p id="feedback-message" class="mt-4 text-center font-bold"></p>
-      </div>
-      <div class="flex space-x-4">
-        <button
-          type="submit"
-          class="w-full bg-pr-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
-        >
-          Publish Article
-        </button>
-        <button
-          type-="button"
-          id="delete-btn"
-          class="w-full bg-red-700 text-white font-bold py-3 px-6 rounded-md hover:bg-red-800 transition-colors"
-        >
-          Delete Article
-        </button>
       </div>
     </div>
     <script src="/js/create.js"></script>

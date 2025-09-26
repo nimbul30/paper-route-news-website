@@ -1,41 +1,37 @@
-// public/js/article.js
-
 document.addEventListener('DOMContentLoaded', () => {
   loadArticle();
 });
 
 async function loadArticle() {
-  // Get the 'slug' from the URL query parameter
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('slug');
 
   if (!slug) {
-    document.body.innerHTML = '<h1>Article not found.</h1>';
+    document.body.innerHTML = '<h1>Article not found. No slug provided.</h1>';
     return;
   }
 
   try {
     const response = await fetch(`/api/articles/${slug}`);
     if (!response.ok) {
-      throw new Error(`Article not found or error loading: ${response.status}`);
+      throw new Error(`API responded with status: ${response.status}`);
     }
     const article = await response.json();
     renderArticle(article);
   } catch (error) {
-    console.error('Failed to load article:', error);
+    console.error('A critical error occurred in loadArticle:', error);
     document.getElementById('article-content').innerHTML =
-      '<h2>Failed to load article content. Please try again later.</h2>';
+      '<h2>Failed to load article content.</h2>';
   }
 }
 
 function renderArticle(article) {
-  // Note: Oracle DB often returns column names in uppercase
   document.getElementById('article-title').textContent = article.TITLE;
   document.getElementById('article-body').innerHTML = `<p>${
     article.CONTENT || 'Content not available.'
   }</p>`;
   document.getElementById('author-name').textContent =
-    article.AUTHOR || 'The Paper Route News';
+    article.AUTHOR_ID || 'The Paper Route News';
   document.title = `${article.TITLE} - The Paper Route News`;
 
   if (article.IMAGE_URL) {
@@ -44,7 +40,6 @@ function renderArticle(article) {
     ).style.backgroundImage = `url('${article.IMAGE_URL}')`;
   }
 
-  // Render YouTube video embed
   if (article.YOUTUBE_EMBED_URL) {
     const videoContainer = document.getElementById('youtube-embed-container');
     videoContainer.innerHTML = `
@@ -68,13 +63,6 @@ function renderArticle(article) {
     sourcesList.innerHTML = sourcesHtml;
   }
 
-  // Render verification details text
-  if (article.VERIFICATION_DETAILS) {
-    document.getElementById('verification-details-list').textContent =
-      article.VERIFICATION_DETAILS;
-  }
-
-  // Render verification PDF download link
   if (article.VERIFICATION_PDF_URL) {
     const pdfContainer = document.getElementById(
       'verification-pdf-link-container'

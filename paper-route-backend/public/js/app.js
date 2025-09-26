@@ -1,5 +1,3 @@
-// public/js/app.js
-
 document.addEventListener('DOMContentLoaded', () => {
   fetchArticles();
 });
@@ -10,103 +8,66 @@ async function fetchArticles() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    // articles is now an array of arrays, e.g., [ [1, 'Title', 'slug', ...], [...] ]
     const articles = await response.json();
     renderArticles(articles);
   } catch (error) {
     console.error('Failed to fetch articles:', error);
-    // Optionally, display an error message to the user on the page
   }
 }
 
 function renderArticles(articles) {
-    const newsGridContainer = document.getElementById('news-grid-container');
-    if (!newsGridContainer) return;
+  const newsGridContainer = document.getElementById('news-grid-container');
+  if (!newsGridContainer) return;
 
-    // Clear any existing content
-    newsGridContainer.innerHTML = '';
+  newsGridContainer.innerHTML = '';
 
-    // First, group articles by category
-    const articlesByCategory = {};
-    articles.forEach(article => {
-        const category = article.CATEGORY;
-        if (!articlesByCategory[category]) {
-            articlesByCategory[category] = []; // Create a new array for this category if it doesn't exist
-        }
-        articlesByCategory[category].push(article);
-    });
+  const articlesByCategory = {};
+  articles.forEach((articleRow) => {
+    // The CATEGORY is the 5th column, so it's at index 4
+    const category = articleRow[4];
+    if (!articlesByCategory[category]) {
+      articlesByCategory[category] = [];
+    }
+    articlesByCategory[category].push(articleRow);
+  });
 
-    // Now, create a section for each category that has articles
-    for (const categoryName in articlesByCategory) {
-        // 1. Create the main container for the section
-        const sectionDiv = document.createElement('div');
-        sectionDiv.className = 'news-section';
+  for (const categoryName in articlesByCategory) {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'news-section';
 
-        // 2. Create the title for the section
-        const titleHtml = `
-            <h3 class="news-section-title">${categoryName.toUpperCase()} NEWS <span class="material-icons text-pr-primary text-base">chevron_right</span></h3>
-        `;
-        sectionDiv.innerHTML = titleHtml;
+    const titleHtml = `<h3 class="news-section-title">${categoryName.toUpperCase()} NEWS <span class="material-icons text-pr-primary text-base">chevron_right</span></h3>`;
+    sectionDiv.innerHTML = titleHtml;
 
-        // 3. Get the articles for this category
-        const categoryArticles = articlesByCategory[categoryName];
+    const categoryArticles = articlesByCategory[categoryName];
 
-        // 4. Create and add the HTML for each article in this section
-        categoryArticles.forEach(article => {
-            const imageUrl = article.IMAGE_URL || 'assets/news logo.png'; // Default image
-            const articleHtml = `
+    categoryArticles.forEach((articleRow) => {
+      // --- THIS IS THE CRITICAL CHANGE ---
+      // We access data by its column index, which is guaranteed to be stable.
+      // TITLE is at index 1
+      // SLUG is at index 2
+      // CONTENT is at index 3
+      // IMAGE_URL is at index 8
+      const title = articleRow[1];
+      const slug = articleRow[2];
+      const content = articleRow[3];
+      const imageUrl = articleRow[8] || 'assets/news logo.png';
+
+      const articleHtml = `
                 <div class="news-article">
-                    <a href="/article-page.html?slug=${article.SLUG}">
-                        <img src="${imageUrl}" alt="${article.TITLE}" class="w-full h-32 object-cover rounded-md mb-2">
-                        <h4>${article.TITLE}</h4>
+                    <a href="/article-page.html?slug=${slug}">
+                        <img src="${imageUrl}" alt="${title}" class="w-full h-32 object-cover rounded-md mb-2">
+                        <h4>${title}</h4>
                     </a>
-                    <p>${article.CONTENT ? article.CONTENT.substring(0, 100) + '...' : 'No summary.'}</p>
+                    <p>${
+                      content
+                        ? String(content).substring(0, 100) + '...'
+                        : 'No summary.'
+                    }</p>
                 </div>
             `;
-            sectionDiv.innerHTML += articleHtml;
-        });
-
-        // 5. Add the completed section to the main grid on the page
-        newsGridContainer.appendChild(sectionDiv);
-    }
-}
-
-  // Clear any static content
-  usNewsContainer.innerHTML =
-    '<h3>US NEWS <span class="material-icons text-pr-primary text-base">chevron_right</span></h3>';
-  worldNewsContainer.innerHTML =
-    '<h3>WORLD NEWS <span class="material-icons text-pr-primary text-base">chevron_right</span></h3>';
-  politicsNewsContainer.innerHTML =
-    '<h3>POLITICS <span class="material-icons text-pr-primary text-base">chevron_right</span></h3>';
-
-  articles.forEach((article) => {
-    const articleHtml = `
-            <div class="news-article">
-                <a href="/article-page.html?slug=${article.SLUG}">
-                    <h4>${article.TITLE}</h4>
-                </a>
-                <p>${
-                  article.CONTENT
-                    ? article.CONTENT.substring(0, 100) + '...'
-                    : 'No summary available.'
-                }</p>
-            </div>
-        `;
-
-    // Append the article to the correct category section
-    // Note: Oracle DB often returns column names in uppercase
-    switch (article.CATEGORY) {
-      case 'US':
-        usNewsContainer.innerHTML += articleHtml;
-        break;
-      case 'World':
-        worldNewsContainer.innerHTML += articleHtml;
-        break;
-      case 'Politics':
-        politicsNewsContainer.innerHTML += articleHtml;
-        break;
-      default:
-        // Fallback for other categories if needed
-        break;
-    }
-  });
+      sectionDiv.innerHTML += articleHtml;
+    });
+    newsGridContainer.appendChild(sectionDiv);
+  }
 }

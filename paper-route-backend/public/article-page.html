@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Paper Route News - Article</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
@@ -13,12 +13,6 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <style>
-      .news-article-body p {
-        margin-bottom: 1rem;
-        line-height: 1.75;
-      }
-    </style>
     <script>
       tailwind.config = {
         theme: {
@@ -34,9 +28,6 @@
             fontFamily: {
               display: ['Playfair Display', 'serif'],
               body: ['Roboto', 'sans-serif'],
-            },
-            borderRadius: {
-              DEFAULT: '0.25rem',
             },
             boxShadow: {
               custom:
@@ -87,6 +78,12 @@
             </div>
             <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden">
               <div class="p-8">
+                <div
+                  id="article-image"
+                  class="bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-6"
+                  style="background-image: url('assets/news logo.png')"
+                ></div>
+                <div id="youtube-embed-container" class="mb-6"></div>
                 <h1
                   id="article-title"
                   class="text-pr-primary font-display text-4xl font-bold mb-4"
@@ -104,7 +101,7 @@
                 </div>
                 <div
                   id="article-body"
-                  class="news-article-body text-pr-primary max-w-none mt-6"
+                  class="prose max-w-none text-pr-primary mt-6"
                 >
                   <p>Please wait while the content is being loaded.</p>
                 </div>
@@ -121,65 +118,19 @@
                     id="sources-list"
                     class="text-pr-secondary space-y-2"
                   ></div>
-                  <div
-                    id="article-verification-details"
-                    class="border-t border-pr-secondary mt-6 pt-6"
-                  >
-                    <h4
-                      class="text-lg font-display font-bold text-pr-primary mb-3"
-                    >
-                      Verification Details
-                    </h4>
-                    <div
-                      id="verification-details-list"
-                      class="text-pr-secondary space-y-2 whitespace-pre-wrap"
-                    ></div>
-                    <div id="article-image" class="bg-center ..."></div>
-
-                    <div id="youtube-embed-container" class="mt-6"></div>
-
-                      <h1 id="article-title" class="text-pr-primary ...">Loading Article...</h1>
-
-                    <div id="article-verification-details" class="border-t ...">
-                      <h4 class="text-lg ...">Verification Details</h4>
-
-                    <div id="verification-pdf-link-container" class="mb-4"></div>
-
-                    <div id="verification-details-list" class="text-pr-secondary ...">
-                    </div>
-                  </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </main>
-        </main>
-
-        <footer class="bg-[#eae7db] mt-auto border-t border-gray-200">
-          <div class="container mx-auto px-6 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-              <div class="mb-6 md:mb-0">
-                <h3 class="text-xl font-display font-bold text-pr-primary">
-                  The Paper Route News
+              <div class="bg-pr-nav px-8 py-6">
+                <h3 class="text-xl font-display font-bold text-pr-primary mb-4">
+                  Article Verification
                 </h3>
+                <div id="verification-pdf-link-container" class="mb-4"></div>
               </div>
-              <div class="flex space-x-6 text-pr-secondary footer-links">
-                <a class="hover:text-pr-primary" href="#">About Us</a>
-                <a class="hover:text-pr-primary" href="#">Contact</a>
-                <a class="hover:text-pr-primary" href="#">Privacy Policy</a>
-                <a class="hover:text-pr-primary" href="ai-policy.html">AI Policy</a>
-              </div>
-            </div>
-            <div class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-pr-secondary">
-              <p>© 2025 The Paper Route News. All Rights Reserved.</p>
             </div>
           </div>
-        </footer>
-
+        </main>
       </div>
     </div>
     <script src="/js/article.js"></script>
   </body>
 </html>
- 
