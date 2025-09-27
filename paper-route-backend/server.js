@@ -43,7 +43,7 @@ app.get('/api/articles', async (req, res) => {
     }
 
     const result = await connection.execute(
-      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER FROM articles ORDER BY created_at DESC`
+      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER, TAGS FROM articles ORDER BY created_at DESC`
     );
 
     console.log('Database query completed, processing results...');
@@ -122,7 +122,7 @@ app.get('/api/articles/:slug', async (req, res) => {
     }
 
     const result = await connection.execute(
-      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`,
+      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER, TAGS FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`,
       { slug: slug }
       // Use array format (same as articles list) to avoid circular reference issues
     );

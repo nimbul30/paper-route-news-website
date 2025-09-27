@@ -307,3 +307,30 @@ body {
     gap: 0.5rem;
   }
 }
+
+/* Tags Styling */
+.tags-container {
+    position: absolute;
+    top: 0.5rem; /* Adjust as needed */
+    left: 0.5rem; /* Adjust as needed */
+    z-index: 10; /* Ensure tags are above the image */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.tag-badge {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.tag-badge:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
