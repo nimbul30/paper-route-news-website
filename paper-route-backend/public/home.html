@@ -84,6 +84,10 @@
           >
         </div>
         <div class="flex items-center space-x-4">
+          <div class="hidden md:flex items-center">
+            <input type="text" id="search-input" placeholder="Search by tag..." class="px-4 py-2 rounded-l-md text-gray-800">
+            <button id="search-btn" class="bg-pr-primary text-white font-bold py-2 px-6 rounded-r-md hover:bg-opacity-90">Search</button>
+          </div>
           <button class="md:hidden flex items-center mobile-menu-button">
             <span class="material-icons text-pr-primary">menu</span>
           </button>
@@ -106,156 +110,50 @@
       </div>
     </header>
     <main class="container mx-auto px-6 py-12">
-      <div class="news-ticker-container">
-        <ul class="news-ticker">
-          <li>
-            <span class="font-bold text-red-500 mr-2">BREAKING:</span> Senate
-            rejects competing bills to fund government...
-          </li>
-          <li>
-            New poll shows where Americans think the country is heading...
-          </li>
-          <li>
-            Army says 4 soldiers died in a helicopter crash in Washington state
-            this week...
-          </li>
-          <li>
-            Mudslides trap drivers, bury roads and damage homes in Southern
-            California...
-          </li>
-          <li>
-            <span class="font-bold text-red-500 mr-2">LIVE:</span> Kennedy's
-            vaccine advisers change COVID shot guidance...
-          </li>
-          <li>
-            <span class="font-bold text-red-500 mr-2">BREAKING:</span> Senate
-            rejects competing bills to fund government...
-          </li>
-          <li>
-            New poll shows where Americans think the country is heading...
-          </li>
-          <li>
-            Army says 4 soldiers died in a helicopter crash in Washington state
-            this week...
-          </li>
-          <li>
-            Mudslides trap drivers, bury roads and damage homes in Southern
-            California...
-          </li>
-          <li>
-            <span class="font-bold text-red-500 mr-2">LIVE:</span> Kennedy's
-            vaccine advisers change COVID shot guidance...
-          </li>
-        </ul>
-      </div>
 
-      <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 hero-section">
-        <div class="flex flex-col gap-8">
-          <div class="bg-card-bg p-6 rounded-lg shadow-custom h-full">
-            <h3 class="font-bold text-lg mb-4 text-pr-primary">
-              Live updates: Trump overhauls H-1B visa for high-skilled workers
-            </h3>
-            <ul
-              class="list-disc list-inside space-y-2 text-sm text-pr-secondary"
-            >
-              <li>
-                Administration asks Supreme Court to strip legal protections
-                from Venezuelan migrants.
-              </li>
-              <li>
-                ICE arrests nearly 150 in Chicago area as part of “Midway
-                blitz.”
-              </li>
-            </ul>
+      
+
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 hero-section">
+        <div class="bg-card-bg rounded-lg shadow-custom">
+          <div class="spot p-4" data-spot-number="1">
+            <span class="spot-number">1</span>
           </div>
-          <div class="bg-card-bg p-6 rounded-lg shadow-custom h-full">
-            <h3 class="font-bold text-lg mb-4 text-pr-primary">
-              Kennedy's vaccine advisers change COVID shot guidance
-            </h3>
-            <ul
-              class="list-disc list-inside space-y-2 text-sm text-pr-secondary"
-            >
-              <li>Panel now calls the vaccine an individual choice.</li>
-              <li>
-                Advisers recommend new restrictions on MRNA vaccines for
-                children.
-              </li>
-            </ul>
+          <div class="border-t border-gray-300 my-4"></div>
+          <div class="spot p-4" data-spot-number="21">
+            <span class="spot-number">21</span>
           </div>
         </div>
-        <div
-          class="bg-card-bg p-6 rounded-lg shadow-custom col-span-1 lg:col-span-1 flex flex-col"
-        >
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaDLANn8xrM3W65JDgRJj3OMdMXotEGJTTGmT62V9_d4NNum4u3QiLwsnHy9pG3p2Q0waWS9E_dsX5RdDd8zhSeLIOBQJFU6QgAhIwSr4qfOma0tgO5c50yP1d7T6LNd9dpL7RUcsxv-ZV2Ll-oxJnkbEzcvJcA9lWvGFf_G3BcvMTiB2NXll3mHqomJN99ykpXEq7ImeI-QZGe_Pz8g387mhI0W0VJyNu-1Bo8lgTITqgaw7I-sFZmP507k9VxRaBn0zsB9sh0WA0"
-            alt="Newspapers stacked"
-            class="w-full h-auto object-cover mb-4 rounded-md"
-          />
-          <h3 class="font-bold text-xl mb-2 text-pr-primary">
-            D4vd tour dates removed from websites after the discovery of a
-            girl's body in Los Angeles
-          </h3>
-          <p class="text-sm text-pr-secondary mb-4">
-            The remaining tour dates for artist D4vd have been abruptly canceled
-            from official websites following a tragic discovery in Los Angeles.
-          </p>
+        <div class="bg-card-bg rounded-lg shadow-custom">
+          <div class="spot p-4" data-spot-number="2">
+            <span class="spot-number">2</span>
+          </div>
+          <div class="border-t border-gray-300 my-4"></div>
+          <div class="spot p-4" data-spot-number="22">
+            <span class="spot-number">22</span>
+          </div>
         </div>
-        <div class="flex flex-col gap-4">
-          <div class="bg-card-bg p-4 rounded-lg shadow-custom flex items-start">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaDLANn8xrM3W65JDgRJj3OMdMXotEGJTTGmT62V9_d4NNum4u3QiLwsnHy9pG3p2Q0waWS9E_dsX5RdDd8zhSeLIOBQJFU6QgAhIwSr4qfOma0tgO5c50yP1d7T6LNd9dpL7RUcsxv-ZV2Ll-oxJnkbEzcvJcA9lWvGFf_G3BcvMTiB2NXll3mHqomJN99ykpXEq7ImeI-QZGe_Pz8g387mhI0W0VJyNu-1Bo8lgTITqgaw7I-sFZmP507k9VxRaBn0zsB9sh0WA1"
-              alt="News Thumbnail"
-              class="w-16 h-16 object-cover rounded-md mr-3"
-            />
-            <div>
-              <h4 class="font-semibold text-pr-primary text-sm">
-                Man who died on Universal Orlando roller coaster had a spinal
-                condition, report says
-              </h4>
-            </div>
+        <div class="bg-card-bg rounded-lg shadow-custom">
+          <div class="spot p-4" data-spot-number="3">
+            <span class="spot-number">3</span>
           </div>
-          <div class="bg-card-bg p-4 rounded-lg shadow-custom flex items-start">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaDLANn8xrM3W65JDgRJj3OMdMXotEGJTTGmT62V9_d4NNum4u3QiLwsnHy9pG3p2Q0waWS9E_dsX5RdDd8zhSeLIOBQJFU6QgAhIwSr4qfOma0tgO5c50yP1d7T6LNd9dpL7RUcsxv-ZV2Ll-oxJnkbEzcvJcA9lWvGFf_G3BcvMTiB2NXll3mHqomJN99ykpXEq7ImeI-QZGe_Pz8g387mhI0W0VJyNu-1Bo8lgTITqgaw7I-sFZmP507k9VxRaBn0zsB9sh0WA2"
-              alt="News Thumbnail"
-              class="w-16 h-16 object-cover rounded-md mr-3"
-            />
-            <div>
-              <h4 class="font-semibold text-pr-primary text-sm">
-                Grammy-winning songwriter Brett James dies in plane crash
-              </h4>
-            </div>
+          <div class="border-t border-gray-300 my-4"></div>
+          <div class="spot p-4" data-spot-number="23">
+            <span class="spot-number">23</span>
           </div>
-          <div class="bg-card-bg p-4 rounded-lg shadow-custom flex items-start">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnwkH2D748vYCR5vSM7v3gO1q3GeyJTpQ0riWCv_K5v5_sR8ip5Acg2mzS7iz_rOe3Epa5hBlvMDG5Yxgxx8uuZ_jIBckpcYTQqauzr02lulX9ZjF6dPLUIF23I2UgRvFN1IKIBnM1LZc-znuVyXwX4IkFXVj1zyJHptGKPtqcKoYTttiVcawb4vrRmQ_NW37junMlYv41qdimatoCW2MkASHBTHAXippSxSLUK2sOiKlLSKzQBTy-EqOJSs4InaowKGDc-1NOPrg0"
-              alt="Passport"
-              class="w-16 h-16 object-cover rounded-md mr-3"
-            />
-            <div>
-              <h4 class="font-semibold text-pr-primary text-sm">
-                Trump asks Supreme Court to allow him to enforce transgender and
-                nonbinary passport policy
-              </h4>
-            </div>
+        </div>
+        <div class="bg-card-bg rounded-lg shadow-custom">
+          <div class="spot p-4" data-spot-number="4">
+            <span class="spot-number">4</span>
           </div>
-          <div class="bg-card-bg p-4 rounded-lg shadow-custom flex items-start">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnwkH2D748vYCR5vSM7v3gO1q3GeyJTpQ0riWCv_K5v5_sR8ip5Acg2mzS7iz_rOe3Epa5hBlvMDG5Yxgxx8uuZ_jIBckpcYTQqauzr02lulX9ZjF6dPLUIF23I2UgRvFN1IKIBnM1LZc-znuVyXwX4IkFXVj1zyJHptGKPtqcKoYTttiVcawb4vrRmQ_NW37junMlYv41qdimatoCW2MkASHBTHAXippSxSLUK2sOiKlLSKzQBTy-EqOJSs4InaowKGDc-1NOPrg1"
-              alt="Politicians"
-              class="w-16 h-16 object-cover rounded-md mr-3"
-            />
-            <div>
-              <h4 class="font-semibold text-pr-primary text-sm">
-                Senate rejects competing bills to fund government, increasing
-                risk of shutdown on Oct. 1
-              </h4>
-            </div>
+          <div class="border-t border-gray-300 my-4"></div>
+          <div class="spot p-4" data-spot-number="24">
+            <span class="spot-number">24</span>
           </div>
         </div>
       </section>
 
       <section
+        id="news-sections-grid"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
       >
         <div class="news-section" id="us-news-section">
@@ -265,6 +163,10 @@
               >chevron_right</span
             >
           </h3>
+          <div class="spot" data-spot-number="8"><span class="spot-number">8</span></div>
+          <div class="spot" data-spot-number="9"><span class="spot-number">9</span></div>
+          <div class="spot" data-spot-number="10"><span class="spot-number">10</span></div>
+          <div class="spot" data-spot-number="11"><span class="spot-number">11</span></div>
         </div>
         <div class="news-section" id="world-news-section">
           <h3 class="news-section-title">
@@ -273,6 +175,10 @@
               >chevron_right</span
             >
           </h3>
+          <div class="spot" data-spot-number="12"><span class="spot-number">12</span></div>
+          <div class="spot" data-spot-number="13"><span class="spot-number">13</span></div>
+          <div class="spot" data-spot-number="14"><span class="spot-number">14</span></div>
+          <div class="spot" data-spot-number="15"><span class="spot-number">15</span></div>
         </div>
         <div class="news-section" id="politics-news-section">
           <h3 class="news-section-title">
@@ -281,6 +187,10 @@
               >chevron_right</span
             >
           </h3>
+          <div class="spot" data-spot-number="16"><span class="spot-number">16</span></div>
+          <div class="spot" data-spot-number="17"><span class="spot-number">17</span></div>
+          <div class="spot" data-spot-number="18"><span class="spot-number">18</span></div>
+          <div class="spot" data-spot-number="19"><span class="spot-number">19</span></div>
         </div>
         <div class="news-section" id="entertainment-news-section">
           <h3 class="news-section-title">
@@ -289,6 +199,7 @@
               >chevron_right</span
             >
           </h3>
+          <div class="spot" data-spot-number="20"><span class="spot-number">20</span></div>
         </div>
         <div class="news-section" id="science-news-section">
           <h3 class="news-section-title">

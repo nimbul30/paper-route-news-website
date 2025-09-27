@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const feedbackMessage = document.getElementById('feedback-message');
   const deleteBtn = document.getElementById('delete-btn');
   const editBtn = document.getElementById('edit-btn');
+  const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
   const ADMIN_PASSWORD = 'password123';
   let isEditMode = false;
@@ -23,34 +24,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createArticleForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    const turndownService = new TurndownService();
-    const content = tinymce.get('content').getContent();
-    const sources = tinymce.get('sources').getContent();
+    console.log('Create article form submitted.');
 
     const articleData = {
       title: document.getElementById('title').value,
       slug: document.getElementById('slug').value,
       image_url: document.getElementById('image_url').value,
-      category: document.getElementById('category').value,
-      content: turndownService.turndown(content),
-      sources: turndownService.turndown(sources),
+      tags: document.getElementById('tags').value,
+      spot_number: document.getElementById('spot_number').value,
+      content: document.getElementById('content').value,
+      sources: document.getElementById('sources').value,
       verification_pdf_url: document.getElementById('verification_pdf_url')
         .value,
       youtube_embed_url: document.getElementById('youtube_embed_url').value,
     };
 
     try {
-      console.log('Form submission - isEditMode:', isEditMode);
-      console.log('originalSlug:', originalSlug);
-
+      console.log('Submitting article data:', articleData);
       let response;
       if (isEditMode) {
-        // Update existing article
-        articleData.new_slug = articleData.slug; // For updates, use new_slug
-        console.log('Sending POST request to: /api/articles/update');
-        console.log('Article data:', articleData);
-        // Temporarily use POST with _method parameter for testing
+        articleData.new_slug = articleData.slug;
         articleData._method = 'PUT';
         articleData._originalSlug = originalSlug;
         response = await fetch(`/api/articles/update`, {
@@ -59,9 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(articleData),
         });
       } else {
-        // Create new article
-        console.log('Sending POST request to: /api/articles');
-        console.log('Article data:', articleData);
         response = await fetch('/api/articles', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -69,31 +59,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
+      console.log('Received response:', response);
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message ||
-            `Failed to ${isEditMode ? 'update' : 'create'} article`
-        );
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          errorData = { message: await response.text() };
+        }
+        console.error('Server returned an error:', errorData);
+        if (response.status === 409) {
+          throw new Error(errorData.message || 'A post with this slug or spot number already exists.');
+        } else if (response.status === 404 && isEditMode) {
+          throw new Error(errorData.message || 'The article you are trying to edit could not be found. It may have been deleted.');
+        } else {
+          throw new Error(
+            errorData.message ||
+              `Failed to ${isEditMode ? 'update' : 'create'} article`
+          );
+        }
       }
 
       const result = await response.json();
+      console.log('Article submission successful:', result);
       feedbackMessage.textContent = isEditMode
         ? 'Article updated successfully!'
         : 'Article published successfully!';
       feedbackMessage.style.color = 'green';
 
       if (isEditMode) {
-        // Reset edit mode
         isEditMode = false;
         originalSlug = null;
         document.querySelector('button[type="submit"]').textContent =
           'Publish Article';
         document.querySelector('h1').textContent = 'Create or Delete Article';
+        cancelEditBtn.classList.add('hidden');
       } else {
         createArticleForm.reset();
       }
     } catch (error) {
+      console.error('An error occurred during article submission:', error);
       feedbackMessage.textContent = `Error: ${error.message}`;
       feedbackMessage.style.color = 'red';
     }
@@ -141,6 +147,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const archiveBtn = document.getElementById('archive-btn');
+
+  archiveBtn.addEventListener('click', async () => {
+    const slugToArchive = document.getElementById('slug').value;
+    if (!slugToArchive) {
+      alert('Please enter the slug of the article you wish to archive.');
+      return;
+    }
+
+    const isConfirmed = confirm(
+      `Are you sure you want to archive the article with slug "${slugToArchive}"? This will remove it from its spot on the home page.`
+    );
+    if (isConfirmed) {
+      try {
+        const response = await fetch(`/api/articles/${slugToArchive}/archive`, {
+          method: 'PUT',
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message);
+        feedbackMessage.textContent = result.message;
+        feedbackMessage.style.color = 'green';
+        createArticleForm.reset();
+      } catch (error) {
+        feedbackMessage.textContent = `Error: ${error.message}`;
+        feedbackMessage.style.color = 'red';
+      }
+    }
+  });
+
+  cancelEditBtn.addEventListener('click', () => {
+    isEditMode = false;
+    originalSlug = null;
+    createArticleForm.reset();
+    document.querySelector('h1').textContent = 'Create or Delete Article';
+    document.querySelector('button[type="submit"]').textContent = 'Publish Article';
+    cancelEditBtn.classList.add('hidden');
+    feedbackMessage.textContent = '';
+  });
+
   function isValidSlug(slug) {
     if (!slug || slug.trim() === '') {
       return false;
@@ -176,14 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('h1').textContent = 'Edit Article';
       document.querySelector('button[type="submit"]').textContent =
         'Update Article';
+      cancelEditBtn.classList.remove('hidden');
 
       // Populate the form fields with existing data
       document.getElementById('title').value = article.TITLE || '';
       document.getElementById('slug').value = article.SLUG || '';
       document.getElementById('image_url').value = article.IMAGE_URL || '';
-      document.getElementById('category').value = article.CATEGORY || '';
-      tinymce.get('content').setContent(article.CONTENT || '');
-      tinymce.get('sources').setContent(article.SOURCES || '');
+      document.getElementById('tags').value = article.TAGS || '';
+      document.getElementById('spot_number').value = article.SPOT_NUMBER || '';
+      document.getElementById('content').value = article.CONTENT || '';
+      document.getElementById('sources').value = article.SOURCES || '';
       document.getElementById('verification_pdf_url').value =
         article.VERIFICATION_PDF_URL || '';
       document.getElementById('youtube_embed_url').value =

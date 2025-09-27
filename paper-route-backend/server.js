@@ -42,28 +42,23 @@ app.get('/api/articles', async (req, res) => {
         .json({ message: 'Database connection not available' });
     }
 
-    // Get array response from Oracle database
     const result = await connection.execute(
-      `SELECT * FROM articles ORDER BY created_at DESC`
+      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER FROM articles ORDER BY created_at DESC`
     );
 
     console.log('Database query completed, processing results...');
 
-    // Process the array results with CLOB handling
     let sanitizedArticles = [];
 
     if (result.rows.length > 0 && Array.isArray(result.rows[0])) {
       console.log('Processing array format with CLOB handling...');
 
-      // Convert arrays to objects first
       const objectsFromArrays = DatabaseSanitizer.arrayToObject(result.rows);
 
-      // Process each object to handle CLOB fields
       for (const obj of objectsFromArrays) {
         try {
           const processedObj = { ...obj };
 
-          // Handle CLOB fields if they exist
           for (const [key, value] of Object.entries(processedObj)) {
             if (
               value &&
@@ -72,8 +67,10 @@ app.get('/api/articles', async (req, res) => {
               value._type.toString().includes('CLOB')
             ) {
               try {
+                console.log(`Extracting CLOB for field ${key}...`);
                 const clobData = await value.getData();
                 processedObj[key] = clobData || '';
+                console.log(`Successfully extracted CLOB for field ${key}.`);
               } catch (clobError) {
                 console.error(
                   `Error extracting CLOB for field ${key}:`,
@@ -95,13 +92,13 @@ app.get('/api/articles', async (req, res) => {
       sanitizedArticles = await DatabaseSanitizer.sanitizeArray(result.rows);
     }
 
+    console.log('Raw articles from DB:', sanitizedArticles);
     console.log(`Returning ${sanitizedArticles.length} articles`);
     res.json(sanitizedArticles);
   } catch (err) {
     console.error('Error fetching articles:', err);
     console.error('Error stack:', err.stack);
 
-    // Return sanitized error response
     try {
       res.status(500).json({
         error: 'Error fetching articles',
@@ -109,7 +106,6 @@ app.get('/api/articles', async (req, res) => {
         details: err.message,
       });
     } catch (responseError) {
-      // Fallback if JSON response fails
       res.status(500).send('Error fetching articles');
     }
   }
@@ -189,18 +185,19 @@ async function startApp() {
         title,
         new_slug,
         content,
-        category,
+        tags,
         image_url,
         sources,
         verification_pdf_url,
         youtube_embed_url,
+        spot_number,
         _originalSlug,
       } = req.body;
 
-      if (!title || !new_slug || !content || !category || !_originalSlug) {
+      if (!title || !new_slug || !content || !tags || !_originalSlug) {
         return res.status(400).json({
           message:
-            'Title, slug, content, category, and original slug are required.',
+            'Title, slug, content, tags, and original slug are required.',
         });
       }
 
@@ -215,22 +212,24 @@ async function startApp() {
                        title = :title, 
                        slug = :new_slug, 
                        content = :content, 
-                       category = :category, 
+                       tags = :tags, 
                        image_url = :image_url, 
                        sources = :sources, 
                        verification_pdf_url = :verification_pdf_url, 
-                       youtube_embed_url = :youtube_embed_url
+                       youtube_embed_url = :youtube_embed_url,
+                       spot_number = :spot_number
                      WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:original_slug))`;
 
         const binds = {
           title,
           new_slug,
           content,
-          category,
+          tags,
           image_url,
           sources,
           verification_pdf_url,
           youtube_embed_url,
+          spot_number,
           original_slug: _originalSlug,
         };
 
@@ -255,15 +254,16 @@ async function startApp() {
         title,
         slug,
         content,
-        category,
+        tags,
         image_url,
         sources,
         verification_pdf_url,
         youtube_embed_url,
+        spot_number,
       } = req.body;
-      if (!title || !slug || !content || !category) {
+      if (!title || !slug || !content || !tags) {
         return res.status(400).json({
-          message: 'Title, slug, content, and category are required.',
+          message: 'Title, slug, content, and tags are required.',
         });
       }
 
@@ -273,17 +273,18 @@ async function startApp() {
           .json({ message: 'Database connection not available' });
       }
 
-      const sql = `INSERT INTO articles (title, slug, content, category, image_url, sources, verification_pdf_url, youtube_embed_url)
-                     VALUES (:title, :slug, :content, :category, :image_url, :sources, :verification_pdf_url, :youtube_embed_url)`;
+      const sql = `INSERT INTO articles (title, slug, content, tags, image_url, sources, verification_pdf_url, youtube_embed_url, spot_number)
+                     VALUES (:title, :slug, :content, :tags, :image_url, :sources, :verification_pdf_url, :youtube_embed_url, :spot_number)`;
       const binds = {
         title,
         slug,
         content,
-        category,
+        tags,
         image_url,
         sources,
         verification_pdf_url,
         youtube_embed_url,
+        spot_number,
       };
       try {
         await connection.execute(sql, binds, { autoCommit: true });
@@ -304,11 +305,12 @@ async function startApp() {
         title,
         new_slug,
         content,
-        category,
+        tags,
         image_url,
         sources,
         verification_pdf_url,
         youtube_embed_url,
+        spot_number,
       } = req.body;
 
       console.log('PUT request received:');
@@ -319,9 +321,9 @@ async function startApp() {
         slug.toLowerCase().trim() !== new_slug.toLowerCase().trim()
       );
 
-      if (!title || !new_slug || !content || !category) {
+      if (!title || !new_slug || !content || !tags) {
         return res.status(400).json({
-          message: 'Title, slug, content, and category are required.',
+          message: 'Title, slug, content, and tags are required.',
         });
       }
 
@@ -354,22 +356,24 @@ async function startApp() {
                        title = :title, 
                        slug = :new_slug, 
                        content = :content, 
-                       category = :category, 
+                       tags = :tags, 
                        image_url = :image_url, 
                        sources = :sources, 
                        verification_pdf_url = :verification_pdf_url, 
-                       youtube_embed_url = :youtube_embed_url
+                       youtube_embed_url = :youtube_embed_url,
+                       spot_number = :spot_number
                      WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`;
 
         const binds = {
           title,
           new_slug,
           content,
-          category,
+          tags,
           image_url,
           sources,
           verification_pdf_url,
           youtube_embed_url,
+          spot_number,
           slug: slug,
         };
 
@@ -417,6 +421,34 @@ async function startApp() {
         res.status(200).json({ message: 'Article deleted successfully.' });
       } catch (err) {
         console.error('Error deleting article:', err);
+        res.status(500).json({ message: 'Database error' });
+      }
+    });
+
+    app.put('/api/articles/:slug/archive', async (req, res) => {
+      const slug = req.params.slug;
+
+      if (!connection) {
+        return res
+          .status(500)
+          .json({ message: 'Database connection not available' });
+      }
+
+      try {
+        const sql = `UPDATE articles SET spot_number = NULL WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`;
+        const binds = { slug: slug };
+
+        const result = await connection.execute(sql, binds, {
+          autoCommit: true,
+        });
+
+        if (result.rowsAffected === 0) {
+          return res.status(404).json({ message: 'Article not found.' });
+        }
+
+        res.status(200).json({ message: 'Article archived successfully' });
+      } catch (err) {
+        console.error('Error archiving article:', err);
         res.status(500).json({ message: 'Database error' });
       }
     });

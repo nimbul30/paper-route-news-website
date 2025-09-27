@@ -5,17 +5,9 @@
     <title>Create New Article</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="/style.css" rel="stylesheet" />
-    <script src="https://cdn.tiny.cloud/1/t0ynb2qd775yn0erg2drlenr3uznfyyz14q6xlanfdaneqri/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        tinymce.init({
-          selector: '#content, #sources',
-          plugins: 'advlist autolink lists link image charmap print preview anchor',
-          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image'
-        });
-      });
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
   </head>
   <body class="bg-pr-background">
     <div class="container mx-auto p-8">
@@ -84,15 +76,26 @@
             />
           </div>
           <div>
-            <label for="category" class="block font-bold text-pr-primary"
-              >Category</label
+            <label for="tags" class="block font-bold text-pr-primary"
+              >Tags (comma-separated)</label
             >
             <input
               type="text"
-              id="category"
-              required
+              id="tags"
               class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
-              placeholder="e.g., Politics, US, World"
+              placeholder="e.g., politics, us-news, elections"
+            />
+          </div>
+          <div>
+            <label for="spot_number" class="block font-bold text-pr-primary"
+              >Spot Number (1-20)</label
+            >
+            <input
+              type="number"
+              id="spot_number"
+              min="1"
+              max="20"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
             />
           </div>
           <div>
@@ -183,11 +186,29 @@ Content for your second section goes here."
             >
               Delete Article
             </button>
+            <button
+              type="button"
+              id="archive-btn"
+              class="w-full bg-yellow-500 text-white font-bold py-3 px-6 rounded-md hover:bg-yellow-600 transition-colors"
+            >
+              Archive
+            </button>
+            <button
+              type="button"
+              id="cancel-edit-btn"
+              class="w-full bg-gray-500 text-white font-bold py-3 px-6 rounded-md hover:bg-gray-600 transition-colors hidden"
+            >
+              Cancel Edit
+            </button>
           </div>
         </form>
         <p id="feedback-message" class="mt-4 text-center font-bold"></p>
       </div>
     </div>
-    <script src="/js/create.js?v=2"></script>
+    <script src="/js/create.js?v=3"></script>
+    <script>
+      const contentEditor = new SimpleMDE({ element: document.getElementById("content") });
+      const sourcesEditor = new SimpleMDE({ element: document.getElementById("sources") });
+    </script>
   </body>
 </html>
