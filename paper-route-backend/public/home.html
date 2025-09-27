@@ -24,7 +24,7 @@
               'pr-primary': '#182a38',
               'pr-secondary': '#757d7f',
               'pr-text-accent': '#eae7db',
-              'card-bg': '#eae7db',
+              'card-bg': '#182a38',
             },
             fontFamily: {
               display: ['Playfair Display', 'serif'],
@@ -43,53 +43,55 @@
     </script>
   </head>
   <body
-    class="bg-pr-background font-body text-pr-primary transition-colors duration-300"
+    class="bg-pr-primary font-body text-pr-text-accent transition-colors duration-300"
   >
-    <header class="bg-[#eae7db] shadow-md sticky top-0 z-50">
+    <header
+      class="bg-pr-primary shadow-md sticky top-0 z-50 border-b-2 border-pr-nav"
+    >
       <nav
         class="container mx-auto px-6 py-3 flex justify-between items-center"
       >
         <div class="flex items-center">
           <img
             alt="The Paper Route News Logo"
-            class="h-16 md:h-24 mr-4"
-            src="assets/news logo.png"
+            class="h-16 md:h-24 mr-4 rounded-md"
+            src="assets\news logo.png"
           />
           <div>
             <a
-              class="text-xl md:text-2xl font-display font-bold text-pr-primary"
+              class="text-xl md:text-2xl font-display font-bold text-pr-text-accent"
               href="#"
               >The Paper Route News</a
             >
-            <p class="hidden md:block text-sm text-pr-primary mt-1">
+            <p class="hidden md:block text-sm text-pr-nav mt-1">
               Your daily route to the stories that matter.
             </p>
           </div>
         </div>
         <div class="hidden md:flex items-center space-x-6 main-nav">
-          <a class="text-pr-secondary hover:text-pr-primary" href="#world"
-            >World</a
-          >
-          <a class="text-pr-secondary hover:text-pr-primary" href="#politics"
-            >Politics</a
-          >
-          <a class="text-pr-secondary hover:text-pr-primary" href="#business"
-            >Business</a
-          >
-          <a class="text-pr-secondary hover:text-pr-primary" href="#tech"
-            >Tech</a
-          >
-          <a class="text-pr-secondary hover:text-pr-primary" href="#culture"
-            >Culture</a
-          >
+          <a class="text-pr-nav hover:text-white" href="#world">World</a>
+          <a class="text-pr-nav hover:text-white" href="#politics">Politics</a>
+          <a class="text-pr-nav hover:text-white" href="#business">Business</a>
+          <a class="text-pr-nav hover:text-white" href="#tech">Tech</a>
+          <a class="text-pr-nav hover:text-white" href="#culture">Culture</a>
         </div>
         <div class="flex items-center space-x-4">
           <div class="hidden md:flex items-center">
-            <input type="text" id="search-input" placeholder="Search by tag..." class="px-4 py-2 rounded-l-md text-gray-800">
-            <button id="search-btn" class="bg-pr-primary text-white font-bold py-2 px-6 rounded-r-md hover:bg-opacity-90">Search</button>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search by tag..."
+              class="px-4 py-2 rounded-l-md text-gray-800 bg-pr-background border border-pr-secondary focus:outline-none focus:ring-2 focus:ring-pr-nav"
+            />
+            <button
+              id="search-btn"
+              class="bg-pr-secondary text-white font-bold py-2 px-4 rounded-r-md hover:bg-opacity-90"
+            >
+              <span class="material-icons">search</span>
+            </button>
           </div>
           <button class="md:hidden flex items-center mobile-menu-button">
-            <span class="material-icons text-pr-primary">menu</span>
+            <span class="material-icons text-pr-text-accent">menu</span>
           </button>
         </div>
       </nav>
@@ -110,158 +112,37 @@
       </div>
     </header>
     <main class="container mx-auto px-6 py-12">
-
-      
-
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 hero-section">
-        <div class="bg-card-bg rounded-lg shadow-custom">
-          <div class="spot p-4" data-spot-number="1">
-            <span class="spot-number">1</span>
-          </div>
-          <div class="border-t border-gray-300 my-4"></div>
-          <div class="spot p-4" data-spot-number="21">
-            <span class="spot-number">21</span>
-          </div>
-        </div>
-        <div class="bg-card-bg rounded-lg shadow-custom">
-          <div class="spot p-4" data-spot-number="2">
-            <span class="spot-number">2</span>
-          </div>
-          <div class="border-t border-gray-300 my-4"></div>
-          <div class="spot p-4" data-spot-number="22">
-            <span class="spot-number">22</span>
-          </div>
-        </div>
-        <div class="bg-card-bg rounded-lg shadow-custom">
-          <div class="spot p-4" data-spot-number="3">
-            <span class="spot-number">3</span>
-          </div>
-          <div class="border-t border-gray-300 my-4"></div>
-          <div class="spot p-4" data-spot-number="23">
-            <span class="spot-number">23</span>
-          </div>
-        </div>
-        <div class="bg-card-bg rounded-lg shadow-custom">
-          <div class="spot p-4" data-spot-number="4">
-            <span class="spot-number">4</span>
-          </div>
-          <div class="border-t border-gray-300 my-4"></div>
-          <div class="spot p-4" data-spot-number="24">
-            <span class="spot-number">24</span>
-          </div>
-        </div>
+      <section class="hero-section" id="featured-articles">
+        <!-- Featured articles will be injected here by app.js -->
       </section>
 
-      <section
-        id="news-sections-grid"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
-      >
-        <div class="news-section" id="us-news-section">
-          <h3 class="news-section-title">
-            US NEWS
-            <span class="material-icons text-pr-primary text-base"
-              >chevron_right</span
-            >
-          </h3>
-          <div class="spot" data-spot-number="8"><span class="spot-number">8</span></div>
-          <div class="spot" data-spot-number="9"><span class="spot-number">9</span></div>
-          <div class="spot" data-spot-number="10"><span class="spot-number">10</span></div>
-          <div class="spot" data-spot-number="11"><span class="spot-number">11</span></div>
-        </div>
-        <div class="news-section" id="world-news-section">
-          <h3 class="news-section-title">
-            WORLD NEWS
-            <span class="material-icons text-pr-primary text-base"
-              >chevron_right</span
-            >
-          </h3>
-          <div class="spot" data-spot-number="12"><span class="spot-number">12</span></div>
-          <div class="spot" data-spot-number="13"><span class="spot-number">13</span></div>
-          <div class="spot" data-spot-number="14"><span class="spot-number">14</span></div>
-          <div class="spot" data-spot-number="15"><span class="spot-number">15</span></div>
-        </div>
-        <div class="news-section" id="politics-news-section">
-          <h3 class="news-section-title">
-            POLITICS
-            <span class="material-icons text-pr-primary text-base"
-              >chevron_right</span
-            >
-          </h3>
-          <div class="spot" data-spot-number="16"><span class="spot-number">16</span></div>
-          <div class="spot" data-spot-number="17"><span class="spot-number">17</span></div>
-          <div class="spot" data-spot-number="18"><span class="spot-number">18</span></div>
-          <div class="spot" data-spot-number="19"><span class="spot-number">19</span></div>
-        </div>
-        <div class="news-section" id="entertainment-news-section">
-          <h3 class="news-section-title">
-            ENTERTAINMENT
-            <span class="material-icons text-pr-primary text-base"
-              >chevron_right</span
-            >
-          </h3>
-          <div class="spot" data-spot-number="20"><span class="spot-number">20</span></div>
-        </div>
-        <div class="news-section" id="science-news-section">
-          <h3 class="news-section-title">
-            SCIENCE NEWS
-            <span class="material-icons text-pr-primary text-base"
-              >chevron_right</span
-            >
-          </h3>
-        </div>
-      </section>
-
-      <section
-        class="bg-card-bg text-pr-primary rounded-lg p-8 text-center my-12"
-      >
-        <h2 class="text-3xl font-display font-bold mb-2">Join Our Community</h2>
-        <p class="mb-6 opacity-90">
-          Become a member and connect with like-minded readers, participate in
-          exclusive discussions, and shape the future of our news platform.
-        </p>
-        <div
-          class="flex flex-col md:flex-row justify-center items-center gap-4"
-        >
-          <input
-            class="w-full md:w-80 px-4 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-pr-primary"
-            placeholder="Your email address"
-            type="email"
-          />
-          <button
-            class="bg-pr-primary text-white font-bold py-2 px-6 rounded-md hover:bg-opacity-90 transition-colors w-full md:w-auto"
-            type="submit"
-          >
-            Sign Up
-          </button>
-          <button
-            class="bg-transparent border-2 border-pr-primary text-pr-primary font-bold py-2 px-6 rounded-md hover:bg-pr-primary hover:text-white transition-colors w-full md:w-auto"
-            type="button"
-          >
-            Learn More
-          </button>
-        </div>
-      </section>
+      <div class="article-list-container">
+        <h2 class="article-list-title">Latest Stories</h2>
+        <section class="article-list" id="article-list">
+          <!-- Article items will be injected here by app.js -->
+        </section>
+      </div>
     </main>
-    <footer class="bg-[#eae7db] mt-12 border-t border-gray-200">
+    <footer class="bg-pr-primary mt-12 border-t border-pr-nav">
       <div class="container mx-auto px-6 py-8">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-6 md:mb-0">
-            <h3 class="text-xl font-display font-bold text-pr-primary">
+            <h3 class="text-xl font-display font-bold text-pr-text-accent">
               The Paper Route News
             </h3>
-            <p class="text-sm text-pr-secondary mt-1">paperroutenews.com</p>
+            <p class="text-sm text-pr-nav mt-1">paperroutenews.com</p>
           </div>
-          <div class="flex space-x-6 text-pr-secondary footer-links">
-            <a class="hover:text-pr-primary" href="#">About Us</a>
-            <a class="hover:text-pr-primary" href="#">Contact</a>
-            <a class="hover:text-pr-primary" href="#">Privacy Policy</a>
-            <a class="hover:text-pr-primary" href="#">Terms of Service</a>
+          <div class="flex space-x-6 text-pr-nav footer-links">
+            <a class="hover:text-white" href="#">About Us</a>
+            <a class="hover:text-white" href="#">Contact</a>
+            <a class="hover:text-white" href="#">Privacy Policy</a>
+            <a class="hover:text-white" href="#">Terms of Service</a>
           </div>
         </div>
         <div
-          class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-pr-secondary"
+          class="mt-8 pt-6 border-t border-pr-nav text-center text-sm text-pr-nav"
         >
-          <p>© 2023 The Paper Route News. All Rights Reserved.</p>
+          <p>© 2025 The Paper Route News. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

@@ -122,7 +122,7 @@ app.get('/api/articles/:slug', async (req, res) => {
     }
 
     const result = await connection.execute(
-      `SELECT * FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`,
+      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`,
       { slug: slug }
       // Use array format (same as articles list) to avoid circular reference issues
     );
@@ -194,6 +194,11 @@ async function startApp() {
         _originalSlug,
       } = req.body;
 
+      const spotNumberInt = spot_number ? parseInt(spot_number, 10) : null;
+      if (spot_number && isNaN(spotNumberInt)) {
+        return res.status(400).json({ message: 'Invalid spot number provided.' });
+      }
+
       if (!title || !new_slug || !content || !tags || !_originalSlug) {
         return res.status(400).json({
           message:
@@ -208,6 +213,17 @@ async function startApp() {
       }
 
       try {
+        // If a new spot_number is being assigned, clear that spot first.
+        // Make sure not to un-spot the article we are currently editing.
+        if (spotNumberInt) {
+          const updateSpotSql = `UPDATE articles SET spot_number = NULL WHERE spot_number = :spot_number AND UPPER(TRIM(slug)) != UPPER(TRIM(:original_slug))`;
+          await connection.execute(
+            updateSpotSql,
+            { spot_number: spotNumberInt, original_slug: _originalSlug },
+            { autoCommit: false }
+          );
+        }
+
         const sql = `UPDATE articles SET 
                        title = :title, 
                        slug = :new_slug, 
@@ -229,12 +245,12 @@ async function startApp() {
           sources,
           verification_pdf_url,
           youtube_embed_url,
-          spot_number,
+          spot_number: spotNumberInt,
           original_slug: _originalSlug,
         };
 
         const result = await connection.execute(sql, binds, {
-          autoCommit: true,
+          autoCommit: true, // This commits both the spot clearing and the update
         });
 
         if (result.rowsAffected === 0) {
@@ -244,6 +260,12 @@ async function startApp() {
         res.status(200).json({ message: 'Article updated successfully', new_slug });
       } catch (err) {
         console.error('Error updating article:', err);
+        // Attempt to rollback if something went wrong
+        try {
+            await connection.rollback();
+        } catch (rollErr) {
+            console.error('Failed to rollback in update route:', rollErr);
+        }
         res.status(500).json({ message: 'Database error' });
       }
     });
@@ -261,6 +283,12 @@ async function startApp() {
         youtube_embed_url,
         spot_number,
       } = req.body;
+
+      const spotNumberInt = spot_number ? parseInt(spot_number, 10) : null;
+      if (spot_number && isNaN(spotNumberInt)) {
+        return res.status(400).json({ message: 'Invalid spot number provided.' });
+      }
+
       if (!title || !slug || !content || !tags) {
         return res.status(400).json({
           message: 'Title, slug, content, and tags are required.',
@@ -273,24 +301,39 @@ async function startApp() {
           .json({ message: 'Database connection not available' });
       }
 
-      const sql = `INSERT INTO articles (title, slug, content, tags, image_url, sources, verification_pdf_url, youtube_embed_url, spot_number)
-                     VALUES (:title, :slug, :content, :tags, :image_url, :sources, :verification_pdf_url, :youtube_embed_url, :spot_number)`;
-      const binds = {
-        title,
-        slug,
-        content,
-        tags,
-        image_url,
-        sources,
-        verification_pdf_url,
-        youtube_embed_url,
-        spot_number,
-      };
       try {
+        if (spotNumberInt) {
+          const updateSql = `UPDATE articles SET spot_number = NULL WHERE spot_number = :spot_number`;
+          await connection.execute(
+            updateSql,
+            { spot_number: spotNumberInt },
+            { autoCommit: false }
+          );
+        }
+
+        const sql = `INSERT INTO articles (title, slug, content, tags, image_url, sources, verification_pdf_url, youtube_embed_url, spot_number)
+                     VALUES (:title, :slug, :content, :tags, :image_url, :sources, :verification_pdf_url, :youtube_embed_url, :spot_number)`;
+        const binds = {
+          title,
+          slug,
+          content,
+          tags,
+          image_url,
+          sources,
+          verification_pdf_url,
+          youtube_embed_url,
+          spot_number: spotNumberInt,
+        };
+
         await connection.execute(sql, binds, { autoCommit: true });
         res.status(201).json({ message: 'Article created successfully' });
       } catch (err) {
         console.error('Error inserting article:', err);
+        try {
+            await connection.rollback();
+        } catch (rollErr) {
+            console.error('Failed to rollback:', rollErr);
+        }
         if (err.errorNum === 1)
           return res
             .status(409)

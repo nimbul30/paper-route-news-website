@@ -5,7 +5,7 @@
   --pr-primary: #182a38;
   --pr-secondary: #757d7f;
   --pr-text-accent: #eae7db;
-  --card-bg: #eae7db;
+  --card-bg: #182a38; /* Updated for dark theme */
   --font-display: 'Playfair Display', serif;
   --font-body: 'Roboto', sans-serif;
   --shadow-custom: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
@@ -14,11 +14,117 @@
 
 /* Base Styles */
 body {
-  background-color: var(--pr-background);
+  background-color: var(--pr-primary);
   font-family: var(--font-body);
-  color: var(--pr-primary);
+  color: var(--pr-text-accent);
   transition: color 0.3s, background-color 0.3s;
 }
+
+/* Hero Section */
+.hero-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.featured-article {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.featured-article img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured-article:hover img {
+  transform: scale(1.05);
+}
+
+.featured-article-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+}
+
+.featured-article-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-family: var(--font-display);
+}
+
+.featured-article-summary {
+  font-size: 0.875rem;
+  color: var(--pr-text-accent);
+}
+
+/* Article List */
+.article-list-container {
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+}
+
+.article-list-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: var(--font-display);
+  margin-bottom: 1.5rem;
+  color: var(--pr-text-accent);
+  border-bottom: 2px solid var(--pr-nav);
+  padding-bottom: 0.5rem;
+}
+
+.article-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.article-item {
+  background-color: var(--pr-background);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-custom);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.article-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.article-item-content {
+  padding: 1rem;
+}
+
+.article-item-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: var(--font-display);
+  color: var(--pr-text-accent);
+  margin-bottom: 0.5rem;
+}
+
+.article-item-summary {
+  font-size: 0.875rem;
+  color: var(--pr-nav);
+}
+
 
 /* News Ticker */
 .news-ticker-container {
@@ -109,7 +215,7 @@ body {
 
 /* News Section & Article Styles */
 .news-section {
-  background-color: var(--card-bg); /* Changed from white */
+  background-color: var(--pr-primary); /* Changed from white */
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: var(--shadow-custom); /* Added shadow */
@@ -119,7 +225,7 @@ body {
   border-bottom: 2px solid var(--pr-nav); /* Adjusted for contrast */
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
-  color: var(--pr-primary);
+  color: var(--pr-text-accent);
 }
 .news-article {
   margin-bottom: 1rem;
@@ -139,12 +245,12 @@ body {
 }
 .news-article h4 {
   font-weight: bold;
-  color: var(--pr-primary);
+  color: var(--pr-text-accent);
   margin-bottom: 0.25rem;
 }
 .news-article p {
   font-size: 0.875rem;
-  color: var(--pr-secondary);
+  color: var(--pr-nav);
 }
 
 /* Card Background and Shadow for Hero Section */

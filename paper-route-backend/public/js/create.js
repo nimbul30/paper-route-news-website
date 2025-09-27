@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let isEditMode = false;
   let originalSlug = null;
 
+  // Initialize SimpleMDE editors
+  const contentEditor = new SimpleMDE({ element: document.getElementById('content') });
+  const sourcesEditor = new SimpleMDE({ element: document.getElementById('sources') });
+
   submitPasswordBtn.addEventListener('click', () => {
     if (passwordInput.value === ADMIN_PASSWORD) {
       passwordGate.classList.add('hidden');
@@ -32,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
       image_url: document.getElementById('image_url').value,
       tags: document.getElementById('tags').value,
       spot_number: document.getElementById('spot_number').value,
-      content: document.getElementById('content').value,
-      sources: document.getElementById('sources').value,
+      content: contentEditor.value(), // Get value from SimpleMDE
+      sources: sourcesEditor.value(), // Get value from SimpleMDE
       verification_pdf_url: document.getElementById('verification_pdf_url')
         .value,
       youtube_embed_url: document.getElementById('youtube_embed_url').value,
@@ -97,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelEditBtn.classList.add('hidden');
       } else {
         createArticleForm.reset();
+        contentEditor.value(''); // Clear SimpleMDE editor
+        sourcesEditor.value(''); // Clear SimpleMDE editor
       }
     } catch (error) {
       console.error('An error occurred during article submission:', error);
@@ -140,6 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackMessage.textContent = result.message;
         feedbackMessage.style.color = 'green';
         createArticleForm.reset();
+        contentEditor.value(''); // Clear SimpleMDE editor
+        sourcesEditor.value(''); // Clear SimpleMDE editor
       } catch (error) {
         feedbackMessage.textContent = `Error: ${error.message}`;
         feedbackMessage.style.color = 'red';
@@ -169,6 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackMessage.textContent = result.message;
         feedbackMessage.style.color = 'green';
         createArticleForm.reset();
+        contentEditor.value(''); // Clear SimpleMDE editor
+        sourcesEditor.value(''); // Clear SimpleMDE editor
       } catch (error) {
         feedbackMessage.textContent = `Error: ${error.message}`;
         feedbackMessage.style.color = 'red';
@@ -180,6 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
     isEditMode = false;
     originalSlug = null;
     createArticleForm.reset();
+    contentEditor.value(''); // Clear SimpleMDE editor
+    sourcesEditor.value(''); // Clear SimpleMDE editor
     document.querySelector('h1').textContent = 'Create or Delete Article';
     document.querySelector('button[type="submit"]').textContent = 'Publish Article';
     cancelEditBtn.classList.add('hidden');
@@ -229,8 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('image_url').value = article.IMAGE_URL || '';
       document.getElementById('tags').value = article.TAGS || '';
       document.getElementById('spot_number').value = article.SPOT_NUMBER || '';
-      document.getElementById('content').value = article.CONTENT || '';
-      document.getElementById('sources').value = article.SOURCES || '';
+      contentEditor.value(article.CONTENT || ''); // Set value using SimpleMDE API
+      sourcesEditor.value(article.SOURCES || ''); // Set value using SimpleMDE API
       document.getElementById('verification_pdf_url').value =
         article.VERIFICATION_PDF_URL || '';
       document.getElementById('youtube_embed_url').value =
