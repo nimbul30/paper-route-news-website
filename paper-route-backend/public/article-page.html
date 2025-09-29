@@ -92,68 +92,76 @@
             </div>
           </nav>
         </header>
-        <main class="container mx-auto px-6 py-12">
-          <div class="max-w-4xl mx-auto" id="article-content">
-            <div class="flex items-center justify-between mb-8">
-              <a
-                href="home.html"
-                class="flex items-center gap-2 text-pr-secondary hover:text-pr-primary transition-colors"
-              >
-                <span class="material-icons">arrow_back</span>
-                <span>Back to Home</span>
-              </a>
-            </div>
-            <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden">
-              <div class="p-8">
-                <div
-                  id="article-image"
-                  class="bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-6"
-                  style="background-image: url('assets/news logo.png')"
-                ></div>
-                <div id="youtube-embed-container" class="mb-6"></div>
-                <h1
-                  id="article-title"
-                  class="text-pr-primary font-display text-4xl font-bold mb-4"
+        <main class="container mx-auto px-6 py-12 relative">
+          <div id="layout-default" class="hidden">
+            <div class="max-w-4xl mx-auto" id="article-content">
+              <div class="flex items-center justify-between mb-8">
+                <a
+                  href="home.html"
+                  class="flex items-center gap-2 text-pr-secondary hover:text-pr-primary transition-colors"
                 >
-                  Loading Article...
-                </h1>
-                <div
-                  class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6"
-                >
-                  <div class="flex items-center gap-3">
-                    <span id="author-name" class="font-semibold text-pr-primary"
-                      >Loading...</span
+                  <span class="material-icons">arrow_back</span>
+                  <span>Back to Home</span>
+                </a>
+              </div>
+              <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden">
+                <div class="p-8">
+                  <div
+                    id="article-image"
+                    class="bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-6"
+                    style="background-image: url('assets/news logo.png')"
+                  ></div>
+                  <div id="youtube-embed-container" class="mb-6"></div>
+                  <h1
+                    id="article-title"
+                    class="text-pr-primary font-display text-4xl font-bold mb-4"
+                  >
+                    Loading Article...
+                  </h1>
+                  <div
+                    class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6"
+                  >
+                    <div class="flex items-center gap-3">
+                      <span id="author-name" class="font-semibold text-pr-primary"
+                        >Loading...</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    id="article-body"
+                    class="prose prose-lg max-w-none text-pr-primary mt-6 leading-relaxed"
+                  >
+                    <p>Please wait while the content is being loaded.</p>
+                  </div>
+                  <div
+                    id="article-sources"
+                    class="border-t border-pr-nav mt-8 pt-6"
+                  >
+                    <h3
+                      class="text-xl font-display font-bold text-pr-primary mb-4"
                     >
+                      Sources
+                    </h3>
+                    <div
+                      id="sources-list"
+                      class="text-black space-y-2"
+                    ></div>
                   </div>
                 </div>
-                <div
-                  id="article-body"
-                  class="prose prose-lg max-w-none text-pr-primary mt-6 leading-relaxed"
-                >
-                  <p>Please wait while the content is being loaded.</p>
-                </div>
-                <div
-                  id="article-sources"
-                  class="border-t border-pr-nav mt-8 pt-6"
-                >
-                  <h3
-                    class="text-xl font-display font-bold text-pr-primary mb-4"
-                  >
-                    Sources
+                <div class="bg-pr-nav px-8 py-6">
+                  <h3 class="text-xl font-display font-bold text-pr-primary mb-4">
+                    Article Verification
                   </h3>
-                  <div
-                    id="sources-list"
-                    class="text-black space-y-2"
-                  ></div>
+                  <div id="verification-pdf-link-container" class="mb-4"></div>
                 </div>
-              </div>
-              <div class="bg-pr-nav px-8 py-6">
-                <h3 class="text-xl font-display font-bold text-pr-primary mb-4">
-                  Article Verification
-                </h3>
-                <div id="verification-pdf-link-container" class="mb-4"></div>
               </div>
             </div>
+          </div>
+          <div id="layout-two-column" class="hidden">
+            <!-- Two-column layout will be generated here -->
+          </div>
+          <div id="layout-full-width-image" class="hidden">
+            <!-- Full-width image layout will be generated here -->
           </div>
         </main>
       </div>

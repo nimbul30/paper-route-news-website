@@ -43,7 +43,7 @@ app.get('/api/articles', async (req, res) => {
     }
 
     const result = await connection.execute(
-      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER, TAGS FROM articles ORDER BY created_at DESC`
+      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER, TAGS, LAYOUT, WIDESCREEN_IMAGE_URL FROM articles ORDER BY created_at DESC`
     );
 
     console.log('Database query completed, processing results...');
@@ -122,7 +122,7 @@ app.get('/api/articles/:slug', async (req, res) => {
     }
 
     const result = await connection.execute(
-      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER, TAGS FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`,
+      `SELECT ID, TITLE, SLUG, CONTENT, AUTHOR_ID, CREATED_AT, IMAGE_URL, SOURCES, VERIFICATION_DETAILS, VERIFICATION_PDF_URL, YOUTUBE_EMBED_URL, SPOT_NUMBER, TAGS, LAYOUT, WIDESCREEN_IMAGE_URL FROM articles WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`,
       { slug: slug }
       // Use array format (same as articles list) to avoid circular reference issues
     );
@@ -172,8 +172,6 @@ app.get('/api/articles/:slug', async (req, res) => {
   }
 });
 
-
-
 async function startApp() {
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -187,16 +185,20 @@ async function startApp() {
         content,
         tags,
         image_url,
+        widescreen_image_url, // Add widescreen_image_url
         sources,
         verification_pdf_url,
         youtube_embed_url,
         spot_number,
+        layout, // Add layout
         _originalSlug,
       } = req.body;
 
       const spotNumberInt = spot_number ? parseInt(spot_number, 10) : null;
       if (spot_number && isNaN(spotNumberInt)) {
-        return res.status(400).json({ message: 'Invalid spot number provided.' });
+        return res
+          .status(400)
+          .json({ message: 'Invalid spot number provided.' });
       }
 
       if (!title || !new_slug || !content || !tags || !_originalSlug) {
@@ -230,10 +232,12 @@ async function startApp() {
                        content = :content, 
                        tags = :tags, 
                        image_url = :image_url, 
+                       widescreen_image_url = :widescreen_image_url,
                        sources = :sources, 
                        verification_pdf_url = :verification_pdf_url, 
                        youtube_embed_url = :youtube_embed_url,
-                       spot_number = :spot_number
+                       spot_number = :spot_number,
+                       layout = :layout
                      WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:original_slug))`;
 
         const binds = {
@@ -242,10 +246,12 @@ async function startApp() {
           content,
           tags,
           image_url,
+          widescreen_image_url, // Add widescreen_image_url
           sources,
           verification_pdf_url,
           youtube_embed_url,
           spot_number: spotNumberInt,
+          layout, // Add layout
           original_slug: _originalSlug,
         };
 
@@ -257,14 +263,16 @@ async function startApp() {
           return res.status(404).json({ message: 'Article not found.' });
         }
 
-        res.status(200).json({ message: 'Article updated successfully', new_slug });
+        res
+          .status(200)
+          .json({ message: 'Article updated successfully', new_slug });
       } catch (err) {
         console.error('Error updating article:', err);
         // Attempt to rollback if something went wrong
         try {
-            await connection.rollback();
+          await connection.rollback();
         } catch (rollErr) {
-            console.error('Failed to rollback in update route:', rollErr);
+          console.error('Failed to rollback in update route:', rollErr);
         }
         res.status(500).json({ message: 'Database error' });
       }
@@ -278,15 +286,19 @@ async function startApp() {
         content,
         tags,
         image_url,
+        widescreen_image_url, // Add widescreen_image_url
         sources,
         verification_pdf_url,
         youtube_embed_url,
         spot_number,
+        layout, // Add layout
       } = req.body;
 
       const spotNumberInt = spot_number ? parseInt(spot_number, 10) : null;
       if (spot_number && isNaN(spotNumberInt)) {
-        return res.status(400).json({ message: 'Invalid spot number provided.' });
+        return res
+          .status(400)
+          .json({ message: 'Invalid spot number provided.' });
       }
 
       if (!title || !slug || !content || !tags) {
@@ -311,18 +323,20 @@ async function startApp() {
           );
         }
 
-        const sql = `INSERT INTO articles (title, slug, content, tags, image_url, sources, verification_pdf_url, youtube_embed_url, spot_number)
-                     VALUES (:title, :slug, :content, :tags, :image_url, :sources, :verification_pdf_url, :youtube_embed_url, :spot_number)`;
+        const sql = `INSERT INTO articles (title, slug, content, tags, image_url, widescreen_image_url, sources, verification_pdf_url, youtube_embed_url, spot_number, layout)
+                     VALUES (:title, :slug, :content, :tags, :image_url, :widescreen_image_url, :sources, :verification_pdf_url, :youtube_embed_url, :spot_number, :layout)`;
         const binds = {
           title,
           slug,
           content,
           tags,
           image_url,
+          widescreen_image_url, // Add widescreen_image_url
           sources,
           verification_pdf_url,
           youtube_embed_url,
           spot_number: spotNumberInt,
+          layout, // Add layout
         };
 
         await connection.execute(sql, binds, { autoCommit: true });
@@ -330,9 +344,9 @@ async function startApp() {
       } catch (err) {
         console.error('Error inserting article:', err);
         try {
-            await connection.rollback();
+          await connection.rollback();
         } catch (rollErr) {
-            console.error('Failed to rollback:', rollErr);
+          console.error('Failed to rollback:', rollErr);
         }
         if (err.errorNum === 1)
           return res
@@ -350,10 +364,12 @@ async function startApp() {
         content,
         tags,
         image_url,
+        widescreen_image_url, // Add widescreen_image_url
         sources,
         verification_pdf_url,
         youtube_embed_url,
         spot_number,
+        layout, // Add layout
       } = req.body;
 
       console.log('PUT request received:');
@@ -401,10 +417,12 @@ async function startApp() {
                        content = :content, 
                        tags = :tags, 
                        image_url = :image_url, 
+                       widescreen_image_url = :widescreen_image_url,
                        sources = :sources, 
                        verification_pdf_url = :verification_pdf_url, 
                        youtube_embed_url = :youtube_embed_url,
-                       spot_number = :spot_number
+                       spot_number = :spot_number,
+                       layout = :layout
                      WHERE UPPER(TRIM(slug)) = UPPER(TRIM(:slug))`;
 
         const binds = {
@@ -413,10 +431,12 @@ async function startApp() {
           content,
           tags,
           image_url,
+          widescreen_image_url, // Add widescreen_image_url
           sources,
           verification_pdf_url,
           youtube_embed_url,
           spot_number,
+          layout, // Add layout
           slug: slug,
         };
 
@@ -495,6 +515,10 @@ async function startApp() {
         res.status(500).json({ message: 'Database error' });
       }
     });
+
+
+
+
 
     // --- Serve Frontend ---
     // Only serve home.html for root and specific routes, not for assets

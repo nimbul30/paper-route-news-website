@@ -27,6 +27,27 @@ async function loadArticle() {
 }
 
 function renderArticle(article) {
+  // Hide all layouts by default
+  document.getElementById('layout-default').classList.add('hidden');
+  document.getElementById('layout-two-column').classList.add('hidden');
+  document.getElementById('layout-full-width-image').classList.add('hidden');
+
+  switch (article.LAYOUT) {
+    case 'two-column':
+      renderLayoutTwoColumn(article);
+      break;
+    case 'full-width-image':
+      renderLayoutFullWidthImage(article);
+      break;
+    default:
+      renderLayoutDefault(article);
+      break;
+  }
+}
+
+function renderLayoutDefault(article) {
+  document.getElementById('layout-default').classList.remove('hidden');
+
   document.getElementById('article-title').textContent = article.TITLE;
   // Format article content with proper paragraphs
   const content = article.CONTENT || 'Content not available.';
@@ -66,6 +87,145 @@ function renderArticle(article) {
     const pdfContainer = document.getElementById(
       'verification-pdf-link-container'
     );
+    pdfContainer.innerHTML = `<a href="${article.VERIFICATION_PDF_URL}" target="_blank" rel="noopener noreferrer" class="inline-block bg-pr-primary text-white font-bold py-2 px-4 rounded-md hover:bg-opacity-90">Download Verification PDF</a>`;
+  }
+}
+
+function renderLayoutTwoColumn(article) {
+  document.getElementById('layout-two-column').classList.remove('hidden');
+  const twoColumnLayout = `
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div class="md:col-span-1">
+        <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden">
+          <div class="p-8">
+            <div
+              id="article-image-two-column"
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg mb-6"
+              style="background-image: url('assets/news logo.png')"
+            ></div>
+            <div id="youtube-embed-container-two-column" class="mb-6"></div>
+            <div class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6">
+              <div class="flex items-center gap-3">
+                <span id="author-name-two-column" class="font-semibold text-pr-primary">Loading...</span>
+              </div>
+            </div>
+            <div id="verification-pdf-link-container-two-column" class="mb-4"></div>
+          </div>
+        </div>
+      </div>
+      <div class="md:col-span-2">
+        <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden p-8">
+          <h1 id="article-title-two-column" class="text-pr-primary font-display text-4xl font-bold mb-4">Loading Article...</h1>
+          <div id="article-body-two-column" class="prose prose-lg max-w-none text-pr-primary mt-6 leading-relaxed">
+            <p>Please wait while the content is being loaded.</p>
+          </div>
+          <div id="article-sources-two-column" class="border-t border-pr-nav mt-8 pt-6">
+            <h3 class="text-xl font-display font-bold text-pr-primary mb-4">Sources</h3>
+            <div id="sources-list-two-column" class="text-black space-y-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('layout-two-column').innerHTML = twoColumnLayout;
+
+  document.getElementById('article-title-two-column').textContent = article.TITLE;
+  const content = article.CONTENT || 'Content not available.';
+  const formattedContent = formatArticleContent(content);
+  document.getElementById('article-body-two-column').innerHTML = formattedContent;
+  document.getElementById('author-name-two-column').textContent = article.AUTHOR_ID || 'The Paper Route News';
+  document.title = `${article.TITLE} - The Paper Route News`;
+
+  if (article.IMAGE_URL) {
+    let imageUrl = article.IMAGE_URL;
+    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
+      imageUrl = `assets/${imageUrl}`;
+    }
+    document.getElementById('article-image-two-column').style.backgroundImage = `url('${imageUrl}')`;
+  }
+
+  if (article.YOUTUBE_EMBED_URL) {
+    const videoContainer = document.getElementById('youtube-embed-container-two-column');
+    videoContainer.innerHTML = `
+      <div class="aspect-w-16 aspect-h-9">
+        <iframe src="${article.YOUTUBE_EMBED_URL}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full rounded-lg shadow-custom"></iframe>
+      </div>
+    `;
+  }
+
+  if (article.SOURCES) {
+    const sourcesList = document.getElementById('sources-list-two-column');
+    const formattedSources = formatArticleContent(article.SOURCES);
+    sourcesList.innerHTML = formattedSources;
+  }
+
+  if (article.VERIFICATION_PDF_URL) {
+    const pdfContainer = document.getElementById('verification-pdf-link-container-two-column');
+    pdfContainer.innerHTML = `<a href="${article.VERIFICATION_PDF_URL}" target="_blank" rel="noopener noreferrer" class="inline-block bg-pr-primary text-white font-bold py-2 px-4 rounded-md hover:bg-opacity-90">Download Verification PDF</a>`;
+  }
+}
+
+function renderLayoutFullWidthImage(article) {
+  document.getElementById('layout-full-width-image').classList.remove('hidden');
+  const fullWidthImageLayout = `
+    <div>
+      <div
+        id="article-image-full-width"
+        class="bg-center bg-no-repeat h-96 bg-cover mb-6"
+        style="background-image: url('assets/news logo.png')"
+      ></div>
+      <div class="max-w-4xl mx-auto bg-card-bg rounded-lg shadow-custom overflow-hidden p-8">
+        <h1 id="article-title-full-width" class="text-pr-primary font-display text-4xl font-bold mb-4">Loading Article...</h1>
+        <div class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6">
+          <div class="flex items-center gap-3">
+            <span id="author-name-full-width" class="font-semibold text-pr-primary">Loading...</span>
+          </div>
+        </div>
+        <div id="article-body-full-width" class="prose prose-lg max-w-none text-pr-primary mt-6 leading-relaxed">
+          <p>Please wait while the content is being loaded.</p>
+        </div>
+        <div id="article-sources-full-width" class="border-t border-pr-nav mt-8 pt-6">
+          <h3 class="text-xl font-display font-bold text-pr-primary mb-4">Sources</h3>
+          <div id="sources-list-full-width" class="text-black space-y-2"></div>
+        </div>
+        <div class="bg-pr-nav px-8 py-6 mt-8">
+          <h3 class="text-xl font-display font-bold text-pr-primary mb-4">Article Verification</h3>
+          <div id="verification-pdf-link-container-full-width" class="mb-4"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('layout-full-width-image').innerHTML = fullWidthImageLayout;
+
+  document.getElementById('article-title-full-width').textContent = article.TITLE;
+  const content = article.CONTENT || 'Content not available.';
+  const formattedContent = formatArticleContent(content);
+  document.getElementById('article-body-full-width').innerHTML = formattedContent;
+  document.getElementById('author-name-full-width').textContent = article.AUTHOR_ID || 'The Paper Route News';
+  document.title = `${article.TITLE} - The Paper Route News`;
+
+  if (article.WIDESCREEN_IMAGE_URL) {
+    let imageUrl = article.WIDESCREEN_IMAGE_URL;
+    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
+      imageUrl = `assets/${imageUrl}`;
+    }
+    document.getElementById('article-image-full-width').style.backgroundImage = `url('${imageUrl}')`;
+  } else if (article.IMAGE_URL) {
+    let imageUrl = article.IMAGE_URL;
+    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
+      imageUrl = `assets/${imageUrl}`;
+    }
+    document.getElementById('article-image-full-width').style.backgroundImage = `url('${imageUrl}')`;
+  }
+
+  if (article.SOURCES) {
+    const sourcesList = document.getElementById('sources-list-full-width');
+    const formattedSources = formatArticleContent(article.SOURCES);
+    sourcesList.innerHTML = formattedSources;
+  }
+
+  if (article.VERIFICATION_PDF_URL) {
+    const pdfContainer = document.getElementById('verification-pdf-link-container-full-width');
     pdfContainer.innerHTML = `<a href="${article.VERIFICATION_PDF_URL}" target="_blank" rel="noopener noreferrer" class="inline-block bg-pr-primary text-white font-bold py-2 px-4 rounded-md hover:bg-opacity-90">Download Verification PDF</a>`;
   }
 }

@@ -34,8 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
       title: document.getElementById('title').value,
       slug: document.getElementById('slug').value,
       image_url: document.getElementById('image_url').value,
+      widescreen_image_url: document.getElementById('widescreen_image_url').value, // Add this line
       tags: document.getElementById('tags').value,
       spot_number: document.getElementById('spot_number').value,
+      layout: document.getElementById('layout').value, // Add this line
       content: contentEditor.value(), // Get value from SimpleMDE
       sources: sourcesEditor.value(), // Get value from SimpleMDE
       verification_pdf_url: document.getElementById('verification_pdf_url')
@@ -110,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
       feedbackMessage.style.color = 'red';
     }
   });
+
+
 
   editBtn.addEventListener('click', async () => {
     const slugToEdit = document.getElementById('slug').value;
@@ -239,8 +243,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('title').value = article.TITLE || '';
       document.getElementById('slug').value = article.SLUG || '';
       document.getElementById('image_url').value = article.IMAGE_URL || '';
+      document.getElementById('widescreen_image_url').value = article.WIDESCREEN_IMAGE_URL || ''; // Add this line
       document.getElementById('tags').value = article.TAGS || '';
       document.getElementById('spot_number').value = article.SPOT_NUMBER || '';
+      document.getElementById('layout').value = article.LAYOUT || 'default'; // Add this line
       contentEditor.value(article.CONTENT || ''); // Set value using SimpleMDE API
       sourcesEditor.value(article.SOURCES || ''); // Set value using SimpleMDE API
       document.getElementById('verification_pdf_url').value =
