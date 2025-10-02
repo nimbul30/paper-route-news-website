@@ -13,6 +13,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "express": "^5.1.0",
     "oracledb": "^6.9.0",
     "pg": "^8.16.3"

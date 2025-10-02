@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const contentEditor = new SimpleMDE({ element: document.getElementById('content') });
   const sourcesEditor = new SimpleMDE({ element: document.getElementById('sources') });
 
+  // AI Generation Elements
+  const generateAiArticleBtn = document.getElementById('generate-ai-article-btn');
+  const aiPrompt = document.getElementById('ai-prompt');
+  const aiLoader = document.getElementById('ai-loader');
+
   submitPasswordBtn.addEventListener('click', () => {
     if (passwordInput.value === ADMIN_PASSWORD) {
       passwordGate.classList.add('hidden');
@@ -263,5 +268,74 @@ document.addEventListener('DOMContentLoaded', () => {
       feedbackMessage.textContent = `Error loading article: ${error.message}`;
       feedbackMessage.style.color = 'red';
     }
+  }
+
+  // --- AI Article Generation ---
+
+  generateAiArticleBtn.addEventListener('click', async () => {
+    const prompt = aiPrompt.value.trim();
+
+    if (!prompt) {
+      alert('Please enter a topic or prompt for the AI.');
+      return;
+    }
+
+    aiLoader.classList.remove('hidden');
+    generateAiArticleBtn.disabled = true;
+    feedbackMessage.textContent = 'Generating article with AI...';
+    feedbackMessage.style.color = 'blue';
+
+    try {
+      await generateArticleWithAI(prompt);
+      feedbackMessage.textContent = 'AI-generated article populated successfully!';
+      feedbackMessage.style.color = 'green';
+    } catch (error) {
+      feedbackMessage.textContent = `Error generating article: ${error.message}`;
+      feedbackMessage.style.color = 'red';
+    } finally {
+      aiLoader.classList.add('hidden');
+      generateAiArticleBtn.disabled = false;
+    }
+  });
+
+  async function generateArticleWithAI(prompt) {
+    const response = await fetch('/api/generate-article', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to generate article.');
+    }
+
+    const result = await response.json();
+
+    if (result && result.title && result.content && result.tags) {
+      document.getElementById('title').value = result.title;
+      document.getElementById('slug').value = generateSlug(result.title);
+      contentEditor.value(result.content);
+      document.getElementById('tags').value = result.tags;
+    } else {
+      throw new Error('Failed to generate a complete article. The AI response was incomplete.');
+    }
+  }
+
+  const verifyLink = document.getElementById('verify-link');
+
+  verifyLink.addEventListener('click', () => {
+    localStorage.setItem('articleForVerification_content', contentEditor.value());
+    localStorage.setItem('articleForVerification_sources', sourcesEditor.value());
+  });
+
+  function generateSlug(title) {
+    return title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '') // remove non-word [a-z0-9_], non-whitespace, non-hyphen chars
+      .replace(/\s+/g, '-') // swap any length of whitespace for a single -
+      .replace(/-+/g, '-'); // swap multiple - for single -
   }
 });
