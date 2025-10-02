@@ -1,16 +1,3 @@
-node:internal/modules/cjs/loader:1404
-  throw err;
-  ^
-
-Error: Cannot find module 'C:\Users\Empower Gaming\Desktop\Paper Route News\server.js'
-    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
-    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
-    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
-    at Function._load (node:internal/modules/cjs/loader:1211:37)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
-    at node:internal/main/run_main_module:36:49 {
-  code: 'MODULE_NOT_FOUND',
-  requireStack: []
-}
+1. ON the aritcle-page.html turn the transparency report link into a visible button. 
+2. On the transparency pop-up give each section a card in a lite color to make it look better.
+3. On the home page please style the topics in the navbar and turn them into tags with the same formatting as the tags on the articles on the home page.
