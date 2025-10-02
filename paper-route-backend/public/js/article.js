@@ -27,11 +27,6 @@ async function loadArticle() {
 }
 
 function renderArticle(article) {
-  const transparencyBtn = document.getElementById('article-transparency-btn');
-  if (transparencyBtn) {
-      transparencyBtn.dataset.slug = article.SLUG;
-  }
-
   // Hide all layouts by default
   document.getElementById('layout-default').classList.add('hidden');
   document.getElementById('layout-two-column').classList.add('hidden');

@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error('Failed to load transparency modal HTML');
         }
         const modalHtml = await response.text();
-        document.getElementById('modal-container').innerHTML = modalHtml;
+        const modalContainer = document.getElementById('modal-container');
+        if (modalContainer) {
+            modalContainer.innerHTML = modalHtml;
+        }
         initializeModal();
     } catch (error) {
         console.error(error);
@@ -70,42 +73,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // For home page article cards
-    document.body.addEventListener('click', async (event) => {
-        if (event.target.classList.contains('transparency-button')) {
-            const slug = event.target.dataset.slug;
-            if (slug) {
-                try {
-                    const response = await fetch(`/api/articles/${slug}`);
-                    if (!response.ok) {
-                        throw new Error(`API responded with status: ${response.status}`);
-                    }
-                    const article = await response.json();
-                    openModalWithData(article);
-                } catch (error) {
-                    console.error('Failed to fetch article data for modal:', error);
+    async function fetchAndShowModal(slug) {
+        if (slug) {
+            try {
+                const response = await fetch(`/api/articles/${slug}`);
+                if (!response.ok) {
+                    throw new Error(`API responded with status: ${response.status}`);
                 }
+                const article = await response.json();
+                openModalWithData(article);
+            } catch (error) {
+                console.error('Failed to fetch article data for modal:', error);
             }
+        }
+    }
+
+    // For home page article cards (delegated event)
+    document.body.addEventListener('click', (event) => {
+        if (event.target.matches('.transparency-button')) {
+            const slug = event.target.dataset.slug;
+            fetchAndShowModal(slug);
         }
     });
 
     // For article details page
     const articleTransparencyBtn = document.getElementById('article-transparency-btn');
     if (articleTransparencyBtn) {
-        articleTransparencyBtn.addEventListener('click', async () => {
+        articleTransparencyBtn.addEventListener('click', () => {
             const slug = articleTransparencyBtn.dataset.slug;
-            if (slug) {
-                try {
-                    const response = await fetch(`/api/articles/${slug}`);
-                    if (!response.ok) {
-                        throw new Error(`API responded with status: ${response.status}`);
-                    }
-                    const article = await response.json();
-                    openModalWithData(article);
-                } catch (error) {
-                    console.error('Failed to fetch article data for modal:', error);
-                }
-            }
+            fetchAndShowModal(slug);
         });
     }
 });
