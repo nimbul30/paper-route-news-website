@@ -88,14 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // For home page article cards (delegated event)
-    document.body.addEventListener('click', (event) => {
-        if (event.target.matches('.transparency-button')) {
-            const slug = event.target.dataset.slug;
-            fetchAndShowModal(slug);
-        }
-    });
-
     // For article details page
     const articleTransparencyBtn = document.getElementById('article-transparency-btn');
     if (articleTransparencyBtn) {

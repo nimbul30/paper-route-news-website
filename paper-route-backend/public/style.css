@@ -350,18 +350,20 @@ body {
 }
 
 .transparency-button {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--pr-secondary);
     color: white;
     padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
+    border-radius: 0.375rem;
     font-size: 0.875rem;
     font-weight: 700;
     text-decoration: none;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
-    border: none;
+    border: 1px solid var(--pr-nav);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .transparency-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--pr-primary);
+    transform: translateY(-1px);
 }
