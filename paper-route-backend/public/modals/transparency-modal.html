@@ -1,0 +1,57 @@
+<div id="transparency-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+    <div class="bg-pr-primary text-pr-text-accent rounded-lg shadow-lg p-8 w-full max-w-2xl relative">
+        <button id="close-modal-btn" class="absolute top-4 right-4 text-pr-nav hover:text-white">&times;</button>
+        <h2 class="text-2xl font-display font-bold mb-4">Transparency Report</h2>
+        <p class="mb-6 text-sm text-pr-nav">Article: <span id="modal-article-title"></span></p>
+
+        <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                    <span class="material-icons text-pr-nav text-3xl">search</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">Automated Information Gathering</h3>
+                    <p class="text-sm">Action: Our AI system, <strong class="font-semibold">Insight Cortex</strong>, identified and parsed this article from a verified digital source.</p>
+                    <p class="text-sm mt-2">Primary Source: <span id="modal-primary-source" class="font-semibold"></span></p>
+                    <a href="#" id="modal-source-link" target="_blank" class="text-sm text-blue-400 hover:underline"></a>
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                    <span class="material-icons text-pr-nav text-3xl">description</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">Automated Draft & Summary</h3>
+                    <p class="text-sm">Action: The AI generated a key-point summary for human review.</p>
+                    <blockquote class="border-l-4 border-pr-secondary italic pl-4 mt-2 text-sm">
+                        <p id="modal-summary">""</p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                    <span class="material-icons text-pr-nav text-3xl">verified_user</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">Human Verification & Editing</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm mt-2">
+                        <div>
+                            <p>Editor ID: <span id="modal-editor-id" class="font-semibold"></span></p>
+                        </div>
+                        <div>
+                            <p>Verified At: <span id="modal-verified-at" class="font-semibold"></span></p>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-sm mt-4 pl-4">
+                        <li class="flex items-center"><span class="material-icons text-green-500 mr-2">check_circle</span>Fact-Checked key claims against source document.</li>
+                        <li class="flex items-center"><span class="material-icons text-green-500 mr-2">check_circle</span>Verified source credibility and publication date.</li>
+                        <li class="flex items-center"><span class="material-icons text-green-500 mr-2">check_circle</span>Reviewed for neutral language and absence of bias.</li>
+                        <li class="flex items-center"><span class="material-icons text-green-500 mr-2">check_circle</span>Approved for publication on The Paper Route News.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

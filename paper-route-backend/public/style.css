@@ -335,3 +335,33 @@ body {
     cursor: pointer;
 }
 
+/* Transparency Modal Styles */
+#transparency-modal.flex {
+  display: flex;
+}
+
+#transparency-modal.hidden {
+  display: none;
+}
+
+#close-modal-btn {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.transparency-button {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.transparency-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
