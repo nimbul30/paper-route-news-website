@@ -27,10 +27,6 @@ async function loadArticle() {
 }
 
 function renderArticle(article) {
-  const transparencyBtn = document.getElementById('article-transparency-btn');
-  if (transparencyBtn) {
-      transparencyBtn.dataset.slug = article.SLUG;
-  }
   // Hide all layouts by default
   document.getElementById('layout-default').classList.add('hidden');
   document.getElementById('layout-two-column').classList.add('hidden');
@@ -51,6 +47,11 @@ function renderArticle(article) {
 
 function renderLayoutDefault(article) {
   document.getElementById('layout-default').classList.remove('hidden');
+
+  const button = document.querySelector('#layout-default .transparency-btn-trigger');
+  if (button) {
+    button.dataset.slug = article.SLUG;
+  }
 
   document.getElementById('article-title').textContent = article.TITLE;
   // Format article content with proper paragraphs
@@ -118,7 +119,8 @@ function renderLayoutTwoColumn(article) {
         </div>
       </div>
       <div class="md:col-span-2">
-        <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden p-8">
+        <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden p-8 relative">
+          <button data-slug="${article.SLUG}" class="transparency-btn-trigger transparency-button absolute top-4 right-4 z-10">Transparency Report</button>
           <h1 id="article-title-two-column" class="text-pr-primary font-display text-4xl font-bold mb-4">Loading Article...</h1>
           <div id="article-body-two-column" class="prose prose-lg max-w-none text-pr-primary mt-6 leading-relaxed">
             <p>Please wait while the content is being loaded.</p>
@@ -178,7 +180,8 @@ function renderLayoutFullWidthImage(article) {
         class="bg-center bg-no-repeat h-96 bg-cover mb-6"
         style="background-image: url('assets/news logo.png')"
       ></div>
-      <div class="max-w-4xl mx-auto bg-card-bg rounded-lg shadow-custom overflow-hidden p-8">
+      <div class="max-w-4xl mx-auto bg-card-bg rounded-lg shadow-custom overflow-hidden p-8 relative">
+        <button data-slug="${article.SLUG}" class="transparency-btn-trigger transparency-button absolute top-4 right-4 z-10">Transparency Report</button>
         <h1 id="article-title-full-width" class="text-pr-primary font-display text-4xl font-bold mb-4">Loading Article...</h1>
         <div class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6">
           <div class="flex items-center gap-3">

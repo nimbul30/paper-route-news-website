@@ -367,3 +367,20 @@ body {
     background-color: var(--pr-primary);
     transform: translateY(-1px);
 }
+
+/* Search button styles */
+#search-btn {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#search-btn:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+}
+
+.transparency-card {
+  background-color: var(--pr-background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--pr-secondary);
+}

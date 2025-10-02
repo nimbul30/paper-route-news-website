@@ -88,12 +88,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // For article details page
-    const articleTransparencyBtn = document.getElementById('article-transparency-btn');
-    if (articleTransparencyBtn) {
-        articleTransparencyBtn.addEventListener('click', () => {
-            const slug = articleTransparencyBtn.dataset.slug;
+    // Use event delegation to handle clicks on the transparency button
+    document.body.addEventListener('click', (event) => {
+        if (event.target.matches('.transparency-btn-trigger')) {
+            const slug = event.target.dataset.slug;
             fetchAndShowModal(slug);
-        });
-    }
+        }
+    });
 });
