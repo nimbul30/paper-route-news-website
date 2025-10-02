@@ -137,6 +137,7 @@ function renderFeaturedArticle(article) {
         <p class="featured-article-summary">${CONTENT ? String(CONTENT).substring(0, 80) + '...' : ''}</p>
       </div>
     </a>
+    <button class="transparency-button absolute top-2 right-2" data-slug="${SLUG}">Transparency Report</button>
   `;
   return articleElement;
 }
@@ -172,6 +173,7 @@ function renderArticleItem(article) {
         <p class="article-item-summary">${CONTENT ? String(CONTENT).substring(0, 100) + '...' : ''}</p>
       </div>
     </a>
+    <button class="transparency-button absolute top-2 right-2" data-slug="${SLUG}">Transparency Report</button>
   `;
   return articleElement;
 }
