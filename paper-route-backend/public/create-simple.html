@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create New Article</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'pr-background': '#6b7d91',
+              'pr-nav': '#d8d3c4',
+              'pr-primary': '#182a38',
+              'pr-secondary': '#757d7f',
+              'pr-text-accent': '#eae7db',
+              'card-bg': '#eae7db',
+            },
+            fontFamily: {
+              display: ['Playfair Display', 'serif'],
+              body: ['Roboto', 'sans-serif'],
+            },
+            boxShadow: {
+              custom:
+                '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-pr-background">
+    <div class="container mx-auto p-8">
+      <div
+        id="password-gate"
+        class="max-w-md mx-auto bg-card-bg p-8 rounded-lg shadow-custom"
+      >
+        <h1 class="text-2xl font-display font-bold text-pr-primary mb-4">
+          Admin Access
+        </h1>
+        <p class="mb-4 text-pr-secondary">
+          Please enter the password to create or delete an article.
+        </p>
+        <input
+          type="password"
+          id="password"
+          class="w-full px-4 py-2 rounded-md text-gray-800"
+          placeholder="Password"
+        />
+        <button
+          id="submit-password"
+          class="mt-4 w-full bg-pr-primary text-white font-bold py-2 px-6 rounded-md hover:bg-opacity-90"
+        >
+          Enter
+        </button>
+      </div>
+
+      <div
+        id="create-form-container"
+        class="hidden max-w-4xl mx-auto bg-card-bg p-8 rounded-lg shadow-custom"
+      >
+        <h1 class="text-2xl font-display font-bold text-pr-primary mb-6">
+          Create or Delete Article
+        </h1>
+        <form id="create-article-form" class="space-y-4">
+          <div>
+            <label for="title" class="block font-bold text-pr-primary"
+              >Title</label
+            >
+            <input
+              type="text"
+              id="title"
+              required
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            />
+          </div>
+          <div>
+            <label for="slug" class="block font-bold text-pr-primary"
+              >Slug (e.g., my-new-article)</label
+            >
+            <input
+              type="text"
+              id="slug"
+              required
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            />
+          </div>
+          <div>
+            <label for="image_url" class="block font-bold text-pr-primary"
+              >Image URL</label
+            >
+            <input
+              type="text"
+              id="image_url"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            />
+          </div>
+          <div>
+            <label for="category" class="block font-bold text-pr-primary"
+              >Category</label
+            >
+            <input
+              type="text"
+              id="category"
+              required
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+              placeholder="e.g., Politics, US, World"
+            />
+          </div>
+          <div>
+            <label for="content" class="block font-bold text-pr-primary"
+              >Content (Body)</label
+            >
+            <div class="text-sm text-pr-secondary mb-2">
+              <strong>Formatting Tips:</strong><br />
+              • Use double line breaks for new paragraphs<br />
+              • **bold text** for bold, *italic text* for italic<br />
+              • # Heading 1, ## Heading 2, ### Heading 3<br />
+              • Use --- to create section breaks
+            </div>
+            <textarea
+              id="content"
+              rows="20"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800 font-mono text-sm"
+              placeholder="Write your article content here...
+
+Use double line breaks between paragraphs.
+
+## Story 1: Your First Section
+Content for your first section goes here.
+
+## Story 2: Your Second Section  
+Content for your second section goes here."
+            ></textarea>
+          </div>
+          <div>
+            <label for="sources" class="block font-bold text-pr-primary"
+              >Sources (One per line)</label
+            >
+            <textarea
+              id="sources"
+              rows="5"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            ></textarea>
+          </div>
+          <div>
+            <label
+              for="verification_pdf_url"
+              class="block font-bold text-pr-primary"
+              >Verification PDF URL</label
+            >
+            <input
+              type="text"
+              id="verification_pdf_url"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            />
+          </div>
+          <div>
+            <label
+              for="youtube_embed_url"
+              class="block font-bold text-pr-primary"
+              >YouTube Embed URL</label
+            >
+            <input
+              type="text"
+              id="youtube_embed_url"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+            />
+          </div>
+          <div class="flex space-x-4 pt-4">
+            <button
+              type="submit"
+              class="w-full bg-pr-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              Publish Article
+            </button>
+            <button
+              type="button"
+              id="edit-btn"
+              class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Edit Article
+            </button>
+            <button
+              type="button"
+              id="delete-btn"
+              class="w-full bg-red-700 text-white font-bold py-3 px-6 rounded-md hover:bg-red-800 transition-colors"
+            >
+              Delete Article
+            </button>
+          </div>
+        </form>
+        <p id="feedback-message" class="mt-4 text-center font-bold"></p>
+      </div>
+    </div>
+    <script src="/js/create-simple.js"></script>
+  </body>
+</html>

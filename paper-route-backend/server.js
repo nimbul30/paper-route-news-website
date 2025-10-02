@@ -1,7 +1,7 @@
-// server.js
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env'), override: true });
 
 const express = require('express');
-const path = require('path');
 const oracledb = require('oracledb');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // --- Gemini API Configuration ---
-const genAI = new GoogleGenerativeAI('AIzaSyCdx0AG6KktvoSDQyWMApgbjcBRihkAgeA');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // NOTE: We are intentionally REMOVING the outFormat line to get simple arrays.
 
@@ -46,8 +46,8 @@ app.post('/api/generate-article', async (req, res) => {
 
   try {
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
-      systemInstruction: `You are a news article writer. Based on the user's prompt, generate a complete news article with a title, content (in Markdown format), and relevant tags. The title should be compelling and SEO-friendly. The content should be well-structured with headings and paragraphs. The tags should be a comma-separated list of relevant keywords.`,
+      model: 'gemini-2.5-pro',
+      systemInstruction: `You are a news article writer. Based on the user's prompt, generate a complete news article with a title, content (in Markdown format), and relevant tags. The title should be compelling and SEO-friendly. The content should be well-structured with headings and paragraphs. The tags should be a comma-separated list of relevant keywords. Your output must be a valid JSON object and nothing else. Do not wrap the JSON in a markdown block.`,
     });
 
     const generationConfig = {
@@ -594,10 +594,10 @@ async function startApp() {
 
         // Phase 1: Triage
         const triageModel = genAI.getGenerativeModel({
-          model: 'gemini-1.5-flash',
-          systemInstruction: `You are a meticulous fact-checker. From the article, extract each key claim. For each claim, search the provided source texts for direct evidence. You must classify the evidence for each claim as either 'Supported', 'Contradicted', or 'No Evidence Found'. If evidence is found, you must provide the exact quote from the source text as 'evidence_quote'.`,
+          model: 'gemini-2.5-pro',
+          systemInstruction: `You are a meticulous fact-checker. From the article, extract each key claim. For each claim, search the provided source texts for direct evidence. You must classify the evidence for each claim as either 'Supported', 'Contradicted', or 'No Evidence Found'. If evidence is found, you must provide the exact quote from the source text as 'evidence_quote'. Your output must be a valid JSON object and nothing else. Do not wrap the JSON in a markdown block.`,
         });
-        const triageResult = await triageModel.generateContent(`ARTICLE TO VERIFY:\n${articleText}\n\nSOURCE URLs:\n${sourceUrls.join('\n')}`, { generationConfig: { responseMimeType: 'application/json', responseSchema: {
+const triageResult = await triageModel.generateContent(`ARTICLE TO VERIFY:\n${articleText}\n\nSOURCE URLs:\n${sourceUrls.join('\n')}`, { generationConfig: { responseMimeType: 'application/json', responseSchema: {
           type: 'OBJECT', properties: {
             verified_claims: { type: 'ARRAY', items: {
               type: 'OBJECT', properties: {
@@ -612,48 +612,48 @@ async function startApp() {
         verificationReport['Phase 1: Triage'] = JSON.parse(await triageResponse.text());
 
         // Phase 2: Deep Dive
-        // const deepDiveModel = genAI.getGenerativeModel({
-        //   model: 'gemini-1.5-flash',
-        //   systemInstruction: `You are a data extraction tool. From the user's article, extract all key entities into structured lists for verification.`,
-        // });
-        // const deepDiveResult = await deepDiveModel.generateContent(articleText, { generationConfig: { responseMimeType: 'application/json', responseSchema: {
-        //   type: 'OBJECT', properties: {
-        //     entities: { type: 'OBJECT', properties: {
-        //       personal_names_titles: {type: 'ARRAY', items: {type: 'STRING'}},
-        //       organization_names: {type: 'ARRAY', items: {type: 'STRING'}},
-        //       numbers_statistics: {type: 'ARRAY', items: {type: 'STRING'}},
-        //       dates_times: {type: 'ARRAY', items: {type: 'STRING'}},
-        //       locations: {type: 'ARRAY', items: {type: 'STRING'}}
-        //     }}
-        //   }
-        // }}});
-        // const deepDiveResponse = await deepDiveResult.response;
-        // verificationReport['Phase 2: Factual Deep Dive'] = JSON.parse(await deepDiveResponse.text());
+        const deepDiveModel = genAI.getGenerativeModel({
+          model: 'gemini-2.5-pro',
+          systemInstruction: `You are a data extraction tool. From the user's article, extract all key entities into structured lists for verification. Your output must be a valid JSON object and nothing else. Do not wrap the JSON in a markdown block.`,
+        });
+        const deepDiveResult = await deepDiveModel.generateContent(articleText, { generationConfig: { responseMimeType: 'application/json', responseSchema: {
+          type: 'OBJECT', properties: {
+            entities: { type: 'OBJECT', properties: {
+              personal_names_titles: {type: 'ARRAY', items: {type: 'STRING'}},
+              organization_names: {type: 'ARRAY', items: {type: 'STRING'}},
+              numbers_statistics: {type: 'ARRAY', items: {type: 'STRING'}},
+              dates_times: {type: 'ARRAY', items: {type: 'STRING'}},
+              locations: {type: 'ARRAY', items: {type: 'STRING'}}
+            }}
+          }
+        }}});
+        const deepDiveResponse = await deepDiveResult.response;
+        verificationReport['Phase 2: Factual Deep Dive'] = JSON.parse(await deepDiveResponse.text());
 
-        // // Phase 3: Quality & Ethics
-        // const qualityModel = genAI.getGenerativeModel({
-        //   model: 'gemini-1.5-flash',
-        //   systemInstruction: `You are an ethics and fairness editor. Analyze the article for bias, loaded language, or unfair framing. Suggest neutral alternatives for any flagged phrases.`,
-        // });
-        // const qualityResult = await qualityModel.generateContent(articleText, { generationConfig: { responseMimeType: 'application/json', responseSchema: {
-        //   type: 'OBJECT', properties: {
-        //     bias_analysis: { type: 'OBJECT', properties: {
-        //       flagged_phrases: {type: 'ARRAY', items: {type: 'OBJECT', properties: {
-        //         phrase: {type: 'STRING'},
-        //         suggestion: {type: 'STRING'}
-        //       }}},
-        //       overall_sentiment: {type: 'STRING'},
-        //       framing: {type: 'STRING'}
-        //     }}
-        //   }
-        // }}});
-        // const qualityResponse = await qualityResult.response;
-        // verificationReport['Phase 3: Quality & Ethics Consultant'] = JSON.parse(await qualityResponse.text());
+        // Phase 3: Quality & Ethics
+        const qualityModel = genAI.getGenerativeModel({
+          model: 'gemini-2.5-pro',
+          systemInstruction: `You are an ethics and fairness editor. Analyze the article for bias, loaded language, or unfair framing. Suggest neutral alternatives for any flagged phrases. Your output must be a valid JSON object and nothing else. Do not wrap the JSON in a markdown block.`,
+        });
+        const qualityResult = await qualityModel.generateContent(articleText, { generationConfig: { responseMimeType: 'application/json', responseSchema: {
+          type: 'OBJECT', properties: {
+            bias_analysis: { type: 'OBJECT', properties: {
+              flagged_phrases: {type: 'ARRAY', items: {type: 'OBJECT', properties: {
+                phrase: {type: 'STRING'},
+                suggestion: {type: 'STRING'}
+              }}},
+              overall_sentiment: {type: 'STRING'},
+              framing: {type: 'STRING'}
+            }}
+          }
+        }}});
+        const qualityResponse = await qualityResult.response;
+        verificationReport['Phase 3: Quality & Ethics Consultant'] = JSON.parse(await qualityResponse.text());
 
         res.json(verificationReport);
       } catch (error) {
         console.error('Error verifying article with AI:', error);
-        res.status(500).json({ message: 'Failed to verify article.' });
+        res.status(500).json({ message: 'Failed to verify article.', error: error.message, details: error.stack });
       }
     });
 
