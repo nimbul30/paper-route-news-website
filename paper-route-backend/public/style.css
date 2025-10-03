@@ -30,7 +30,6 @@ body {
 
 .featured-article {
   position: relative;
-  overflow: hidden;
   border-radius: 0.5rem;
 }
 
@@ -92,7 +91,6 @@ body {
 .article-item {
   background-color: var(--pr-background);
   border-radius: 0.5rem;
-  overflow: hidden;
   box-shadow: var(--shadow-custom);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -269,11 +267,13 @@ body {
     flex-wrap: wrap;
   }
   .main-nav {
-    display: none;
+    display: flex;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-top: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
   }
   .main-nav.is-open {
     display: flex;
@@ -327,12 +327,14 @@ body {
     border-radius: 0.25rem;
     font-size: 0.75rem;
     text-decoration: none;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease-in-out;
 }
 
 .tag-badge:hover {
     background-color: rgba(0, 0, 0, 0.8);
     cursor: pointer;
+    transform: scale(2);
+    z-index: 1;
 }
 
 /* Transparency Modal Styles */
@@ -391,12 +393,26 @@ body {
     color: white;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     text-decoration: none;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease-in-out;
 }
 
 .nav-tag:hover {
     background-color: rgba(0, 0, 0, 0.8);
     cursor: pointer;
+    transform: scale(2);
+}
+
+.search-bar {
+    background: linear-gradient(to right, #6b7d91, #182a38);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.desktop-nav {
+    justify-content: center;
 }

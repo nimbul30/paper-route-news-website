@@ -4,8 +4,6 @@ const express = require('express');
 const path = require('path');
 const oracledb = require('oracledb');
 
-
-
 const { DatabaseSanitizer } = require('./utils/databaseSanitizer');
 const app = express();
 const PORT = process.env.PORT || 3000;
