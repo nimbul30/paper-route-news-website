@@ -10,11 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // --- Gemini API Configuration ---
-<<<<<<< HEAD
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-=======
-const genAI = new GoogleGenerativeAI('');
->>>>>>> ce851a48846ed1de5ce75b635b08f5d445b98d23
 
 // NOTE: We are intentionally REMOVING the outFormat line to get simple arrays.
 
