@@ -71,6 +71,11 @@ function renderLayoutDefault(article) {
     document.getElementById(
       'article-image'
     ).style.backgroundImage = `url('${imageUrl}')`;
+
+    const imageButton = document.querySelector('#layout-default .image-modal-trigger');
+    if (imageButton) {
+        imageButton.dataset.imageUrl = imageUrl;
+    }
   }
 
   if (article.YOUTUBE_EMBED_URL) {
@@ -120,7 +125,10 @@ function renderLayoutTwoColumn(article) {
       </div>
       <div class="md:col-span-2">
         <div class="bg-card-bg rounded-lg shadow-custom overflow-hidden p-8 relative">
-          <button data-slug="${article.SLUG}" class="transparency-btn-trigger transparency-button absolute top-4 right-4 z-10">Transparency Report</button>
+          <div class="absolute top-4 right-4 z-10 flex gap-2">
+            <button data-image-url="" class="image-modal-trigger bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">View Image</button>
+            <button data-slug="${article.SLUG}" class="transparency-btn-trigger transparency-button">Transparency Report</button>
+          </div>
           <h1 id="article-title-two-column" class="text-pr-primary font-display text-4xl font-bold mb-4">Loading Article...</h1>
           <div id="article-body-two-column" class="prose prose-lg max-w-none text-pr-primary mt-6 leading-relaxed">
             <p>Please wait while the content is being loaded.</p>
@@ -148,6 +156,10 @@ function renderLayoutTwoColumn(article) {
       imageUrl = `assets/${imageUrl}`;
     }
     document.getElementById('article-image-two-column').style.backgroundImage = `url('${imageUrl}')`;
+    const imageButton = document.querySelector('#layout-two-column .image-modal-trigger');
+    if (imageButton) {
+        imageButton.dataset.imageUrl = imageUrl;
+    }
   }
 
   if (article.YOUTUBE_EMBED_URL) {
@@ -181,7 +193,10 @@ function renderLayoutFullWidthImage(article) {
         style="background-image: url('assets/news logo.png')"
       ></div>
       <div class="max-w-4xl mx-auto bg-card-bg rounded-lg shadow-custom overflow-hidden p-8 relative">
-        <button data-slug="${article.SLUG}" class="transparency-btn-trigger transparency-button absolute top-4 right-4 z-10">Transparency Report</button>
+        <div class="absolute top-4 right-4 z-10 flex gap-2">
+          <button data-image-url="" class="image-modal-trigger bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">View Image</button>
+          <button data-slug="${article.SLUG}" class="transparency-btn-trigger transparency-button">Transparency Report</button>
+        </div>
         <h1 id="article-title-full-width" class="text-pr-primary font-display text-4xl font-bold mb-4">Loading Article...</h1>
         <div class="flex items-center gap-6 text-pr-secondary text-sm mb-6 border-b border-pr-nav pb-6">
           <div class="flex items-center gap-3">
@@ -217,12 +232,20 @@ function renderLayoutFullWidthImage(article) {
       imageUrl = `assets/${imageUrl}`;
     }
     document.getElementById('article-image-full-width').style.backgroundImage = `url('${imageUrl}')`;
+    const imageButton = document.querySelector('#layout-full-width-image .image-modal-trigger');
+    if (imageButton) {
+        imageButton.dataset.imageUrl = imageUrl;
+    }
   } else if (article.IMAGE_URL) {
     let imageUrl = article.IMAGE_URL;
     if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
       imageUrl = `assets/${imageUrl}`;
     }
     document.getElementById('article-image-full-width').style.backgroundImage = `url('${imageUrl}')`;
+    const imageButton = document.querySelector('#layout-full-width-image .image-modal-trigger');
+    if (imageButton) {
+        imageButton.dataset.imageUrl = imageUrl;
+    }
   }
 
   if (article.SOURCES) {
