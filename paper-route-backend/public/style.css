@@ -123,7 +123,6 @@ body {
   color: var(--pr-nav);
 }
 
-
 /* News Ticker */
 .news-ticker-container {
   width: 100%;
@@ -268,10 +267,14 @@ body {
   }
   .main-nav {
     display: flex;
+    display: flex;
     width: 100%;
+    flex-direction: row;
     flex-direction: row;
     align-items: center;
     margin-top: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -310,31 +313,31 @@ body {
 
 /* Tags Styling */
 .tags-container {
-    position: absolute;
-    top: 0.5rem; /* Adjust as needed */
-    left: 0.5rem; /* Adjust as needed */
-    z-index: 10; /* Ensure tags are above the image */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
+  position: absolute;
+  top: 0.5rem; /* Adjust as needed */
+  left: 0.5rem; /* Adjust as needed */
+  z-index: 10; /* Ensure tags are above the image */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .tag-badge {
-    display: inline-block;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    text-decoration: none;
-    transition: background-color 0.2s ease, transform 0.2s ease-in-out;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease-in-out;
 }
 
 .tag-badge:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    cursor: pointer;
-    transform: scale(2);
-    z-index: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  transform: scale(2);
+  z-index: 1;
 }
 
 /* Transparency Modal Styles */
@@ -347,36 +350,37 @@ body {
 }
 
 #close-modal-btn {
-    font-size: 2.5rem;
-    line-height: 1;
+  font-size: 2.5rem;
+  line-height: 1;
 }
 
 .transparency-button {
-    background-color: var(--pr-secondary);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    cursor: pointer;
-    border: 1px solid var(--pr-nav);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  background-color: var(--pr-secondary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  border: 1px solid var(--pr-nav);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .transparency-button:hover {
-    background-color: var(--pr-primary);
-    transform: translateY(-1px);
+  background-color: var(--pr-primary);
+  transform: translateY(-1px);
 }
 
 /* Search button styles */
 #search-btn {
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.2s ease;
 }
 
 #search-btn:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px);
 }
 
@@ -388,31 +392,17 @@ body {
 }
 
 .nav-tag {
-    display: inline-block;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.65rem;
-    text-decoration: none;
-    transition: background-color 0.2s ease, transform 0.2s ease-in-out;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease-in-out;
 }
 
 .nav-tag:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    cursor: pointer;
-    transform: scale(2);
-}
-
-.search-bar {
-    background: linear-gradient(to right, #6b7d91, #182a38);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-}
-
-.desktop-nav {
-    justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
 }

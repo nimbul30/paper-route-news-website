@@ -5,9 +5,30 @@
     <title>Create New Article</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'pr-background': '#6b7d91',
+              'pr-nav': '#d8d3c4',
+              'pr-primary': '#182a38',
+              'pr-secondary': '#757d7f',
+              'pr-text-accent': '#eae7db',
+              'card-bg': '#eae7db',
+            },
+            fontFamily: {
+              display: ['Playfair Display', 'serif'],
+              body: ['Roboto', 'sans-serif'],
+            },
+            boxShadow: {
+              custom:
+                '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            },
+          },
+        },
+      };
+    </script>
   </head>
   <body class="bg-pr-background">
     <div class="container mx-auto p-8">
@@ -39,23 +60,6 @@
         id="create-form-container"
         class="hidden max-w-4xl mx-auto bg-card-bg p-8 rounded-lg shadow-custom"
       >
-        <div id="ai-generation-section" class="mb-8 p-6 bg-gray-800 rounded-lg shadow-lg">
-          <h2 class="text-xl font-bold text-white mb-4">Generate with AI</h2>
-          <div class="space-y-4">
-            
-            <div>
-              <label for="ai-prompt" class="block text-sm font-medium text-gray-300">Topic or Prompt</label>
-              <textarea id="ai-prompt" rows="3" class="w-full mt-1 px-4 py-2 rounded-md text-gray-900 bg-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500" placeholder="e.g., 'Write a news article about the latest advancements in AI technology.'"></textarea>
-            </div>
-            <div class="flex items-center justify-between">
-              <button type="button" id="generate-ai-article-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
-                Generate Article
-              </button>
-              <div id="ai-loader" class="hidden spinner w-6 h-6 border-4 rounded-full"></div>
-            </div>
-          </div>
-        </div>
-
         <h1 class="text-2xl font-display font-bold text-pr-primary mb-6">
           Create or Delete Article
         </h1>
@@ -93,50 +97,16 @@
             />
           </div>
           <div>
-            <label for="widescreen_image_url" class="block font-bold text-pr-primary"
-              >Widescreen Image URL</label
+            <label for="category" class="block font-bold text-pr-primary"
+              >Category</label
             >
             <input
               type="text"
-              id="widescreen_image_url"
+              id="category"
+              required
               class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
+              placeholder="e.g., Politics, US, World"
             />
-          </div>
-          <div>
-            <label for="tags" class="block font-bold text-pr-primary"
-              >Tags (comma-separated)</label
-            >
-            <input
-              type="text"
-              id="tags"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
-              placeholder="e.g., politics, us-news, elections"
-            />
-          </div>
-          <div>
-            <label for="spot_number" class="block font-bold text-pr-primary"
-              >Spot Number (1-24)</label
-            >
-            <input
-              type="number"
-              id="spot_number"
-              min="1"
-              max="24"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
-            />
-          </div>
-          <div>
-            <label for="layout" class="block font-bold text-pr-primary"
-              >Article Layout</label
-            >
-            <select
-              id="layout"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
-            >
-              <option value="default">Default</option>
-              <option value="two-column">Two-Column</option>
-              <option value="full-width-image">Full-Width Image</option>
-            </select>
           </div>
           <div>
             <label for="content" class="block font-bold text-pr-primary"
@@ -166,19 +136,12 @@ Content for your second section goes here."
           </div>
           <div>
             <label for="sources" class="block font-bold text-pr-primary"
-              >Sources</label
+              >Sources (One per line)</label
             >
-            <div class="text-sm text-pr-secondary mb-2">
-              <strong>Formatting Tips:</strong><br />
-              • Use double line breaks for new paragraphs<br />
-              • **bold text** for bold, *italic text* for italic<br />
-              • # Heading 1, ## Heading 2, ### Heading 3<br />
-              • Use --- to create section breaks
-            </div>
             <textarea
               id="sources"
               rows="5"
-              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800 font-mono text-sm"
+              class="w-full mt-1 px-4 py-2 rounded-md text-gray-800"
             ></textarea>
           </div>
           <div>
@@ -212,14 +175,6 @@ Content for your second section goes here."
             >
               Publish Article
             </button>
-            <a
-              href="/verify.html"
-              id="verify-link"
-              target="_blank"
-              class="w-full bg-green-600 text-white text-center font-bold py-3 px-6 rounded-md hover:bg-green-700 transition-colors"
-            >
-              Verify Article
-            </a>
             <button
               type="button"
               id="edit-btn"
@@ -234,25 +189,11 @@ Content for your second section goes here."
             >
               Delete Article
             </button>
-            <button
-              type="button"
-              id="archive-btn"
-              class="w-full bg-yellow-500 text-white font-bold py-3 px-6 rounded-md hover:bg-yellow-600 transition-colors"
-            >
-              Archive
-            </button>
-            <button
-              type="button"
-              id="cancel-edit-btn"
-              class="w-full bg-gray-500 text-white font-bold py-3 px-6 rounded-md hover:bg-gray-600 transition-colors hidden"
-            >
-              Cancel Edit
-            </button>
           </div>
         </form>
         <p id="feedback-message" class="mt-4 text-center font-bold"></p>
       </div>
     </div>
-    <script src="/js/create.js?v=3"></script>
+    <script src="/js/create-simple.js"></script>
   </body>
 </html>

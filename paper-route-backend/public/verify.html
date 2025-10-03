@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Assisted Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet" />
+    <style>
+      .spinner {
+        border-top-color: #3498db;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-pr-background">
+    <div class="container mx-auto p-8">
+      <div class="max-w-4xl mx-auto bg-card-bg p-8 rounded-lg shadow-custom">
+        <header class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-pr-primary">
+            AI-Assisted Verification Tool
+          </h1>
+          <p class="text-md text-pr-secondary mt-2">
+            Automate the preliminary checks of your AI-generated content.
+          </p>
+        </header>
+
+        <main>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Input Column -->
+            <div>
+              <h2 class="text-xl font-semibold mb-3 text-pr-primary">1. Content to Verify</h2>
+              <div>
+                <label for="article-input" class="block text-sm font-medium text-pr-primary mb-1">Article Text</label>
+                <textarea id="article-input" rows="12" class="w-full p-2 border border-gray-300 rounded-md text-gray-800"></textarea>
+              </div>
+              <div class="mt-4">
+                <label for="sources-input" class="block text-sm font-medium text-pr-primary mb-1">Source URLs (one per line)</label>
+                <textarea id="sources-input" rows="6" class="w-full p-2 border border-gray-300 rounded-md text-gray-800"></textarea>
+              </div>
+            </div>
+
+            <!-- Control Column -->
+            <div>
+              <h2 class="text-xl font-semibold mb-3 text-pr-primary">2. Get Verification Report</h2>
+              <button id="verify-button" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700">
+                Verify Article
+              </button>
+              <div id="status-container" class="mt-4 text-center">
+                <div id="loader" class="hidden spinner w-8 h-8 border-4 rounded-full mx-auto"></div>
+                <p id="status-text" class="text-pr-secondary font-medium mt-2"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Report Output Section -->
+          <div id="report-output" class="hidden mt-6 pt-6 border-t border-gray-700">
+            <h2 class="text-2xl font-bold text-pr-primary mb-4 text-center">Verification Report</h2>
+            <div id="report-content" class="bg-gray-800 p-4 rounded-lg"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/js/verify.js"></script>
+  </body>
+</html>
